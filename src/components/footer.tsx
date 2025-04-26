@@ -61,10 +61,10 @@ export default function Footer() {
           <p className=" mx-auto text-sm text-inherit ">&copy; {date} InteliTech Inc. All rights reserved.</p>
           <ul className="flex gap-4 text-sm">
             <li className="hover:text-accent">
-              <Link href="/resources/terms">Terms of Use</Link>
+              <Link href="/legal/terms">Terms of Use</Link>
             </li>
             <li className="hover:text-accent">
-              <Link href="/resources/privacy-policy">Privacy Policy</Link>
+              <Link href="/legal/privacy-policy">Privacy Policy</Link>
             </li>
           </ul>
         </section>

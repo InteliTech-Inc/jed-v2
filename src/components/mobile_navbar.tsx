@@ -4,10 +4,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { NavLinks } from "./navbar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { containerVariants, itemVariants } from "@/constants/animations";
 import { Button } from "./ui/button";
-
 type MobileNavbarProps = {
   isOpen: boolean;
   closeButtonHandler: () => void;
@@ -28,7 +27,6 @@ export default function MobileNavbar({ isOpen, closeButtonHandler }: MobileNavba
       variants={containerVariants}
       initial="hidden"
       animate={isOpen ? "visible" : "hidden"}
-      exit="exit"
       className={`${isOpen ? "absolute" : "hidden"} w-full h-screen top-0 left-0 lg:hidden z-50`}
     >
       <nav className="bg-primary pt-8 w-full h-screen p-4 relative flex flex-col">
@@ -58,9 +56,9 @@ export default function MobileNavbar({ isOpen, closeButtonHandler }: MobileNavba
           ))}
         </motion.ul>
         <motion.section variants={itemVariants} custom={NavLinks.length} className="flex gap-4 mt-6 lg:hidden">
-          <Button variant={"secondary"}>
+          <Link href={"/about#contact"} onClick={closeButtonHandler} className=" px-4 py-2 bg-accent text-secondary rounded-full flex gap-2 items-center">
             Contact <Icon icon={"solar:phone-calling-rounded-linear"} />
-          </Button>
+          </Link>
           <Button>
             Log In <Icon icon={"solar:login-2-outline"} />
           </Button>

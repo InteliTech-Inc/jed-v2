@@ -9,6 +9,7 @@ import SolutionsDropDown from "./solutions_dropdown";
 import { Button } from "./ui/button";
 import LogoImage from "../../public/images/logo.png";
 import { Icon } from "@iconify/react";
+import { usePathname, useRouter } from "next/navigation";
 
 export const NavLinks = [
   {
@@ -20,7 +21,7 @@ export const NavLinks = [
   },
   {
     name: "Events",
-    path: "/all-events",
+    path: "/events",
     icon: "solar:calendar-mark-line-duotone",
     activeIcon: "solar:calendar-mark-bold-duotone",
     dropdown: false,
@@ -51,6 +52,10 @@ export const NavLinks = [
 export default function Navbar() {
   const [navIsOpen, setNavIsOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const isHome = pathname === "/";
 
   useEffect(() => {
     if (navIsOpen) {
@@ -81,7 +86,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className={` sticky top-0 z-50 transition-colors duration-300   ${hasScrolled ? "bg-white" : "bg-primary text-white"}`}>
+    <div className={` sticky top-0 z-50 transition-colors duration-300   ${hasScrolled || !isHome ? "bg-white" : "bg-primary text-white"}`}>
       <div className={` ${hasScrolled ? "" : "border-b-0"} max-w-7xl flex p-4  lg:py-6 gap-8 justify-between items-center border-b mx-auto `}>
         {/* Logo & Mobile Menu Icon */}
         <section className="flex justify-between items-center w-full lg:w-fit">
@@ -126,7 +131,12 @@ export default function Navbar() {
 
         {/* Login Button */}
         <section className="hidden lg:flex gap-4">
-          <Button variant={"secondary"}>
+          <Button
+            variant={"secondary"}
+            onClick={() => {
+              router.push("/about#contact");
+            }}
+          >
             Contact <Icon icon={"solar:phone-calling-rounded-linear"} />
           </Button>
           <Button>

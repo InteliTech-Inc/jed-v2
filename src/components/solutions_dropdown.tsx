@@ -8,7 +8,7 @@ export default function SolutionsDropDown() {
       <div className="w-96 border rounded-lg bg-white z-10 p-2 shadow-lg">
         <ul>
           <li className="">
-            <Link href="/products/#nominations" className="dropdown-item flex gap-4 hover:bg-gray-100 p-2 rounded-md">
+            <Link href="/solutions/#nominations" className="dropdown-item flex gap-4 hover:bg-gray-100 p-2 rounded-md">
               <span className="p-2 bg-accent/40 border-accent h-fit border-2  rounded-md">
                 <Icon icon={"ph:user-list-light"} className=" size-6 text-secondary" />
               </span>
@@ -19,7 +19,7 @@ export default function SolutionsDropDown() {
             </Link>
           </li>
           <li className="">
-            <Link href="/products#ticketing" className="dropdown-item flex gap-4 hover:bg-gray-100 p-2 rounded-md">
+            <Link href="/solutions#ticketing" className="dropdown-item flex gap-4 hover:bg-gray-100 p-2 rounded-md">
               <span className="p-2 bg-accent/40 border-accent h-fit border-2  rounded-md">
                 <Icon icon={"fluent-emoji-high-contrast:ticket"} className=" size-6 text-secondary" />
               </span>
@@ -30,7 +30,7 @@ export default function SolutionsDropDown() {
             </Link>
           </li>
           <li className="">
-            <Link href="/products#voting" className="dropdown-item flex gap-4 hover:bg-gray-100 p-2 rounded-md">
+            <Link href="/solutions#voting" className="dropdown-item flex gap-4 hover:bg-gray-100 p-2 rounded-md">
               <span className="p-2 bg-accent/40 border-accent h-fit border-2  rounded-md">
                 <Icon icon={"material-symbols-light:how-to-vote-outline"} className=" size-6 text-secondary" />
               </span>
