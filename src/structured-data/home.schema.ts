@@ -53,7 +53,7 @@ export const HOME_SCHEMA = {
     {
       "@type": "Person",
       name: "Evans Elabo",
-      url: `https://ng-elabo.vercel.app`,
+      url: `https://ng-elabo.vercel.app/`,
       image: {
         "@type": "ImageObject",
         url: `${process.env.NEXT_PUBLIC_LIVE_URL}/images/small_god.jpg`,
@@ -67,7 +67,7 @@ export const HOME_SCHEMA = {
     {
       "@type": "Person",
       name: "Nana Kwesi Asante",
-      url: `${process.env.NEXT_PUBLIC_LIVE_URL}/author/author3`,
+      url: `https://nkasante.vercel.app/`,
     },
     {
       "@type": "Person",
