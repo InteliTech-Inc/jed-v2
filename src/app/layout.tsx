@@ -77,7 +77,7 @@ const openGraphImagesAbsolute = [
     height: 630,
   },
   {
-    url: `https://jed-event.com/src/app/opengraph-image-square.png`,
+    url: `${process.env.NEXT_PUBLIC_LIVE_URL}/src/app/opengraph-image-square.png`,
     width: 400,
     height: 400,
   },
@@ -87,7 +87,7 @@ const description =
   "Find all the tools you need to create great online events, like ticketing, nomination submissions, and voting. It's easy to use for both organizers and participants.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://jed-event.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_LIVE_URL as string),
   title: {
     default: "JED",
     template: "JED | %s",
@@ -99,7 +99,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "https://jed-event.com",
+    canonical: process.env.NEXT_PUBLIC_LIVE_URL as string,
     languages: {
       "en-US": "/en-US",
     },
@@ -107,8 +107,13 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "JED",
     description,
-    authors: ["Evans Elabo", "Diabene Yaw Addo", "Joshua Richardson Owusu", "Nana Kwesi Asante"],
-    url: "https://jed-event.com",
+    authors: [
+      "Evans Elabo",
+      "Diabene Yaw Addo",
+      "Joshua Richardson Owusu",
+      "Nana Kwesi Asante",
+    ],
+    url: process.env.NEXT_PUBLIC_LIVE_URL as string,
     images: openGraphImagesAbsolute,
   },
 };
@@ -123,7 +128,12 @@ export default function RootLayout({
       <body className={`${switzer.variable} ${satoshi.variable} antialiased`}>
         <Navbar />
         <div className="">
-          <Toaster closeButton className="font-sans" position="top-center" richColors />
+          <Toaster
+            closeButton
+            className="font-sans"
+            position="top-center"
+            richColors
+          />
           {children}
         </div>
         <Footer />
