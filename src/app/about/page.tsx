@@ -27,7 +27,7 @@ const contactLines = [
 
 export default function AboutUsPage() {
   return (
-    <div className="">
+    <div className="mb-16">
       <section className=" p-4 text-center mt-10 max-w-screen-md mx-auto">
         <h3 className="text-4xl lg:text-5xl text-neutral-800 py-4 font-semibold ">Our Company</h3>
         <p>
