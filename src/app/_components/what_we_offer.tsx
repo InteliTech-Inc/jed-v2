@@ -16,7 +16,7 @@ export default function WhatWeOffer() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Nominations Card */}
-              <div className="bg-gray-50 border-neutral-100 border rounded-xl  p-6 ">
+              <div className="bg-gray-50  border-neutral-100 border rounded-xl  p-6 ">
                 <div className="mb-6">
                   <Image src={Nom} alt="Nominations colored elements" className="w-full rounded-md" />
                 </div>
@@ -29,7 +29,7 @@ export default function WhatWeOffer() {
               </div>
 
               {/* Ticketing Card */}
-              <div className="bg-gray-50 border-neutral-100 border rounded-xl  p-6 ">
+              <div className="bg-gray-50  border-neutral-100 border rounded-xl  p-6 ">
                 <div className="mb-6">
                   <Image src={Ticket} alt="Ticketing colored elements" className="w-full rounded-md" />
                 </div>
@@ -41,7 +41,7 @@ export default function WhatWeOffer() {
               </div>
 
               {/* Voting Card */}
-              <div className="bg-gray-50 border-neutral-100 border rounded-xl  p-6 ">
+              <div className="bg-gray-50  border-neutral-100 border rounded-xl p-6 ">
                 <div className="mb-6">
                   <Image src={Vote} alt="Voting colored elements" className="w-full rounded-md" />
                 </div>
