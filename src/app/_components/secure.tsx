@@ -11,6 +11,7 @@ import Telecel from "@/assets/images/telecel cash.jpeg";
 import Airteltigo from "@/assets/images/arteltigo.jpg";
 import VisaCard from "@/assets/images/visa.png";
 import MasterCard from "@/assets/images/mastercard.png";
+import { useRouter } from "next/navigation";
 
 const paymentMethods = [
   { src: MtnMomo, alt: "MTN Mobile Money payment option" },
@@ -44,6 +45,7 @@ const itemVariants = {
 export default function SecuritySection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const router = useRouter();
 
   return (
     <section
@@ -78,7 +80,7 @@ export default function SecuritySection() {
           ))}
         </motion.section>
         <motion.div variants={itemVariants}>
-          <Button aria-label="Contact support team" className="group">
+          <Button onClick={() => router.push("/support/contact")} aria-label="Contact support team" className="group">
             Contact support
             <Icon icon="solar:phone-calling-rounded-linear" className="text-accent ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
           </Button>
