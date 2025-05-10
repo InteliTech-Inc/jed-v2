@@ -33,19 +33,48 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title,
       description,
       "image": mainImage.asset -> url,
+      author->,
+      _createdAt,
+      _updatedAt,
+      categories[]->
     }`,
     { slug }
   );
+
+  if (!post) {
+    return {
+      title: "Post Not Found | JED Blog",
+      description: "The requested blog post could not be found.",
+    };
+  }
+
+  const categories = post.categories?.map((cat: any) => cat.title).join(", ") || "";
+
   return {
-    title: post?.title,
-    description: post?.description,
+    title: `${post.title} | JED Blog`,
+    description: post.description,
     openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      publishedTime: post._createdAt,
+      modifiedTime: post._updatedAt,
+      authors: [post.author.name],
+      tags: categories.split(", "),
       images: [
         {
-          url: post?.image,
-          alt: `${post?.title}'s image`,
+          url: post.image,
+          alt: post.title,
+          width: 1200,
+          height: 630,
         },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [post.image],
     },
   };
 }
@@ -58,7 +87,8 @@ export default async function SinglePost({ params }: { readonly params: Promise<
     {
     ...,
     author->,
-      }
+    categories[]->
+    }
   `,
     { slug },
     { next: { revalidate: 1 } }
@@ -86,60 +116,75 @@ export default async function SinglePost({ params }: { readonly params: Promise<
           }
         : undefined,
     },
+    image: {
+      "@type": "ImageObject",
+      url: urlFor(posts.mainImage).url(),
+      caption: posts.title,
+    },
+    keywords: posts.categories?.map((cat: any) => cat.title).join(", "),
   };
 
   return (
-    <>
+    <article className="min-h-screen" itemScope itemType="https://schema.org/BlogPosting">
       <script type="application/ld+json" id="schema-post" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaPost) }} />
-      <section className="flex p-4  flex-col items-center justify-center w-full md:w-[55dvw] mx-auto">
+      <section className="flex p-4 flex-col items-center justify-center w-full md:w-[55dvw] mx-auto">
         <div className="my-8">
           <BackButton />
-          <p className="text-3xl leading-[1.6] py-4 md:text-5xl md:leading-[4rem] font-semibold text-neutral-700 lg:text-center">{posts.title}</p>
+          <h1 className="text-3xl leading-[1.6] py-4 md:text-5xl md:leading-[4rem] font-semibold text-neutral-700 lg:text-center" itemProp="headline">
+            {posts.title}
+          </h1>
           <div className="flex flex-row items-center lg:justify-center gap-2 md:gap-x-4 my-5">
             <Image
               src={urlFor(posts.author.image).url()}
-              alt={posts.author.name}
+              alt={`${posts.author.name}'s profile picture`}
               width={200}
               height={200}
-              className="rounded-full w-8 h-8 object-cover object-top "
+              className="rounded-full w-8 h-8 object-cover object-top"
             />
             <section className="flex flex-col lg:flex-row items-start justify-center lg:items-center">
               <p className="flex items-center justify-center">
-                <span className="font-bold">{posts.author.name ? `By ${posts.author.name}` : "User"}</span>
+                <span className="font-bold" itemProp="author">
+                  {posts.author.name ? `By ${posts.author.name}` : "User"}
+                </span>
               </p>
-              <span className="hidden md:block text-lg text-gray-500 px-2">&#x2022;</span>
-              <span className=" text-gray-500">
+              <span className="hidden md:block text-lg text-gray-500 px-2" aria-hidden="true">
+                &#x2022;
+              </span>
+              <time className="text-gray-500" dateTime={new Date(posts._createdAt).toISOString()} itemProp="datePublished">
                 {new Date(posts._createdAt).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "long",
                   year: "numeric",
                 })}
-              </span>
+              </time>
             </section>
           </div>
-          <div className="w-full md:h-[20rem]  my-14">
+          <div className="w-full md:h-[20rem] my-14">
             <Image
               src={urlFor(posts.mainImage).url()}
               alt={posts.title}
               width={2000}
               height={2000}
               className="object-cover object-bottom w-full h-full rounded-lg"
+              priority
             />
           </div>
-          <PortableText value={posts.body} components={RichText} />
-          <hr className="dark:border-white/55 border-primary my-6 " />
-          <div className="flex flex-col md:flex-row items-start gap-4">
+          <div itemProp="articleBody">
+            <PortableText value={posts.body} components={RichText} />
+          </div>
+          <hr className="dark:border-white/55 border-primary my-6" />
+          <div className="flex items-start gap-4">
             <Image
               src={urlFor(posts.author.image).url()}
-              alt={posts.author.name}
+              alt={`${posts.author.name}'s profile picture`}
               width={2000}
               height={2000}
-              className="rounded-full  w-12 aspect-square object-cover object-top hover:scale-105 transition-transform duration-300 ease-in-out"
+              className="rounded-full w-12 aspect-square object-cover object-top hover:scale-105 transition-transform duration-300 ease-in-out"
             />
             <div>
               <div className="flex items-center gap-3 -mb-6">
-                <p className="font-bold text-xl ">{posts.author.name}</p>
-                <Link href={`${posts.author.social}`} target="_blank">
+                <p className="font-bold text-xl">{posts.author.name}</p>
+                <Link href={`${posts.author.social}`} target="_blank" aria-label={`Visit ${posts.author.name}'s social profile`}>
                   <LinkIcon height={20} width={20} className="text-gray-500 hover:text-secondary transition-all duration-150 ease-in" />
                 </Link>
               </div>
@@ -148,6 +193,6 @@ export default async function SinglePost({ params }: { readonly params: Promise<
           </div>
         </div>
       </section>
-    </>
+    </article>
   );
 }

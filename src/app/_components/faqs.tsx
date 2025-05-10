@@ -13,7 +13,7 @@ export default function FAQ() {
             <AccordionTrigger className=" text-lg lg:text-2xl text-left leading-[1.4] hover:text-accent transition-all duration-150  text-white ease-in py-6 sm:px-4 rounded-md hover:no-underline">
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className=" text-lg pt-4 text-accent">{item.answer}</AccordionContent>
+            <AccordionContent className=" text-lg pt-4 text-accent md:px-4">{item.answer}</AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
