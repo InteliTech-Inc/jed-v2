@@ -6,21 +6,43 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Solutions",
+  description:
+    "Discover JED's comprehensive event management solutions including nominations, voting, and ticketing systems. Streamline your event planning with our easy-to-use tools.",
+  keywords: ["event solutions", "event nominations", "online voting", "event ticketing", "event management tools"],
+  openGraph: {
+    title: "JED Solutions - Event Management Platform",
+    description:
+      "Discover JED's comprehensive event management solutions including nominations, voting, and ticketing systems. Streamline your event planning with our easy-to-use tools.",
+    type: "website",
+  },
+  twitter: {
+    title: "JED Solutions - Event Management Platform",
+    description:
+      "Discover JED's comprehensive event management solutions including nominations, voting, and ticketing systems. Streamline your event planning with our easy-to-use tools.",
+  },
 };
 
 export default function SolutionsPage() {
   return (
-    <div className="">
-      <section className="p-6 max-w-7xl mx-auto">
-        <h1 className="py-4 text-4xl md:text-5xl lg:text-6xl font-bold text-secondary">Solutions</h1>
+    <div className="min-h-screen">
+      <section className="p-6 max-w-7xl mx-auto" aria-labelledby="solutions-heading">
+        <h1 id="solutions-heading" className="py-4 text-4xl md:text-5xl lg:text-6xl font-bold text-secondary">
+          Solutions
+        </h1>
         <p className="text-lg lg:w-3/5 lg:text-2xl leading-[1.4]">
           Our tools help you make the process of voting, nominations, and ticketing much simpler, making it easier to manage your events. With our easy-to-use
           tools, you can improve your planning and make every event <mark className="text-primary/60">memorable</mark>.
         </p>
       </section>
-      <section id="nominations" className="grid lg:h-screen max-w-7xl mx-auto lg:grid-cols-2 gap-4 place-content-center p-6">
+      <section
+        id="nominations"
+        className="grid lg:h-screen max-w-7xl mx-auto lg:grid-cols-2 gap-4 place-content-center p-6"
+        aria-labelledby="nominations-heading"
+      >
         <section className="lg:p-4">
-          <h1 className="text-2xl lg:text-5xl text-secondary font-semibold py-4">Nominations</h1>
+          <h2 id="nominations-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
+            Nominations
+          </h2>
           <p>
             With Jed's nominations feature, event creators can easily send out nomination forms by sharing an internallly generated link. This makes it simple
             for participants to nominate their choices for awards, positions, or recognitions, anytime and from anywhere. The nomination results can be accessed
@@ -35,13 +57,19 @@ export default function SolutionsPage() {
         </section>
         <section className="">
           <div className="border rounded-3xl h-full p-4 grid place-content-center bg-neutral-50">
-            <Image src={NominationsImage} alt="Product" className="" />
+            <Image src={NominationsImage} alt="JED Nominations Platform Interface" className="w-full h-auto" priority />
           </div>
         </section>
       </section>
-      <section id="voting" className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-6">
+      <section
+        id="voting"
+        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-6"
+        aria-labelledby="voting-heading"
+      >
         <section className="lg:p-4">
-          <h1 className="text-2xl lg:text-5xl text-secondary font-semibold py-4">Voting</h1>
+          <h2 id="voting-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
+            Voting
+          </h2>
           <p>
             Jed's voting tool offers a secure, trustworthy, and efficient solution for managing and monitoring the entire voting process. It provides options
             for voting through the app online or using a USSD code to vote offline, this solution provides flexibility and makes voting accessible to a wider
@@ -56,18 +84,24 @@ export default function SolutionsPage() {
         </section>
         <section>
           <div className="border rounded-3xl h-full p-4 grid place-content-center bg-neutral-50">
-            <Image src={VotingImage} alt="Product" className="" />
+            <Image src={VotingImage} alt="JED Voting Platform Interface" className="w-full h-auto" priority />
           </div>
         </section>
       </section>
-      <section id="ticketing" className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-6">
+      <section
+        id="ticketing"
+        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-6"
+        aria-labelledby="ticketing-heading"
+      >
         <section>
           <div className="border rounded-3xl h-full p-4 grid place-content-center bg-neutral-50">
-            <Image src={TicketingImage} alt="Product" className="" />
+            <Image src={TicketingImage} alt="JED Ticketing Platform Interface" className="w-full h-auto" priority />
           </div>
         </section>
         <section className="lg:p-4">
-          <h1 className="text-2xl lg:text-5xl text-secondary font-semibold py-4">Ticketing</h1>
+          <h2 id="ticketing-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
+            Ticketing
+          </h2>
           <p>
             Jed's ticketing system aims to make buying tickets for events easier for everyone. Event creators can set ticket prices, create and manage different
             types of tickets, and track sales as they happen. This helps ensure that the entire ticketing process runs smoothly.
