@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function SolutionsPage() {
   return (
     <div className="min-h-screen">
-      <section className="p-6 max-w-7xl mx-auto" aria-labelledby="solutions-heading">
+      <section className="p-4 sm:p-6 max-w-7xl mx-auto" aria-labelledby="solutions-heading">
         <h1 id="solutions-heading" className="py-4 text-4xl md:text-5xl lg:text-6xl font-bold text-secondary">
           Solutions
         </h1>
@@ -36,14 +36,14 @@ export default function SolutionsPage() {
       </section>
       <section
         id="nominations"
-        className="grid lg:h-screen max-w-7xl mx-auto lg:grid-cols-2 gap-4 place-content-center p-6"
+        className="grid lg:h-screen max-w-7xl mx-auto lg:grid-cols-2 gap-4 place-content-center p-4 sm:p-6"
         aria-labelledby="nominations-heading"
       >
         <section className="lg:p-4">
           <h2 id="nominations-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
             Nominations
           </h2>
-          <p>
+          <p className=" text-pretty">
             With Jed's nominations feature, event creators can easily send out nomination forms by sharing an internallly generated link. This makes it simple
             for participants to nominate their choices for awards, positions, or recognitions, anytime and from anywhere. The nomination results can be accessed
             and exported on the admin's dashboard. With this feature, there's no need to manually collect nominations through google forms. This streamlined
@@ -63,20 +63,20 @@ export default function SolutionsPage() {
       </section>
       <section
         id="voting"
-        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-6"
+        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-4 sm:p-6"
         aria-labelledby="voting-heading"
       >
         <section className="lg:p-4">
           <h2 id="voting-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
             Voting
           </h2>
-          <p>
+          <p className=" text-pretty">
             Jed's voting tool offers a secure, trustworthy, and efficient solution for managing and monitoring the entire voting process. It provides options
             for voting through the app online or using a USSD code to vote offline, this solution provides flexibility and makes voting accessible to a wider
             audience.
           </p>
           <br />
-          <p>
+          <p className=" text-pretty">
             Event creators can track voting patterns and see how many people are participating in real-time, which provides transparency and helps improve the
             voting process. With detailed participation insights, Jed's voting system ensures a smooth, fair, and timely voting experience. This helps deliver
             quick results while maintaining high standards of security and integrity.
@@ -90,7 +90,7 @@ export default function SolutionsPage() {
       </section>
       <section
         id="ticketing"
-        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-6"
+        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-4 sm:p-6"
         aria-labelledby="ticketing-heading"
       >
         <section>
@@ -102,12 +102,12 @@ export default function SolutionsPage() {
           <h2 id="ticketing-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
             Ticketing
           </h2>
-          <p>
+          <p className=" text-pretty">
             Jed's ticketing system aims to make buying tickets for events easier for everyone. Event creators can set ticket prices, create and manage different
             types of tickets, and track sales as they happen. This helps ensure that the entire ticketing process runs smoothly.
           </p>
           <br />
-          <p>
+          <p className=" text-pretty">
             Using Jed for ticketing means event organizers can focus on other important tasks because they know ticket sales will be handled efficiently. This
             tool helps improve the experience for both event organizers and guests, making sure that the event runs without a hitch and maximizes attendance.
           </p>
