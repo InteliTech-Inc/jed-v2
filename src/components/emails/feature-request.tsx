@@ -1,23 +1,25 @@
 import { Body, Button, Container, Head, Hr, Html, Img, Link, Preview, Section, Text } from "@react-email/components";
 
-interface ContactFormEmailProps {
+interface FeatureRequestEmailProps {
   name: string;
   email: string;
-  subject: string;
-  message: string;
+  category: string;
+  featureName: string;
+  description: string;
+  useCase: string;
 }
 
-export const ContactFormEmail = ({ name, email, subject, message }: ContactFormEmailProps) => (
+export const FeatureRequestEmail = ({ name, email, category, featureName, description, useCase }: FeatureRequestEmailProps) => (
   <Html>
     <Head />
-    <Preview>New contact form submission from {name}</Preview>
+    <Preview>New feature request from {name}</Preview>
     <Body style={main}>
       <Container style={container}>
         <Section style={box}>
           <Img src={`https://ik.imagekit.io/jednk/logo_white?updatedAt=1746008984026`} width="120" height="50" alt="JED" />
           <Hr style={hr} />
           <Text style={paragraph}>Hello JED Support Team,</Text>
-          <Text style={paragraph}>You have received a new contact form submission. Here are the details:</Text>
+          <Text style={paragraph}>You have received a new feature request. Here are the details:</Text>
           <Section style={detailsBox}>
             <Text style={detailText}>
               <strong>Name:</strong> {name}
@@ -26,20 +28,29 @@ export const ContactFormEmail = ({ name, email, subject, message }: ContactFormE
               <strong>Email:</strong> {email}
             </Text>
             <Text style={detailText}>
-              <strong>Subject:</strong> {subject}
+              <strong>Category:</strong> {category}
+            </Text>
+            <Text style={detailText}>
+              <strong>Feature Name:</strong> {featureName}
             </Text>
           </Section>
           <Section style={messageBox}>
             <Text style={detailText}>
-              <strong>Message:</strong>
+              <strong>Description:</strong>
             </Text>
-            <Text style={messageText}>{message}</Text>
+            <Text style={messageText}>{description}</Text>
+          </Section>
+          <Section style={messageBox}>
+            <Text style={detailText}>
+              <strong>Use Case:</strong>
+            </Text>
+            <Text style={messageText}>{useCase}</Text>
           </Section>
           <Button style={button} href={`mailto:${email}`}>
             Reply to {name}
           </Button>
           <Hr style={hr} />
-          <Text style={paragraph}>This email was sent from the contact form on the JED website. Please respond to the sender's email address directly.</Text>
+          <Text style={paragraph}>This feature request was submitted through the JED website. Please respond to the sender's email address directly.</Text>
           <Text style={paragraph}>— JED Support Team</Text>
           <Hr style={hr} />
           <Text style={footer}>JED | Fast and Modern online event management platform</Text>
@@ -49,7 +60,7 @@ export const ContactFormEmail = ({ name, email, subject, message }: ContactFormE
   </Html>
 );
 
-export default ContactFormEmail;
+export default FeatureRequestEmail;
 
 const main = {
   backgroundColor: "#fff",

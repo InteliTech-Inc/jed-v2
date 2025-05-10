@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -40,7 +41,18 @@ export default function RequestFeaturePage() {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/feature-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit feature request");
+      }
+
       toast.success("Feature request submitted successfully! We'll review it and get back to you.");
       setFormData({
         name: "",
@@ -51,6 +63,7 @@ export default function RequestFeaturePage() {
         useCase: "",
       });
     } catch (error) {
+      console.error(error);
       toast.error("Failed to submit feature request. Please try again.");
     } finally {
       setIsLoading(false);
@@ -79,12 +92,12 @@ export default function RequestFeaturePage() {
               <h2 className="text-2xl font-semibold">Your Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <Label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                     Name{" "}
                     <span className="text-red-500" aria-hidden="true">
                       *
                     </span>
-                  </label>
+                  </Label>
                   <Input
                     id="name"
                     name="name"
@@ -98,12 +111,12 @@ export default function RequestFeaturePage() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <Label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email{" "}
                     <span className="text-red-500" aria-hidden="true">
                       *
                     </span>
-                  </label>
+                  </Label>
                   <Input
                     id="email"
                     name="email"
@@ -127,54 +140,56 @@ export default function RequestFeaturePage() {
             <div>
               <div className="space-y-6">
                 <h2 className="text-2xl font-semibold">Feature Details</h2>
-                <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
-                    Category{" "}
-                    <span className="text-red-500" aria-hidden="true">
-                      *
-                    </span>
-                  </label>
-                  <Select value={formData.category} onValueChange={(value: string) => setFormData((prev) => ({ ...prev, category: value }))} required>
-                    <SelectTrigger id="category" className="w-full shadow-none">
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {featureCategories.map((category) => (
-                        <SelectItem key={category.id} value={category.id}>
-                          {category.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <div className=" flex flex-col md:flex-row gap-4 my-4">
+                  <div className=" w-full">
+                    <Label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                      Category{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </Label>
+                    <Select value={formData.category} onValueChange={(value: string) => setFormData((prev) => ({ ...prev, category: value }))} required>
+                      <SelectTrigger id="category" className="w-full shadow-none">
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {featureCategories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div>
-                  <label htmlFor="featureName" className="block text-sm font-medium text-gray-700 mb-1">
-                    Feature Name{" "}
-                    <span className="text-red-500" aria-hidden="true">
-                      *
-                    </span>
-                  </label>
-                  <Input
-                    id="featureName"
-                    name="featureName"
-                    value={formData.featureName}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, featureName: e.target.value }))}
-                    required
-                    placeholder="What would you call this feature?"
-                    className="w-full"
-                    aria-required="true"
-                  />
+                  <div className="w-full">
+                    <Label htmlFor="featureName" className="block text-sm font-medium text-gray-700 mb-1">
+                      Feature Name{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </Label>
+                    <Input
+                      id="featureName"
+                      name="featureName"
+                      value={formData.featureName}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, featureName: e.target.value }))}
+                      required
+                      placeholder="What would you call this feature?"
+                      className="w-full"
+                      aria-required="true"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+              <div className=" mb-4">
+                <Label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
                   Description{" "}
                   <span className="text-red-500" aria-hidden="true">
                     *
                   </span>
-                </label>
+                </Label>
                 <Textarea
                   id="description"
                   name="description"
@@ -188,12 +203,12 @@ export default function RequestFeaturePage() {
               </div>
 
               <div>
-                <label htmlFor="useCase" className="block text-sm font-medium text-gray-700 mb-1">
+                <Label htmlFor="useCase" className="block text-sm font-medium text-gray-700 mb-1">
                   Use Case{" "}
                   <span className="text-red-500" aria-hidden="true">
                     *
                   </span>
-                </label>
+                </Label>
                 <Textarea
                   id="useCase"
                   name="useCase"
