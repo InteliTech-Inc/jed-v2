@@ -10,7 +10,20 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Blog",
+  description: "Stay updated with the latest news, features, and stories from JED. Read about event management, online voting, nominations, and more.",
+  openGraph: {
+    title: "Blog",
+    description: "Stay updated with the latest news, features, and stories from JED. Read about event management, online voting, nominations, and more.",
+    type: "website",
+    url: `${process.env.NEXT_PUBLIC_LIVE_URL}/blog`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog",
+    description: "Stay updated with the latest news, features, and stories from JED. Read about event management, online voting, nominations, and more.",
+  },
 };
+
 export default async function BlogPage() {
   const posts = await client.fetch(postQuery, {}, { next: { revalidate: 1 } });
 
@@ -40,13 +53,9 @@ export default async function BlogPage() {
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        id="schema-blog"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
+    <main className="min-h-screen" role="main">
+      <script type="application/ld+json" id="schema-blog" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <BlogList posts={posts} />
-    </>
+    </main>
   );
 }
