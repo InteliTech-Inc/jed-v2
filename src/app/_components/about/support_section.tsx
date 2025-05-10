@@ -16,7 +16,7 @@ const supportOptions = [
   },
   {
     title: "Feature Requests",
-    description: "Want to suggest a new feature? Share it with us and the community.",
+    description: "Want to suggest a new feature? Share it with us.",
     icon: "solar:lightbulb-bold",
     action: "Request Feature",
     href: "/support/request-feature",

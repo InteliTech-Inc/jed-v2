@@ -26,11 +26,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await client.fetch(
     `*[_type == "post" && slug.current == $slug][0]{
@@ -54,11 +50,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function SinglePost({
-  params,
-}: {
-  readonly params: Promise<{ slug: string }>;
-}) {
+export default async function SinglePost({ params }: { readonly params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const posts = await client.fetch(
     `
@@ -98,17 +90,11 @@ export default async function SinglePost({
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        id="schema-post"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaPost) }}
-      />
+      <script type="application/ld+json" id="schema-post" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaPost) }} />
       <section className="flex p-4  flex-col items-center justify-center w-full md:w-[55dvw] mx-auto">
         <div className="my-8">
           <BackButton />
-          <p className="text-3xl leading-[1.6] py-4 md:text-5xl md:leading-[4rem] font-semibold text-neutral-700 lg:text-center">
-            {posts.title}
-          </p>
+          <p className="text-3xl leading-[1.6] py-4 md:text-5xl md:leading-[4rem] font-semibold text-neutral-700 lg:text-center">{posts.title}</p>
           <div className="flex flex-row items-center lg:justify-center gap-2 md:gap-x-4 my-5">
             <Image
               src={urlFor(posts.author.image).url()}
@@ -119,13 +105,9 @@ export default async function SinglePost({
             />
             <section className="flex flex-col lg:flex-row items-start justify-center lg:items-center">
               <p className="flex items-center justify-center">
-                <span className="font-bold">
-                  {posts.author.name ? `By ${posts.author.name}` : "User"}
-                </span>
+                <span className="font-bold">{posts.author.name ? `By ${posts.author.name}` : "User"}</span>
               </p>
-              <span className="hidden md:block text-lg text-gray-500 px-2">
-                &#x2022;
-              </span>
+              <span className="hidden md:block text-lg text-gray-500 px-2">&#x2022;</span>
               <span className=" text-gray-500">
                 {new Date(posts._createdAt).toLocaleDateString("en-US", {
                   day: "numeric",
@@ -141,7 +123,7 @@ export default async function SinglePost({
               alt={posts.title}
               width={2000}
               height={2000}
-              className="object-cover object-bottom w-full h-full rounded-lg shadow-md"
+              className="object-cover object-bottom w-full h-full rounded-lg"
             />
           </div>
           <PortableText value={posts.body} components={RichText} />
@@ -158,11 +140,7 @@ export default async function SinglePost({
               <div className="flex items-center gap-3 -mb-6">
                 <p className="font-bold text-xl ">{posts.author.name}</p>
                 <Link href={`${posts.author.social}`} target="_blank">
-                  <LinkIcon
-                    height={20}
-                    width={20}
-                    className="text-gray-500 hover:text-secondary transition-all duration-150 ease-in"
-                  />
+                  <LinkIcon height={20} width={20} className="text-gray-500 hover:text-secondary transition-all duration-150 ease-in" />
                 </Link>
               </div>
               <PortableText value={posts.author.bio} components={RichText} />
