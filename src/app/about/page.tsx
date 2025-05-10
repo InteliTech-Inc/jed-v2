@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { ABOUT_SCHEMA } from "@/structured-data/about.schema";
 
 export const metadata: Metadata = {
-  title: "About Us | JED Event Management Platform",
+  title: "About Us",
   description:
     "Learn about JED's mission to provide intuitive, secure, and efficient event management solutions. Discover why we're different and how we're revolutionizing event organization.",
   keywords: ["about JED", "event management company", "event platform", "voting platform", "event solutions"],

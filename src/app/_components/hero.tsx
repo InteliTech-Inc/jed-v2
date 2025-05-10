@@ -26,7 +26,7 @@ export default function Hero() {
               role="status"
               aria-label="Platform status"
             >
-              Built for global customers
+              Built for event organizers who want more...
             </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}

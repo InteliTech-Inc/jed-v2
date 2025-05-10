@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import MobileNavbar from "./mobile_navbar";
 import SolutionsDropDown from "./solutions_dropdown";
@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import LogoImage from "../../public/images/logo.png";
 import { Icon } from "@iconify/react";
 import { usePathname, useRouter } from "next/navigation";
+import LogoDark from "../../public/images/jed-dark.png";
 
 export const NavLinks = [
   {
@@ -78,7 +79,6 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -86,36 +86,19 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div
-      className={` sticky top-0 z-50 transition-colors duration-300   ${
-        hasScrolled || !isHome ? "bg-white" : "bg-primary text-white"
-      }`}
-    >
-      <div
-        className={` ${
-          hasScrolled ? "" : "border-b-0"
-        } max-w-7xl flex p-4  lg:py-6 gap-8 justify-between items-center border-b mx-auto `}
-      >
+    <div className={` sticky top-0 z-50 transition-colors duration-300   ${hasScrolled || !isHome ? "bg-white" : "bg-primary text-white"}`}>
+      <div className={` ${hasScrolled ? "" : "border-b-0"} max-w-7xl flex p-4  lg:py-6 gap-8 justify-between items-center border-b mx-auto `}>
         {/* Logo & Mobile Menu Icon */}
         <section className="flex justify-between items-center w-full lg:w-fit">
           <Link href="/">
-            <Logo />
+            <Logo logo={hasScrolled ? LogoDark : LogoImage} />
           </Link>
 
           <AnimatePresence>
             {!navIsOpen && (
-              <motion.div
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                className="lg:hidden h-fit"
-              >
+              <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="lg:hidden h-fit">
                 <div className="p-2.5 rounded-full bg-primary text-accent">
-                  <Icon
-                    icon="solar:hamburger-menu-line-duotone"
-                    className="w-6 h-6"
-                    onClick={() => setNavIsOpen(true)}
-                  />
+                  <Icon icon="solar:hamburger-menu-line-duotone" className="w-6 h-6" onClick={() => setNavIsOpen(true)} />
                 </div>
               </motion.div>
             )}
@@ -123,14 +106,7 @@ export default function Navbar() {
         </section>
 
         {/* Mobile Navbar */}
-        <AnimatePresence>
-          {navIsOpen && (
-            <MobileNavbar
-              isOpen={navIsOpen}
-              closeButtonHandler={() => setNavIsOpen(false)}
-            />
-          )}
-        </AnimatePresence>
+        <AnimatePresence>{navIsOpen && <MobileNavbar isOpen={navIsOpen} closeButtonHandler={() => setNavIsOpen(false)} />}</AnimatePresence>
 
         {/* Desktop Navbar Links */}
         <section className={`hidden h-fit lg:block`}>
@@ -141,18 +117,10 @@ export default function Navbar() {
                   <Link
                     href={link.path}
                     className={`${
-                      !link.dropdown
-                        ? "hover:underline hover:text-accent hover:underline-offset-4"
-                        : "hover:text-secondary"
+                      !link.dropdown ? "hover:underline hover:text-accent hover:underline-offset-4" : "hover:text-secondary"
                     } ease-in duration-100 flex items-center gap-2`}
                   >
-                    {link.name}{" "}
-                    {link.dropdown && (
-                      <Icon
-                        icon="solar:alt-arrow-down-outline"
-                        className="w-4 h-4"
-                      />
-                    )}
+                    {link.name} {link.dropdown && <Icon icon="solar:alt-arrow-down-outline" className="w-4 h-4" />}
                   </Link>
                   {link.dropdown && link.dropdown}
                 </li>
@@ -180,14 +148,6 @@ export default function Navbar() {
   );
 }
 
-export function Logo() {
-  return (
-    <Image
-      src={LogoImage}
-      alt="Logo"
-      className="w-auto h-auto"
-      width={60}
-      height={40}
-    />
-  );
+export function Logo({ logo = LogoImage }: { logo?: StaticImageData }) {
+  return <Image src={logo} alt="Logo" className="w-auto h-auto" width={60} height={40} />;
 }
