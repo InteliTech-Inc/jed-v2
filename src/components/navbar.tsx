@@ -91,7 +91,7 @@ export default function Navbar() {
         {/* Logo & Mobile Menu Icon */}
         <section className="flex justify-between items-center w-full lg:w-fit">
           <Link href="/">
-            <Logo logo={hasScrolled ? LogoDark : LogoImage} />
+            <Logo logo={!isHome ? LogoDark : hasScrolled ? LogoDark : LogoImage} />
           </Link>
 
           <AnimatePresence>
@@ -134,7 +134,7 @@ export default function Navbar() {
           <Button
             variant={"secondary"}
             onClick={() => {
-              router.push("/about#contact");
+              router.push("/support/contact");
             }}
           >
             Contact <Icon icon={"solar:phone-calling-rounded-linear"} />
