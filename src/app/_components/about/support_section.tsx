@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const supportOptions = [
   {
@@ -11,6 +12,7 @@ const supportOptions = [
     icon: "solar:bug-bold",
     action: "Open GitHub Issue",
     href: "https://github.com/your-org/jed/issues",
+    external: true,
   },
   {
     title: "Feature Requests",
@@ -18,6 +20,7 @@ const supportOptions = [
     icon: "solar:lightbulb-bold",
     action: "Request Feature",
     href: "/support/request-feature",
+    external: false,
   },
   {
     title: "Contact Support",
@@ -25,6 +28,7 @@ const supportOptions = [
     icon: "solar:phone-calling-rounded-bold",
     action: "Contact Us",
     href: "/support/contact",
+    external: false,
   },
 ];
 
@@ -72,7 +76,7 @@ export default function SupportSection() {
           viewport={{ once: true }}
         >
           {supportOptions.map((option) => (
-            <motion.div key={option.title} variants={itemVariants} className="bg-neutral-50/60 rounded-xl p-8  border transition-colors">
+            <motion.div key={option.title} variants={itemVariants} className="bg-neutral-50/60 rounded-xl p-8 border transition-colors">
               <div className="flex flex-col h-full">
                 <div className="flex items-start gap-4 mb-6">
                   <div className="p-3 bg-secondary rounded-lg">
@@ -85,10 +89,17 @@ export default function SupportSection() {
                 </div>
                 <div className="mt-4">
                   <Button variant="outline" className="w-full group shadow-none" asChild>
-                    <a href={option.href} target="_blank" rel="noopener noreferrer">
-                      {option.action}
-                      <Icon icon="solar:arrow-right-linear" className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                    </a>
+                    {option.external ? (
+                      <a href={option.href} target="_blank" rel="noopener noreferrer">
+                        {option.action}
+                        <Icon icon="solar:arrow-right-linear" className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      </a>
+                    ) : (
+                      <Link href={option.href}>
+                        {option.action}
+                        <Icon icon="solar:arrow-right-linear" className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      </Link>
+                    )}
                   </Button>
                 </div>
               </div>

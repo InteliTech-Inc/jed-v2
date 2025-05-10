@@ -31,6 +31,12 @@ export default function RequestFeaturePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!formData.email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -118,47 +124,48 @@ export default function RequestFeaturePage() {
             </div>
 
             {/* Feature Details */}
-            <div className="space-y-6">
-              <h2 className="text-2xl font-semibold">Feature Details</h2>
+            <div>
+              <div className="space-y-6">
+                <h2 className="text-2xl font-semibold">Feature Details</h2>
+                <div>
+                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                    Category{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
+                  </label>
+                  <Select value={formData.category} onValueChange={(value: string) => setFormData((prev) => ({ ...prev, category: value }))} required>
+                    <SelectTrigger id="category" className="w-full shadow-none">
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {featureCategories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div>
-                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
-                  Category{" "}
-                  <span className="text-red-500" aria-hidden="true">
-                    *
-                  </span>
-                </label>
-                <Select value={formData.category} onValueChange={(value: string) => setFormData((prev) => ({ ...prev, category: value }))} required>
-                  <SelectTrigger id="category" className="w-full">
-                    <SelectValue placeholder="Select a category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {featureCategories.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <label htmlFor="featureName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Feature Name{" "}
-                  <span className="text-red-500" aria-hidden="true">
-                    *
-                  </span>
-                </label>
-                <Input
-                  id="featureName"
-                  name="featureName"
-                  value={formData.featureName}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, featureName: e.target.value }))}
-                  required
-                  placeholder="What would you call this feature?"
-                  className="w-full"
-                  aria-required="true"
-                />
+                <div>
+                  <label htmlFor="featureName" className="block text-sm font-medium text-gray-700 mb-1">
+                    Feature Name{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
+                  </label>
+                  <Input
+                    id="featureName"
+                    name="featureName"
+                    value={formData.featureName}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, featureName: e.target.value }))}
+                    required
+                    placeholder="What would you call this feature?"
+                    className="w-full"
+                    aria-required="true"
+                  />
+                </div>
               </div>
 
               <div>
@@ -201,16 +208,21 @@ export default function RequestFeaturePage() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <Button type="submit" className="w-full" disabled={isLoading} aria-busy={isLoading}>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={
+                  isLoading || !formData.name || !formData.email || !formData.category || !formData.featureName || !formData.description || !formData.useCase
+                }
+                aria-busy={isLoading}
+              >
                 {isLoading ? (
                   <>
                     <Icon icon="eos-icons:loading" className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-                    <span>Submitting...</span>
                   </>
                 ) : (
                   <>
                     <span>Submit Feature Request</span>
-                    <Icon icon="solar:arrow-right-linear" className="ml-2 h-4 w-4" aria-hidden="true" />
                   </>
                 )}
               </Button>

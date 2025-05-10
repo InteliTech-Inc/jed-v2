@@ -163,7 +163,7 @@ export default function RootLayout({
         </a>
         <Navbar />
         <main id="main-content" className="min-h-screen">
-          <Toaster closeButton className="font-sans" position="top-center" richColors aria-live="polite" />
+          <Toaster closeButton className={`font-(family-name:--font-paragraph)`} position="top-center" richColors aria-live="polite" />
           {children}
         </main>
         <Footer />
