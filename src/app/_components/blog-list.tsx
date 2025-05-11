@@ -36,7 +36,7 @@ export default function BlogList({ posts }: Readonly<Props>) {
 
   return (
     <div className="md:px-10 px-6 max-w-[1200px] mx-auto">
-      <div className="mt-12">
+      <div className="">
         <h1 className="text-3xl mb-5 md:mb-0 md:text-5xl font-bold">
           JED <mark className="text-secondary">BLOG</mark>
         </h1>

@@ -134,7 +134,7 @@ export default function Navbar() {
           <Button
             variant={"secondary"}
             onClick={() => {
-              router.push("/support/contact");
+              router.push("/about#support");
             }}
           >
             Contact <Icon icon={"solar:phone-calling-rounded-linear"} />

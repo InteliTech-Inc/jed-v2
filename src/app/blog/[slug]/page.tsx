@@ -125,7 +125,7 @@ export default async function SinglePost({ params }: { readonly params: Promise<
   };
 
   return (
-    <article className="min-h-screen" itemScope itemType="https://schema.org/BlogPosting">
+    <article className="min-h-screen " itemScope itemType="https://schema.org/BlogPosting">
       <script type="application/ld+json" id="schema-post" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaPost) }} />
       <section className="flex p-4 flex-col items-center justify-center w-full md:w-[55dvw] mx-auto">
         <div className="my-8">

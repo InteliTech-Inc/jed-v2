@@ -56,7 +56,7 @@ export default function MobileNavbar({ isOpen, closeButtonHandler }: MobileNavba
           ))}
         </motion.ul>
         <motion.section variants={itemVariants} custom={NavLinks.length} className="flex gap-4 mt-6 lg:hidden">
-          <Link href={"/support/contact"} onClick={closeButtonHandler} className=" px-4 py-2 bg-accent text-secondary rounded-full flex gap-2 items-center">
+          <Link href={"/about#support"} onClick={closeButtonHandler} className=" px-4 py-2 bg-accent text-secondary rounded-full flex gap-2 items-center">
             Contact <Icon icon={"solar:phone-calling-rounded-linear"} />
           </Link>
           <Button>
