@@ -53,7 +53,7 @@ export default async function BlogPage() {
   };
 
   return (
-    <main className="min-h-screen" role="main">
+    <main className="min-h-screen mt-12" role="main">
       <script type="application/ld+json" id="schema-blog" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <BlogList posts={posts} />
     </main>
