@@ -157,7 +157,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${switzer.variable} ${satoshi.variable} antialiased`} role="document">
+      <body className={`${switzer.variable} ${satoshi.variable} antialiased `} role="document">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black">
           Skip to main content
         </a>

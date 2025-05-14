@@ -48,9 +48,9 @@ export default function WhatWeOffer() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <div className="max-w-7xl mx-auto mt-20" ref={ref}>
+    <div className="max-w-7xl mx-auto mt-20 " ref={ref}>
       <motion.section
-        className="max-w-screen-sm text-center mx-auto"
+        className="max-w-screen-sm text-center mx-auto px-4"
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.5 }}

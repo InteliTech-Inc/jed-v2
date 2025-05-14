@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function SolutionsPage() {
   return (
     <div className="min-h-screen">
-      <section className="p-4 sm:p-6 max-w-7xl mx-auto" aria-labelledby="solutions-heading">
+      <section className="p-5 sm:p-6 max-w-7xl mx-auto" aria-labelledby="solutions-heading">
         <h1 id="solutions-heading" className="py-4 text-4xl md:text-5xl lg:text-6xl font-bold text-secondary">
           Solutions
         </h1>
@@ -36,7 +36,7 @@ export default function SolutionsPage() {
       </section>
       <section
         id="nominations"
-        className="grid lg:h-screen max-w-7xl mx-auto lg:grid-cols-2 gap-4 place-content-center p-4 sm:p-6"
+        className="grid lg:h-screen max-w-7xl mx-auto lg:grid-cols-2 gap-4 place-content-center p-5 sm:p-6"
         aria-labelledby="nominations-heading"
       >
         <section className="lg:p-4">
@@ -63,7 +63,7 @@ export default function SolutionsPage() {
       </section>
       <section
         id="voting"
-        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-4 sm:p-6"
+        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-5 sm:p-6"
         aria-labelledby="voting-heading"
       >
         <section className="lg:p-4">
@@ -90,7 +90,7 @@ export default function SolutionsPage() {
       </section>
       <section
         id="ticketing"
-        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-4 sm:p-6"
+        className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-5 sm:p-6"
         aria-labelledby="ticketing-heading"
       >
         <section>

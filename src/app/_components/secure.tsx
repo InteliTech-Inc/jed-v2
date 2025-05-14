@@ -49,7 +49,7 @@ export default function SecuritySection() {
 
   return (
     <section
-      className="max-w-6xl mt-10 mx-auto grid lg:grid-cols-2 gap-10 p-4 lg:pt-6 place-items-center lg:pb-0 lg:pr-0 lg:my-20"
+      className="max-w-6xl mt-10 mx-auto grid lg:grid-cols-2 gap-10 p-5 lg:pt-6 place-items-center lg:pb-0 lg:pr-0 lg:my-20"
       ref={ref}
       aria-labelledby="security-heading"
     >

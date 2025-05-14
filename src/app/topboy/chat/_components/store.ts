@@ -9,6 +9,8 @@ export const useChatStore = create<ChatState>((set) => ({
   eventDetails: null,
   selectedTicketPackage: null,
   numberOfVotes: 0,
+  retryCount: 0,
+  isInRetryMode: false,
 
   addMessage: (message) =>
     set((state) => ({
@@ -27,6 +29,9 @@ export const useChatStore = create<ChatState>((set) => ({
   setEventDetails: (details) => set({ eventDetails: details }),
   setSelectedTicketPackage: (pkg) => set({ selectedTicketPackage: pkg }),
   setNumberOfVotes: (votes) => set({ numberOfVotes: votes }),
+  incrementRetryCount: () => set((state) => ({ retryCount: state.retryCount + 1 })),
+  resetRetryCount: () => set({ retryCount: 0, isInRetryMode: false }),
+  setRetryMode: (mode: boolean) => set({ isInRetryMode: mode }),
 
   reset: () =>
     set({
@@ -36,5 +41,7 @@ export const useChatStore = create<ChatState>((set) => ({
       eventDetails: null,
       selectedTicketPackage: null,
       numberOfVotes: 0,
+      retryCount: 0,
+      isInRetryMode: false,
     }),
 }));
