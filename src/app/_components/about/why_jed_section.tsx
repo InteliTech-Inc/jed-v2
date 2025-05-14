@@ -72,7 +72,7 @@ export default function WhyJedSection() {
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
           {painPoints.map((point) => (
             <motion.div key={point.title} variants={itemVariants} className="bg-white rounded-xl p-8">
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col sm:flex-row items-start gap-4">
                 <div className="p-3 bg-secondary rounded-lg">
                   <Icon icon={point.icon} className="w-8 h-8 text-accent" />
                 </div>

@@ -37,12 +37,17 @@ export interface ChatState {
   eventDetails: EventDetails | null;
   selectedTicketPackage: TicketPackage | null;
   numberOfVotes: number;
+  retryCount: number;
+  isInRetryMode: boolean;
   addMessage: (message: Omit<ChatMessage, "id" | "timestamp">) => void;
   setCurrentAction: (action: ChatAction | null) => void;
   setNomineeDetails: (details: NomineeDetails | null) => void;
   setEventDetails: (details: EventDetails | null) => void;
   setSelectedTicketPackage: (pkg: TicketPackage | null) => void;
   setNumberOfVotes: (votes: number) => void;
+  incrementRetryCount: () => void;
+  resetRetryCount: () => void;
+  setRetryMode: (mode: boolean) => void;
   reset: () => void;
 }
 
