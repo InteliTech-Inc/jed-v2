@@ -1,4 +1,30 @@
+import { Metadata } from "next";
 import { ChatContainer } from "@/app/topboy/chat/_components/ChatContainer";
+
+export const metadata: Metadata = {
+  title: "Topboy Chat",
+  description:
+    "Chat with Topboy, your friendly assistant for voting and ticket purchases at JED events. Get help with voting for nominees or buying event tickets in a simple, conversational way.",
+  keywords: ["JED", "Topboy", "chat", "voting", "tickets", "events", "assistant", "help"],
+  openGraph: {
+    title: "Chat with Topboy | JED",
+    description:
+      "Chat with Topboy, your friendly assistant for voting and ticket purchases at JED events. Get help with voting for nominees or buying event tickets in a simple, conversational way.",
+    type: "website",
+    locale: "en_US",
+    siteName: "JED",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chat with Topboy | JED",
+    description:
+      "Chat with Topboy, your friendly assistant for voting and ticket purchases at JED events. Get help with voting for nominees or buying event tickets in a simple, conversational way.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function ChatPage() {
   return (

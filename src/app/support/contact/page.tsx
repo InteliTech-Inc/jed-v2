@@ -14,7 +14,7 @@ const initialFormData = {
   email: "",
   subject: "",
   message: "",
-};  
+};
 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +40,7 @@ export default function ContactPage() {
       toast.success("Message sent successfully! We'll get back to you soon.");
       setFormData(initialFormData);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.error("Failed to send message. Please try again.");
     } finally {
       setIsLoading(false);
@@ -49,7 +49,7 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen py-20" role="main">
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-6">
         <motion.div
           className="text-center max-w-3xl mx-auto mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -63,15 +63,14 @@ export default function ContactPage() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
             <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form" noValidate>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Name <span className="text-red-500" aria-hidden="true">*</span>
+                  Name{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <Input
                   id="name"
@@ -87,7 +86,10 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email <span className="text-red-500" aria-hidden="true">*</span>
+                  Email{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <Input
                   id="email"
@@ -101,12 +103,17 @@ export default function ContactPage() {
                   aria-required="true"
                   aria-describedby="email-format"
                 />
-                <p id="email-format" className="sr-only">Please enter a valid email address</p>
+                <p id="email-format" className="sr-only">
+                  Please enter a valid email address
+                </p>
               </div>
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                  Subject <span className="text-red-500" aria-hidden="true">*</span>
+                  Subject{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <Input
                   id="subject"
@@ -122,7 +129,10 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                  Message <span className="text-red-500" aria-hidden="true">*</span>
+                  Message{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <Textarea
                   id="message"
@@ -144,7 +154,6 @@ export default function ContactPage() {
                 ) : (
                   <>
                     <span>Send Message</span>
-                    
                   </>
                 )}
               </Button>
