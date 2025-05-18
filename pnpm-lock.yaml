@@ -20,9 +20,15 @@ importers:
       '@radix-ui/react-avatar':
         specifier: ^1.1.9
         version: 1.1.9(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.13
+        version: 1.1.13(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-label':
         specifier: ^2.1.3
         version: 2.1.3(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-popover':
+        specifier: ^1.1.13
+        version: 1.1.13(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-select':
         specifier: ^2.2.4
         version: 2.2.4(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -41,6 +47,9 @@ importers:
       '@sanity/image-url':
         specifier: ^1.1.0
         version: 1.1.0
+      '@tabler/icons-react':
+        specifier: ^3.33.0
+        version: 3.33.0(react@19.1.0)
       '@types/uuid':
         specifier: ^10.0.0
         version: 10.0.0
@@ -53,6 +62,12 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      cmdk:
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       framer-motion:
         specifier: ^12.6.5
         version: 12.6.5(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -77,9 +92,6 @@ importers:
       react-hook-form:
         specifier: ^7.55.0
         version: 7.55.0(react@19.1.0)
-      react-loader-spinner:
-        specifier: ^6.1.6
-        version: 6.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       resend:
         specifier: ^4.5.1
         version: 4.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -95,6 +107,9 @@ importers:
       tw-animate-css:
         specifier: ^1.2.5
         version: 1.2.5
+      use-debounce:
+        specifier: ^10.0.4
+        version: 10.0.4(react@19.1.0)
       uuid:
         specifier: ^11.1.0
         version: 11.1.0
@@ -1683,6 +1698,19 @@ packages:
       '@types/react':
         optional: true
 
+  '@radix-ui/react-dialog@1.1.13':
+    resolution: {integrity: sha512-ARFmqUyhIVS3+riWzwGTe7JLjqwqgnODBUZdqpWar/z1WFs9z76fuOs/2BOWCR+YboRn4/WN9aoaGVwqNRr8VA==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
   '@radix-ui/react-direction@1.1.1':
     resolution: {integrity: sha512-1UEWRX6jnOA2y4H5WczZ44gOOjTEmlqv1uNW4GAJEO5+bauCBhv8snY65Iw5/VOS/ghKN9gr2KjnLKxrsvoMVw==}
     peerDependencies:
@@ -1738,6 +1766,19 @@ packages:
 
   '@radix-ui/react-label@2.1.3':
     resolution: {integrity: sha512-zwSQ1NzSKG95yA0tvBMgv6XPHoqapJCcg9nsUBaQQ66iRBhZNhlpaQG2ERYYX4O4stkYFK5rxj5NsWfO9CS+Hg==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+
+  '@radix-ui/react-popover@1.1.13':
+    resolution: {integrity: sha512-84uqQV3omKDR076izYgcha6gdpN8m3z6w/AeJ83MSBJYVG/AbOHdLjAgsPZkeC/kt+k64moXFCnio8BbqXszlw==}
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
@@ -2476,6 +2517,14 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
+  '@tabler/icons-react@3.33.0':
+    resolution: {integrity: sha512-ay+HDecCjmFl25Lg14hcl59ffSjnOcgfrlV14shu8Qjbz+Xh4LRus93DuoyLQte8YSxE7Pe5gnEz6OF0GtwNtw==}
+    peerDependencies:
+      react: '>= 16'
+
+  '@tabler/icons@3.33.0':
+    resolution: {integrity: sha512-NZeFfzcYe7xcBHR3zKoCSrw/cFWvfj6LjenPQ48yVMTGdX854HH9nH44ZfMH8rrDzHBllfjwl4CIX6Vh2tyN0Q==}
+
   '@tailwindcss/node@4.1.3':
     resolution: {integrity: sha512-H/6r6IPFJkCfBJZ2dKZiPJ7Ueb2wbL592+9bQEl2r73qbX6yGnmQVIfiUvDRB2YI0a3PWDrzUwkvQx1XW1bNkA==}
 
@@ -2969,6 +3018,12 @@ packages:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
     engines: {node: '>=6'}
 
+  cmdk@1.1.1:
+    resolution: {integrity: sha512-Vsv7kFaXm+ptHDMZ7izaRsP70GgrW9NBNGswt9OZaVBLlE0SNpDq8eu/VGXyF9r7M0azK3Wy7OlYXsuyYLFzHg==}
+    peerDependencies:
+      react: ^18 || ^19 || ^19.0.0-rc
+      react-dom: ^18 || ^19 || ^19.0.0-rc
+
   color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
 
@@ -3109,6 +3164,9 @@ packages:
   date-fns@2.30.0:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
+
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -4692,13 +4750,6 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
-  react-loader-spinner@6.1.6:
-    resolution: {integrity: sha512-x5h1Jcit7Qn03MuKlrWcMG9o12cp9SNDVHVJTNRi9TgtGPKcjKiXkou4NRfLAtXaFB3+Z8yZsVzONmPzhv2ErA==}
-    engines: {node: '>= 12'}
-    peerDependencies:
-      react: ^16.0.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
-
   react-promise-suspense@0.3.4:
     resolution: {integrity: sha512-I42jl7L3Ze6kZaq+7zXWSunBa3b1on5yfvUW6Eo/3fFOj6dZ5Bqmcd264nJbTK/gn1HjjILAjSwnZbV4RpSaNQ==}
 
@@ -5377,6 +5428,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  use-debounce@10.0.4:
+    resolution: {integrity: sha512-6Cf7Yr7Wk7Kdv77nnJMf6de4HuDE4dTxKij+RqE9rufDsI6zsbjyAxcH5y2ueJCQAnfgKbzXbZHYlkFwmBlWkw==}
+    engines: {node: '>= 16.0.0'}
+    peerDependencies:
+      react: '*'
 
   use-device-pixel-ratio@1.1.2:
     resolution: {integrity: sha512-nFxV0HwLdRUt20kvIgqHYZe6PK/v4mU1X8/eLsT1ti5ck0l2ob0HDRziaJPx+YWzBo6dMm4cTac3mcyk68Gh+A==}
@@ -7224,6 +7281,28 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.1.1
 
+  '@radix-ui/react-dialog@1.1.13(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@radix-ui/primitive': 1.1.2
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-context': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-dismissable-layer': 1.1.9(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-focus-guards': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-focus-scope': 1.1.6(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-id': 1.1.1(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-portal': 1.1.8(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-presence': 1.1.4(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-primitive': 2.1.2(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-slot': 1.2.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-use-controllable-state': 1.2.2(@types/react@19.1.1)(react@19.1.0)
+      aria-hidden: 1.2.4
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-remove-scroll: 2.6.3(@types/react@19.1.1)(react@19.1.0)
+    optionalDependencies:
+      '@types/react': 19.1.1
+      '@types/react-dom': 19.1.2(@types/react@19.1.1)
+
   '@radix-ui/react-direction@1.1.1(@types/react@19.1.1)(react@19.1.0)':
     dependencies:
       react: 19.1.0
@@ -7272,6 +7351,29 @@ snapshots:
       '@radix-ui/react-primitive': 2.0.3(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
+    optionalDependencies:
+      '@types/react': 19.1.1
+      '@types/react-dom': 19.1.2(@types/react@19.1.1)
+
+  '@radix-ui/react-popover@1.1.13(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@radix-ui/primitive': 1.1.2
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-context': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-dismissable-layer': 1.1.9(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-focus-guards': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-focus-scope': 1.1.6(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-id': 1.1.1(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-popper': 1.2.6(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-portal': 1.1.8(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-presence': 1.1.4(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-primitive': 2.1.2(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-slot': 1.2.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-use-controllable-state': 1.2.2(@types/react@19.1.1)(react@19.1.0)
+      aria-hidden: 1.2.4
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      react-remove-scroll: 2.6.3(@types/react@19.1.1)(react@19.1.0)
     optionalDependencies:
       '@types/react': 19.1.1
       '@types/react-dom': 19.1.2(@types/react@19.1.1)
@@ -8124,6 +8226,13 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  '@tabler/icons-react@3.33.0(react@19.1.0)':
+    dependencies:
+      '@tabler/icons': 3.33.0
+      react: 19.1.0
+
+  '@tabler/icons@3.33.0': {}
+
   '@tailwindcss/node@4.1.3':
     dependencies:
       enhanced-resolve: 5.18.1
@@ -8612,6 +8721,18 @@ snapshots:
 
   clsx@2.1.1: {}
 
+  cmdk@1.1.1(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-dialog': 1.1.13(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@radix-ui/react-id': 1.1.1(@types/react@19.1.1)(react@19.1.0)
+      '@radix-ui/react-primitive': 2.1.2(@types/react-dom@19.1.2(@types/react@19.1.1))(@types/react@19.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+
   color-convert@1.9.3:
     dependencies:
       color-name: 1.1.3
@@ -8758,6 +8879,8 @@ snapshots:
   date-fns@2.30.0:
     dependencies:
       '@babel/runtime': 7.27.0
+
+  date-fns@4.1.0: {}
 
   debounce@1.2.1: {}
 
@@ -10369,13 +10492,6 @@ snapshots:
 
   react-is@18.3.1: {}
 
-  react-loader-spinner@6.1.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
-    dependencies:
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
-      react-is: 18.3.1
-      styled-components: 6.1.17(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-
   react-promise-suspense@0.3.4:
     dependencies:
       fast-deep-equal: 2.0.1
@@ -11267,6 +11383,10 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.1.1
+
+  use-debounce@10.0.4(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   use-device-pixel-ratio@1.1.2(react@19.1.0):
     dependencies:

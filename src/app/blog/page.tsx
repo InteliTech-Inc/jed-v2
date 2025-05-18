@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import BlogList from "../_components/blog-list";
+import BlogList from "./_components/blog-list";
 import { postQuery } from "@/lib/sanity-query";
 import { client } from "@/client";
 import { Post } from "@/interfaces/block.interface";
