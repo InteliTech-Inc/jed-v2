@@ -80,13 +80,13 @@ export default function NomineesGrid({ nominees, eventId, event }: NomineesGridP
   };
 
   return (
-    <div className="flex flex-col w-full mt-20 gap-6">
+    <div className="flex flex-col w-full mt-10 lg:mt-20 gap-6">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex w-full flex-col sm:flex-row items-center justify-between gap-4">
           <SearchBar placeholder="Search nominees..." queryKey="q" handleReset={handleReset} />
           <CategoryFilter categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
         </div>
-        <Button className=" shadow-none" onClick={() => setIsModalOpen(true)}>
+        <Button className=" shadow-none w-full sm:w-auto" onClick={() => setIsModalOpen(true)}>
           View Details
           <Info className="mr-2 h-4 w-4" />
         </Button>

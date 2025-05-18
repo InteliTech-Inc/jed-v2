@@ -6,26 +6,27 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
 const painPoints = [
   {
-    title: "Poor UI/UX",
+    title: "User Interface & Experience (UI/UX)",
     description:
-      "Many platforms have really bad user interfaces that make it hard to manage events. Users struggle with complicated design and unclear guidelines. JED fixes this with a clean, simple design that anyone can use right away.",
+      "Many platforms have really bad user interfaces that make it hard to manage events.JED's intuitive design puts you in control, allowing you to effortlessly manage events with clarity and confidence.",
     icon: "solar:user-cross-broken",
   },
   {
-    title: "Unnecessary checks before accessing the platform",
+    title: "Instant Access",
     description:
-      "Some platforms require you to contact the platform owners before you can even sign up. With JED, you can sign up and start using the platform immediately. However, we verify all events to ensure they are real and not scams.",
+      "Some platforms require you to contact the platform owners before you can even sign up. At JED, we've streamlined our sign-up process so you can dive right in and start planning your event, no need to contact us before you can even sign up. However, we do a quick verification to ensure every event is legitimate, so you can trust the events you find and create with confidence.",
     icon: "solar:shield-check-bold",
   },
   {
-    title: "High Commissions",
-    description: "Many platforms take a big chunk of your event's earnings. JED keeps our fees low and clear. You get to keep more of your hard-earned money.",
+    title: "Maximize Your Earnings",
+    description:
+      "Many platforms take a big chunk of your event's earnings. With JED, you keep more of what you earn! Our transparent and competitive pricing ensures you do not sacrifice your hard-earned profits. We believe event organizers deserve to reap the rewards of their work, so we've kept our fees low and straightforward.",
     icon: "solar:money-bag-bold",
   },
   {
-    title: "Poor Performance",
+    title: "Reliable Performance You Can Count On",
     description:
-      "Other platforms crash or slow down when too many people use them. JED stays fast and stable no matter how busy your event gets. Your event runs smoothly from start to finish.",
+      "Other platforms crash or slow down when too many people use them. With JED, your event's success is not threatened by high traffics. Our platform stays fast and stable all the time. This ensures your event runs smoothly from start to finish. You focus on your event, we've got the tech and infrastructure covered.",
     icon: "solar:chart-bold",
   },
 ];
@@ -66,13 +67,13 @@ export default function WhyJedSection() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">Why we built JED?</h2>
-          <p className="text-lg text-gray-600">We wanted to solve the common problems that event organizers face with other platforms. </p>
+          <p className="text-lg text-gray-600">To empower event organizers with a hassle-free experience with regards to managing their events. </p>
         </motion.div>
 
         <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants} initial="hidden" animate={isInView ? "visible" : "hidden"}>
           {painPoints.map((point) => (
             <motion.div key={point.title} variants={itemVariants} className="bg-white rounded-xl p-8">
-              <div className="flex flex-col sm:flex-row items-start gap-4">
+              <div className="flex flex-col items-start gap-4">
                 <div className="p-3 bg-secondary rounded-lg">
                   <Icon icon={point.icon} className="w-8 h-8 text-accent" />
                 </div>

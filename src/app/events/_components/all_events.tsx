@@ -7,9 +7,9 @@ import { useSearchParams } from "next/navigation";
 import { Vote, SearchX } from "lucide-react";
 import SearchBar from "./search_bar";
 import EventCard from "./event_card";
-import { useEffect, useMemo } from "react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -36,42 +36,39 @@ const cardVariants = {
 };
 
 export default function AllEvents({ events }: { events: Event[] }) {
-  const [isSearching, setIsSearching] = useState(false);
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
+  /**
+   * The events should be fetched from the database and stored in a state to make this page feel smooth.
+   */
   const searchParams = useSearchParams();
-
-  const handleReset = () => {
-    setFilteredEvents(events);
-    setIsSearching(false);
-  };
-
-  const searchQuery = searchParams.get("q");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("all");
 
   useEffect(() => {
-    const performSearch = async () => {
-      if (!searchQuery) {
-        setFilteredEvents(events);
-        return;
-      }
+    const query = searchParams.get("q") || "";
+    setSearchQuery(query);
+  }, [searchParams]);
 
-      setIsSearching(true);
-      try {
-        const searchTerms = searchQuery.toLowerCase().trim().split(/\s+/);
+  const statuses = useMemo(() => {
+    const uniqueStatuses = new Set(events.map((event) => event.eventProgress));
+    return Array.from(uniqueStatuses);
+  }, [events]);
 
-        const filtered = events.filter((event) => {
-          const searchableText = [event.name, event.description].filter(Boolean).join(" ").toLowerCase();
+  const filteredEvents = useMemo(() => {
+    return events.filter((event) => {
+      const matchesSearch = searchQuery
+        ? event.name.toLowerCase().includes(searchQuery.toLowerCase()) || event.description.toLowerCase().includes(searchQuery.toLowerCase())
+        : true;
 
-          return searchTerms.every((term) => searchableText.includes(term));
-        });
+      const matchesStatus = selectedStatus === "all" || event.eventProgress === selectedStatus;
 
-        setFilteredEvents(filtered);
-      } finally {
-        setIsSearching(false);
-      }
-    };
+      return matchesSearch && matchesStatus;
+    });
+  }, [events, searchQuery, selectedStatus]);
 
-    performSearch();
-  }, [searchQuery, events]);
+  const handleReset = () => {
+    setSearchQuery("");
+    setSelectedStatus("all");
+  };
 
   const eventsGrid = useMemo(() => {
     if (filteredEvents.length === 0) {
@@ -114,8 +111,23 @@ export default function AllEvents({ events }: { events: Event[] }) {
 
   return (
     <div className="flex flex-col w-full gap-4 p-6 lg:p-10 mt-12">
-      <div className="flex items-center justify-center sm:justify-between">
-        <SearchBar placeholder="Search events..." queryKey="q" handleReset={handleReset} />
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+          <SearchBar placeholder="Search events..." queryKey="q" handleReset={handleReset} />
+          <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+            <SelectTrigger className="w-full sm:w-60 rounded-full shadow-none !h-12">
+              <SelectValue placeholder="Filter by status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Events</SelectItem>
+              {statuses.map((status) => (
+                <SelectItem key={status} value={status} className="capitalize">
+                  {status.replace("_", " ")}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
         <Link href="/topboy/chat" className="w-full sm:w-auto">
           <Button className="w-full sm:w-auto">
             Vote Now
@@ -123,7 +135,7 @@ export default function AllEvents({ events }: { events: Event[] }) {
           </Button>
         </Link>
       </div>
-      <div className={`mt-4 ${isSearching ? "opacity-50" : ""}`}>{eventsGrid}</div>
+      <div className="mt-4">{eventsGrid}</div>
     </div>
   );
 }

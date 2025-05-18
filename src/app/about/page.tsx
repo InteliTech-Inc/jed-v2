@@ -46,8 +46,8 @@ export default function AboutPage() {
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
             <p className="text-lg text-gray-600">
-              We're on a mission to simplify event management. We believe that organizing events should be easy, whether you're running a small gathering or a
-              large-scale event. Our platform combines powerful features with a simple, intuitive interface to help you focus on what matters most.
+              We're dedicated to making event planning effortless. Our platform offers a user-friendly experience, packed with powerful tools, to help you
+              seamlessly organize events of any size, so you can focus on what truly matters.
             </p>
           </div>
         </div>

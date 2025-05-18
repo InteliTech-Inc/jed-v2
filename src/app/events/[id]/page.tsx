@@ -36,7 +36,7 @@ export default async function SingleEventPage({ params }: SingleEventPageProps) 
   return (
     <div className="container mx-auto px-4 py-8">
       <BackButton />
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mt-6 mx-auto">
         <h1 className="text-3xl font-bold mb-3 text-center">{event.name}</h1>
         <p className="text-gray-600 mb-8 text-center">{event.description}</p>
         <NomineesGrid nominees={nominees} eventId={id} event={event} />

@@ -5,8 +5,10 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Picture from "@/assets/images/mockup.png";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const router = useRouter();
   return (
     <>
       <div>
@@ -45,12 +47,31 @@ export default function Hero() {
               Organizing and managing online events shouldn't be complicated. Our platform makes it simple to manage everything in one place—nominations,
               voting, ticketing, and more.
             </motion.p>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
-              <Button variant={"secondary"} aria-label="Start free trial" role="button">
-                Try for free
-                <Icon icon="solar:arrow-right-linear" aria-hidden="true" />
-              </Button>
-            </motion.div>
+            <div className="flex w-fit mx-auto gap-4">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+                <Button
+                  variant={"secondary"}
+                  aria-label="Start free trial"
+                  role="button"
+                  onClick={() => window.open("https://jed-app.fly.dev/login", "_blank", "noopener,noreferrer")}
+                >
+                  Try for free
+                  <Icon icon="solar:arrow-right-linear" aria-hidden="true" />
+                </Button>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+                <Button
+                  variant={"outline"}
+                  aria-label="Start free trial"
+                  className="bg-transparent hover:border-accent"
+                  role="button"
+                  onClick={() => router.push("/topboy/chat")}
+                >
+                  Vote Now
+                  <Icon icon="iconoir:thumbs-up" aria-hidden="true" />
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </div>
         <motion.section

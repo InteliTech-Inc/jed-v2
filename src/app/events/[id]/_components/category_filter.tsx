@@ -19,7 +19,7 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-72 justify-between shadow-none !h-12">
+        <Button variant="outline" role="combobox" aria-expanded={open} className="w-full md:w-72 justify-between shadow-none !h-12">
           {selectedCategory === "all" ? "All Categories" : categories.find((category) => category === selectedCategory) || "Select category"}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

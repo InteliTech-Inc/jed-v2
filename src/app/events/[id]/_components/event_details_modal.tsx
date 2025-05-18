@@ -19,7 +19,7 @@ export default function EventDetailsModal({ event, isOpen, onClose }: EventDetai
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl group p-0 border-0 overflow-hidden [&>button]:bg-accent [&>button]:rounded-full [&>button]:size-8 [&>button]:top-4 [&>button]:right-4 [&>button]:hover:bg-accent/90 [&>button]:grid [&>button]:place-content-center">
+      <DialogContent className="max-w-4xl mx-2 group p-0 border-0 overflow-hidden [&>button]:bg-accent [&>button]:rounded-full [&>button]:size-8 [&>button]:top-4 [&>button]:right-4 [&>button]:hover:bg-accent/90 [&>button]:grid [&>button]:place-content-center">
         <DialogTitle className="sr-only">Event Details</DialogTitle>
         <div className="relative w-full h-[79vh]">
           <Image src={event.image} alt={event.name} fill className="object-cover " priority />

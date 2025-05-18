@@ -72,8 +72,10 @@ export default function NomineeVotingPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto mt-8">
-        <BackButton />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
+        <div className=" ml-2 md:ml-6">
+          <BackButton />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
           <div className="relative  w-full overflow-hidden rounded-xl">
             <Image src={nominee.image} alt={nominee.name} fill className="object-cover" priority />
             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">

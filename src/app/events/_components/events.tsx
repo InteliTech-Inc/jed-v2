@@ -1,6 +1,8 @@
 import { Event } from "@/interfaces";
 import data from "../data.json";
 import AllEvents from "./all_events";
+import { Suspense } from "react";
+import EventsSkeleton from "./event_skeleton";
 
 async function getEvents() {
   const res = await new Promise((resolve) => {
