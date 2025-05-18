@@ -1,15 +1,15 @@
 "use client";
 
-import { Event, Nominee } from "@/interfaces";
-import { useState } from "react";
+import { Event } from "@/interfaces";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { ThumbsUp } from "lucide-react";
 import BackButton from "@/components/back";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import eventsData from "../../../data.json";
 import { useParams } from "next/navigation";
+import { SERVER_FUNCTIONS } from "@/functions/server";
+import { Spinner } from "@/components/spinner";
 
 export default function NomineeVotingPage() {
   const { id: eventId, nom_id: nomineeId } = useParams();
@@ -18,38 +18,53 @@ export default function NomineeVotingPage() {
     name: "",
     email: "",
   });
+  const [eventData, setEventData] = useState<Event>();
 
-  const eventData = eventsData.find((e) => String(e.id) === eventId);
-  if (!eventData) {
-    return <div className="container mx-auto px-4 py-8">Event not found.</div>;
+  async function fetchEventData() {
+    const id = String(eventId);
+    const res = await SERVER_FUNCTIONS.getEvent(id);
+    return res.data;
   }
 
-  const event: Event = {
+  useEffect(() => {
+    fetchEventData().then((data) => {
+      setEventData(data);
+    });
+  }, []);
+
+  const event = {
     ...eventData,
-    id: String(eventData.id),
-    approvalStatus: eventData.approvalStatus as "pending" | "approved" | "declined",
-    eventProgress: eventData.eventProgress as "not started" | "ongoing" | "completed",
-    categoryDetails: eventData.categoryDetails.map((category) => ({
+    id: String(eventData?.id),
+    approval_status: eventData?.approval_status,
+    event_progress: eventData?.event_progress,
+    categories: (eventData?.categories ?? []).map((category) => ({
       ...category,
-      nominees: category.nominees.map((nominee) => ({
+      nominees: category.nominees.map((nominee: any) => ({
         id: nominee.id,
-        name: nominee.fullName,
-        fullName: nominee.fullName,
+        name: nominee.full_name,
+        fullName: nominee.full_name,
         category: category.name,
-        image: nominee.image,
+        image: nominee.img_url,
         code: nominee.code,
-        totalVotes: nominee.totalVotes,
+        totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
+          ?.count,
       })),
     })),
-  };
+  } as Partial<Event>;
 
-  const nominee = event.categoryDetails.flatMap((cat) => cat.nominees).find((nom) => nom.id === nomineeId);
+  const nominee = event.categories
+    ?.flatMap((cat) => cat.nominees)
+    .find((nom) => nom.id === nomineeId);
 
   if (!nominee) {
-    return <div className="container mx-auto px-4 py-8">Nominee not found.</div>;
+    return (
+      <div className="flex container items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
-  const totalPrice = numberOfVotes * event.pricePerVote;
+  const totalPrice = numberOfVotes * event.amount_per_vote!;
 
   const handleVoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -77,10 +92,18 @@ export default function NomineeVotingPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
           <div className="relative  w-full overflow-hidden rounded-xl">
-            <Image src={nominee.image} alt={nominee.name} fill className="object-cover" priority />
+            <Image
+              src={nominee.image}
+              alt={nominee.name}
+              fill
+              className="object-cover"
+              priority
+            />
             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
               <div className="flex flex-col gap-2">
-                <h2 className="text-2xl font-bold text-white">{nominee.name}</h2>
+                <h2 className="text-2xl font-bold text-white">
+                  {nominee.name}
+                </h2>
                 <p className="text-white/80">{nominee.category}</p>
                 <p className="text-accent">{nominee.code}</p>
               </div>
@@ -92,13 +115,23 @@ export default function NomineeVotingPage() {
               <h1 className="text-2xl font-bold mb-2">
                 Vote for {nominee.name} ({nominee.code})
               </h1>
-              <p className="text-gray-600">Support your favorite nominee by casting your votes. You can also vote via USSD by dialing *928*121#</p>
+              <p className="text-gray-600">
+                Support your favorite nominee by casting your votes. You can
+                also vote via USSD by dialing *928*121#
+              </p>
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" name="name" value={formData.name} onChange={handleInputChange} placeholder="Enter your full name" required />
+                <Input
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter your full name"
+                  required
+                />
               </div>
 
               <div className="space-y-2">
@@ -115,9 +148,20 @@ export default function NomineeVotingPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="votes">Number of Votes (GHS {event.pricePerVote.toFixed(2)})</Label>
-                <Input id="votes" type="number" min={event.pricePerVote} value={numberOfVotes} onChange={handleVoteChange} required />
-                <p className="text-sm text-gray-500">Total Price: GHS {totalPrice.toFixed(2)}</p>
+                <Label htmlFor="votes">
+                  Number of Votes (GHS {event.amount_per_vote?.toFixed(2)})
+                </Label>
+                <Input
+                  id="votes"
+                  type="number"
+                  min={event.amount_per_vote}
+                  value={numberOfVotes}
+                  onChange={handleVoteChange}
+                  required
+                />
+                <p className="text-sm text-gray-500">
+                  Total Price: GHS {totalPrice.toFixed(2)}
+                </p>
               </div>
               <Button type="submit" className="w-full">
                 Submit Votes
