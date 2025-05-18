@@ -28,16 +28,21 @@ export type Event = {
   id: string;
   name: string;
   description: string;
-  image: string;
+  img_url: string;
   voting_period: Period;
   nomination_period: Period;
-  approvalStatus: "pending" | "approved" | "declined";
-  eventProgress: "not started" | "ongoing" | "completed";
-  categories: number;
-  isPublished: boolean;
-  displayResults: boolean;
-  pricePerVote: number;
-  categoryDetails: Category[];
+  approval_status: "pending" | "approved" | "declined";
+  event_progress: "pending" | "ongoing" | "completed";
+  is_published: boolean;
+  display_results: boolean;
+  amount_per_vote: number;
+  categories: Category[];
+};
+
+export type EventResponse = {
+  data: {
+    events: Event[];
+  };
 };
 
 // Full response type
