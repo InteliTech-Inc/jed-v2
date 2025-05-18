@@ -3,7 +3,7 @@ import { Event, Nominee } from "@/interfaces";
 import NomineesGrid from "@/app/events/[id]/_components/nominees_grid";
 import BackButton from "@/components/back";
 import { SERVER_FUNCTIONS } from "@/functions/server";
-import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 interface Props {
   params: Promise<{
@@ -89,12 +89,12 @@ export default async function EventPage({ params }: Readonly<Props>) {
     approval_status: data.approval_status,
     event_progress: data.event_progress,
     voting_period: {
-      start: data.schedule.voting_start_period,
-      end: data.schedule.voting_end_period,
+      start: data.schedule?.voting_start_period,
+      end: data.schedule?.voting_end_period,
     },
     nomination_period: {
-      start: data.schedule.nomination_start_period,
-      end: data.schedule.nomination_end_period,
+      start: data.schedule?.nomination_start_period,
+      end: data.schedule?.nomination_end_period,
     },
   } as Event;
 
@@ -112,13 +112,15 @@ export default async function EventPage({ params }: Readonly<Props>) {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <BackButton />
+      <div className="max-w-7xl mx-auto">
+        <BackButton />
+      </div>
       <div className="max-w-7xl mx-auto">
         <article itemScope itemType="https://schema.org/Event">
           <meta itemProp="name" content={event.name} />
           <meta itemProp="description" content={event.description} />
-          <meta itemProp="image" content={event.image} />
-          <meta itemProp="status" content={event.eventProgress} />
+          <meta itemProp="image" content={event.img_url} />
+          <meta itemProp="status" content={event.event_progress} />
 
           <NomineesGrid nominees={nominees} eventId={id} event={event} />
         </article>
