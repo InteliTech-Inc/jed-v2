@@ -35,7 +35,7 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-black/60" />
         </div>
         <div className="relative z-10 text-center text-white max-w-7xl mx-auto px-4">
-          <BackButton className="text-white" />
+          <BackButton />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About JED</h1>
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             We're building the future of event management, making it easier for organizers to create amazing experiences.

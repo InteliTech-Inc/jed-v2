@@ -6,13 +6,14 @@ import BackButton from "@/components/back";
 import { notFound } from "next/navigation";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const eventData = eventsData.find((e) => String(e.id) === params.id);
+  const { id } = await params;
+  const eventData = eventsData.find((e) => String(e.id) === id);
 
   if (!eventData) {
     return {
@@ -70,8 +71,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function EventPage({ params }: Props) {
-  const { id } = params;
+export default async function EventPage({ params }: Props) {
+  const { id } = await params;
   const eventData = eventsData.find((e) => String(e.id) === id);
 
   if (!eventData) {
