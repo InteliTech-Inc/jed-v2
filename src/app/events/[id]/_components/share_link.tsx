@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Button } from "@/components/ui/button";
 import { Share2, Check } from "lucide-react";
 import { toast } from "sonner";
 import axios, { AxiosError } from "axios";
