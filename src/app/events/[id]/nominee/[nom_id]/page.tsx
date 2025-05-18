@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import eventsData from "../../../data.json";
 import { useParams } from "next/navigation";
-
+import ShareLink from "@/app/events/[id]/_components/share_link";
 export default function NomineeVotingPage() {
   const { id: eventId, nom_id: nomineeId } = useParams();
   const [numberOfVotes, setNumberOfVotes] = useState(1);
@@ -72,12 +72,13 @@ export default function NomineeVotingPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto mt-8">
-        <div className=" ml-2 md:ml-6">
+        <div className=" ml-2 md:ml-6 flex justify-between">
           <BackButton />
+          <ShareLink code={nominee.code} />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
-          <div className="relative  w-full overflow-hidden rounded-xl">
-            <Image src={nominee.image} alt={nominee.name} fill className="object-cover" priority />
+        <div className="grid md:grid-cols-2  gap-8 px-2 md:p-6">
+          <div className="relative w-full h-[300px] sm:h-full overflow-hidden rounded-xl">
+            <Image src={nominee.image} alt={nominee.name} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 50vw" />
             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
               <div className="flex flex-col gap-2">
                 <h2 className="text-2xl font-bold text-white">{nominee.name}</h2>
@@ -92,6 +93,7 @@ export default function NomineeVotingPage() {
               <h1 className="text-2xl font-bold mb-2">
                 Vote for {nominee.name} ({nominee.code})
               </h1>
+
               <p className="text-gray-600">Support your favorite nominee by casting your votes. You can also vote via USSD by dialing *928*121#</p>
             </div>
 
