@@ -6,7 +6,7 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/hooks/use_media_query";
 import Image from "next/image";
 import { format } from "date-fns";
-import { IconLivePhoto } from "@tabler/icons-react";
+import { capitalize } from "@/utils/capitalize";
 
 type EventDetailsModalProps = {
   event: Event;
@@ -51,28 +51,26 @@ export default function EventDetailsModal({
                   Event Details
                 </h3>
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-gray-500">Voting Period</p>
-                    <p className="font-medium text-gray-900">
-                      {formatDate(event.voting_period.start)} -{" "}
-                      {formatDate(event.voting_period.end)}
-                    </p>
-                  </div>
+                  {event.voting_period.start && (
+                    <div>
+                      <p className="text-gray-500">Voting Period</p>
+                      <p className="font-medium text-gray-900">
+                        {formatDate(event.voting_period.start)} -{" "}
+                        {formatDate(event.voting_period.end)}
+                      </p>
+                    </div>
+                  )}
                   <div>
                     <p className="text-gray-500">Categories</p>
                     <p className="font-medium text-gray-900">
                       {event.categories.length} Categories
                     </p>
                   </div>
-                  <p className="text-black/90 border border-gray-200 rounded-full w-fit px-6 py-1 text-sm md:text-base capitalize">
-                    {event.eventProgress.replace("_", " ")}
+                  <p className="text-black/90 border items-center flex justify-center border-gray-200 rounded-full w-fit px-6 py-1 text-sm md:text-base capitalize">
+                    {capitalize(event.event_progress)}
                   </p>
                 </div>
               </div>
-
-              <p className="text-white/80 capitalize w-fit border border-white/20 rounded-full text-sm px-5 py-1">
-                {event.event_progress}
-              </p>
             </div>
           </div>
         </div>
