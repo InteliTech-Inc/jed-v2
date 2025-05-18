@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...category,
       nominees: category.nominees.map((nominee: any) => ({
         id: nominee.id,
-        name: nominee.fullName,
-        fullName: nominee.fullName,
+        name: nominee.full_name,
+        fullName: nominee.full_name,
         category: category.name,
         image: nominee.image,
         code: nominee.code,
