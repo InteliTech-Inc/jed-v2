@@ -4,14 +4,15 @@ import eventsData from "../../../data.json";
 import { Event } from "@/interfaces";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
     nom_id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const eventData = eventsData.find((e) => String(e.id) === params.id);
+  const { id, nom_id } = await params;
+  const eventData = eventsData.find((e) => String(e.id) === id);
 
   if (!eventData) {
     return {
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     })),
   };
 
-  const nominee = event.categoryDetails.flatMap((cat) => cat.nominees).find((nom) => nom.id === params.nom_id);
+  const nominee = event.categoryDetails.flatMap((cat) => cat.nominees).find((nom) => nom.id === nom_id);
 
   if (!nominee) {
     return {
@@ -90,6 +91,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function NomineePage({ params }: Props) {
-  const { id, nom_id } = params;
+  const { id, nom_id } = await params;
   return <NomineeVotingCard eventId={id} nomineeId={nom_id} />;
 }

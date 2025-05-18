@@ -120,7 +120,7 @@ export default function NomineeVotingCard({ eventId, nomineeId }: { eventId: str
                 <p className="text-sm text-gray-500">Total Price: GHS {totalPrice.toFixed(2)}</p>
               </div>
               <Button type="submit" className="w-full">
-                Submit Votes
+                Vote
               </Button>
             </form>
           </div>
