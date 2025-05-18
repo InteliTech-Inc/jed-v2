@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { Event, Nominee } from "@/interfaces";
 import NomineesGrid from "@/app/events/[id]/_components/nominees_grid";
 import BackButton from "@/components/back";
@@ -79,7 +80,7 @@ export default async function EventPage({ params }: Readonly<Props>) {
   const { data } = await SERVER_FUNCTIONS.getEvent(id);
 
   if (!data) {
-    return <div className="container mx-auto px-4 py-8">Event not found.</div>;
+    notFound();
   }
 
   const event = {
@@ -110,13 +111,18 @@ export default async function EventPage({ params }: Readonly<Props>) {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <main className="container mx-auto px-4 py-8">
       <BackButton />
-      <div className="max-w-7xl mt-6 mx-auto">
-        <h1 className="text-3xl font-bold mb-3 text-center">{event.name}</h1>
-        <p className="text-gray-600 mb-8 text-center">{event.description}</p>
-        <NomineesGrid nominees={nominees} eventId={id} event={event} />
+      <div className="max-w-7xl mx-auto">
+        <article itemScope itemType="https://schema.org/Event">
+          <meta itemProp="name" content={event.name} />
+          <meta itemProp="description" content={event.description} />
+          <meta itemProp="image" content={event.image} />
+          <meta itemProp="status" content={event.eventProgress} />
+
+          <NomineesGrid nominees={nominees} eventId={id} event={event} />
+        </article>
       </div>
-    </div>
+    </main>
   );
 }
