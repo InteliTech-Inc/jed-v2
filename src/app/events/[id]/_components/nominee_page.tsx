@@ -9,6 +9,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SERVER_FUNCTIONS } from "@/functions/server";
 import { Spinner } from "@/components/spinner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormSchema, votingFormSchema } from "@/validations/voting-form";
 
 export default function NomineeVotingPage({
   eventId,
@@ -17,11 +20,6 @@ export default function NomineeVotingPage({
   eventId: string;
   nomineeId: string;
 }>) {
-  const [numberOfVotes, setNumberOfVotes] = useState(1);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-  });
   const [eventData, setEventData] = useState<Event>();
 
   async function fetchEventData() {
@@ -60,6 +58,29 @@ export default function NomineeVotingPage({
     ?.flatMap((cat) => cat.nominees)
     .find((nom) => nom.id === nomineeId);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm<FormSchema>({
+    resolver: zodResolver(votingFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      numberOfVotes: 1,
+    },
+  });
+
+  const numberOfVotes = watch("numberOfVotes") ?? 1;
+  const totalPrice = numberOfVotes * (event.amount_per_vote ?? 0);
+
+  const onSubmit = (data: FormSchema) => {
+    console.log({ ...data, totalPrice });
+    // TODO: Implement voting logic
+  };
+
   if (!nominee) {
     return (
       <div className="flex container items-center justify-center">
@@ -68,26 +89,6 @@ export default function NomineeVotingPage({
     );
   }
 
-  const totalPrice = numberOfVotes * event.amount_per_vote!;
-
-  const handleVoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) {
-      setNumberOfVotes(value);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement voting logic
-    console.log({ ...formData, numberOfVotes, totalPrice });
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto mt-8">
@@ -95,7 +96,7 @@ export default function NomineeVotingPage({
           <BackButton />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
-          <div className="relative  w-full overflow-hidden rounded-xl">
+          <div className="relative w-full overflow-hidden rounded-xl">
             <Image
               src={nominee.image}
               alt={nominee.name}
@@ -125,30 +126,37 @@ export default function NomineeVotingPage({
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col gap-6"
+            >
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input
                   id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
+                  {...register("name")}
                   placeholder="Enter your full name"
-                  required
                 />
+                {errors.name && (
+                  <small className="text-sm text-red-500">
+                    {errors.name.message}
+                  </small>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email">Email Address</Label>
                 <Input
                   id="email"
-                  name="email"
                   type="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  {...register("email")}
                   placeholder="Enter your email address"
-                  required
                 />
+                {errors.email && (
+                  <small className="text-sm text-red-500">
+                    {errors.email.message}
+                  </small>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -158,15 +166,22 @@ export default function NomineeVotingPage({
                 <Input
                   id="votes"
                   type="number"
-                  min={event.amount_per_vote}
-                  value={numberOfVotes}
-                  onChange={handleVoteChange}
-                  required
+                  {...register("numberOfVotes", { valueAsNumber: true })}
+                  min={1}
+                  onChange={(e) =>
+                    setValue("numberOfVotes", parseInt(e.target.value))
+                  }
                 />
+                {errors.numberOfVotes && (
+                  <small className="text-sm text-red-500">
+                    {errors.numberOfVotes.message}
+                  </small>
+                )}
                 <p className="text-sm text-gray-500">
                   Total Price: GHS {totalPrice.toFixed(2)}
                 </p>
               </div>
+
               <Button type="submit" className="w-full">
                 Submit Votes
               </Button>
