@@ -14,13 +14,7 @@ export type Category = {
   id: number;
   name: string;
   description: string;
-  nominees: {
-    id: string;
-    fullName: string;
-    image: string;
-    code: string;
-    totalVotes: number;
-  }[];
+  nominees: Nominee[];
 };
 
 // Period type
@@ -42,6 +36,7 @@ export type Event = {
   categories: number;
   isPublished: boolean;
   displayResults: boolean;
+  pricePerVote: number;
   categoryDetails: Category[];
 };
 

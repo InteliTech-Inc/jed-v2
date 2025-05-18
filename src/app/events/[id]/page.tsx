@@ -14,12 +14,12 @@ export default async function SingleEventPage({ params }: SingleEventPageProps) 
     return <div className="container mx-auto px-4 py-8">Event not found.</div>;
   }
 
-  const event: Event = {
+  const event = {
     ...eventData,
     id: String(eventData.id),
     approvalStatus: eventData.approvalStatus as "pending" | "approved" | "declined",
     eventProgress: eventData.eventProgress as "not started" | "ongoing" | "completed",
-  };
+  } as Event;
 
   const nominees: Nominee[] = event.categoryDetails.flatMap((cat) =>
     cat.nominees.map((nom) => ({

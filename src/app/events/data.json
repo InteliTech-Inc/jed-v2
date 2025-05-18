@@ -17,6 +17,7 @@
     "categories": 18,
     "isPublished": false,
     "displayResults": false,
+    "pricePerVote": 2.50,
     "categoryDetails": []
   },
   {
@@ -37,6 +38,7 @@
     "categories": 12,
     "isPublished": false,
     "displayResults": false,
+    "pricePerVote": 1.00,
     "categoryDetails": []
   },
   {
@@ -57,6 +59,7 @@
     "categories": 9,
     "isPublished": true,
     "displayResults": false,
+    "pricePerVote": 5.00,
     "categoryDetails": [
       {
         "id": 1,
@@ -138,6 +141,7 @@
     "categories": 6,
     "isPublished": false,
     "displayResults": false,
+    "pricePerVote": 0.50,
     "categoryDetails": []
   },
   {
@@ -158,6 +162,7 @@
     "categories": 15,
     "isPublished": true,
     "displayResults": false,
+    "pricePerVote": 1.00,
     "categoryDetails": [
       {
         "id": 1,
