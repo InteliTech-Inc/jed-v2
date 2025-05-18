@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function EventsPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen max-w-7xl mx-auto">
       <div className=" ml-6">
         <BackButton />
       </div>

@@ -5,6 +5,7 @@ import { client } from "@/client";
 import { Post } from "@/interfaces/block.interface";
 import { urlFor } from "@/lib/url-for";
 import { BLOG_SCHEMA } from "@/structured-data/blog.schema";
+import BackButton from "@/components/back";
 
 export const revalidate = 60;
 
@@ -55,7 +56,10 @@ export default async function BlogPage() {
   return (
     <main className="min-h-screen mt-12" role="main">
       <script type="application/ld+json" id="schema-blog" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <BlogList posts={posts} />
+      <div className="max-w-7xl mx-auto px-4">
+        <BackButton />
+        <BlogList posts={posts} />
+      </div>
     </main>
   );
 }
