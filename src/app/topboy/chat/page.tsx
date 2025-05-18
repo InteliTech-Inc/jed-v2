@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ChatContainer } from "@/app/topboy/chat/_components/ChatContainer";
+import { ChatContainer } from "./_components/ChatContainer";
 
 export const metadata: Metadata = {
   title: "Topboy Chat",
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "Chat with Topboy, your friendly assistant for voting and ticket purchases at JED events. Get help with voting for nominees or buying event tickets in a simple, conversational way.",
   keywords: ["JED", "Topboy", "chat", "voting", "tickets", "events", "assistant", "help"],
   openGraph: {
-    title: "Chat with Topboy | JED",
+    title: "Topboy Chat",
     description:
       "Chat with Topboy, your friendly assistant for voting and ticket purchases at JED events. Get help with voting for nominees or buying event tickets in a simple, conversational way.",
     type: "website",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chat with Topboy | JED",
+    title: "Topboy Chat",
     description:
       "Chat with Topboy, your friendly assistant for voting and ticket purchases at JED events. Get help with voting for nominees or buying event tickets in a simple, conversational way.",
   },
@@ -28,18 +28,21 @@ export const metadata: Metadata = {
 
 export default function ChatPage() {
   return (
-    <div className="relative w-full p-4 py-8 ">
-      <div className="absolute top-0 left-0 w-full h-[35rem] bg-gradient-to-b from-accent/20 via-accent/10 to-transparent z-0"></div>
-      <div className="relative mt-8 z-10">
-        <h1 className="text-2xl md:text-4xl font-bold text-center">Meet Topboy 👋</h1>
-        <p className="text-center mb-8 max-w-2xl mx-auto mt-2">
-          Topboy is our system assistant. He will help you vote for your favorite nominees and buy tickets for your favorite events.
-        </p>
+    <section className="relative min-h-screen">
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/20 via-accent/10 to-transparent -z-10" />
 
-        <div className=" mt-20">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mt-8 space-y-3">
+          <h1 className="text-2xl md:text-5xl text-neutral-600 text-center font-bold">Meet Topboy 👋</h1>
+          <p className="text-center text-lg text-gray-600 max-w-2xl mx-auto">
+            Topboy is our system assistant. He will help you vote for your favorite nominees and buy tickets for your favorite events.
+          </p>
+        </div>
+
+        <div className="mt-12">
           <ChatContainer />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

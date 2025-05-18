@@ -1,7 +1,7 @@
 import React from "react";
 import { PortableText } from "@portabletext/react";
 import { client } from "@/client";
-import { RichText } from "../../_components/rich-text";
+import { RichText } from "../_components/rich-text";
 import Image from "next/image";
 import { Post } from "@/interfaces/block.interface";
 import BackButton from "../../_components/back-button";

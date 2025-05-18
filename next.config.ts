@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
       {
         hostname: "cdn.sanity.io",
       },
+      {
+        hostname: "ik.imagekit.io",
+      },
+      {
+        hostname: "www.jed-event.com",
+      },
+      {
+        hostname: "i.pravatar.cc",
+      },
     ],
   },
 };
