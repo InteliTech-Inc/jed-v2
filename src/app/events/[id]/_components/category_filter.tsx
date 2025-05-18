@@ -24,7 +24,7 @@ export default function CategoryFilter({ categories, selectedCategory, onCategor
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 p-0">
+      <PopoverContent className="min-w-full w-80 md:w-72  p-0">
         <Command>
           <CommandInput placeholder="Search category..." />
           <CommandEmpty>No category found.</CommandEmpty>

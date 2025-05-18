@@ -110,12 +110,12 @@ export default function AllEvents({ events }: { events: Event[] }) {
   }, [filteredEvents, searchQuery]);
 
   return (
-    <div className="flex flex-col w-full gap-4 p-6 lg:p-10 mt-12">
+    <div className="flex max-w-7xl mx-auto flex-col w-full gap-4 p-6 lg:p-10 mt-12">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
           <SearchBar placeholder="Search events..." queryKey="q" handleReset={handleReset} />
           <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-            <SelectTrigger className="w-full sm:w-60 rounded-full shadow-none !h-12">
+            <SelectTrigger className="w-full sm:w-72 hidden md:flex rounded-full shadow-none !h-12">
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
             <SelectContent>

@@ -35,7 +35,7 @@ export default function BlogList({ posts }: Readonly<Props>) {
   };
 
   return (
-    <div className="md:px-10 px-6 max-w-[1200px] mx-auto">
+    <div className=" mt-10 max-w-7xl mx-auto">
       <div className="">
         <h1 className="text-3xl mb-5 md:mb-0 md:text-5xl font-bold">
           JED <mark className="text-secondary">BLOG</mark>
@@ -50,11 +50,11 @@ export default function BlogList({ posts }: Readonly<Props>) {
           <p className="text-4xl md:text-5xl font-bold">No Posts Found</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 gap-y-16 pb-24" role="list" aria-label="Blog posts">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10 gap-y-16 pb-24" role="list" aria-label="Blog posts">
           {currentPostsToShow.map((post) => (
             <ClientSideRoutes key={post._id} route={`/blog/${post.slug.current}`}>
               <article className="flex flex-col overflow-hidden group cursor-pointer rounded-lg" role="listitem">
-                <div className="relative w-fill h-60 !overflow-hidden">
+                <div className="relative w-full h-60 !overflow-hidden">
                   <Image
                     className="object-cover md:object-center rounded-lg group-hover:scale-105 transition-transform duration-500 ease-out"
                     src={post.mainImage ? urlFor(post.mainImage)?.url() : ""}
