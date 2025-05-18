@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { capitalize } from "@/utils/capitalize";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -146,7 +147,7 @@ export default function AllEvents({
               <SelectItem value="all">All Events</SelectItem>
               {statuses.map((status) => (
                 <SelectItem key={status} value={status} className="capitalize">
-                  {status.replace("_", " ")}
+                  {capitalize(status)}
                 </SelectItem>
               ))}
             </SelectContent>
