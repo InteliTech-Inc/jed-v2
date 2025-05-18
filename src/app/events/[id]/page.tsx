@@ -1,35 +1,47 @@
 import { Event, Nominee } from "@/interfaces";
 import NomineesGrid from "@/app/events/[id]/_components/nominees_grid";
-import eventsData from "../data.json";
 import BackButton from "@/components/back";
+import { SERVER_FUNCTIONS } from "@/functions/server";
+
 type SingleEventPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export default async function SingleEventPage({ params }: SingleEventPageProps) {
+export default async function SingleEventPage({
+  params,
+}: Readonly<SingleEventPageProps>) {
   const { id } = await params;
-  const eventData = eventsData.find((e) => String(e.id) === id);
 
-  if (!eventData) {
+  const { data } = await SERVER_FUNCTIONS.getEvent(id);
+
+  if (!data) {
     return <div className="container mx-auto px-4 py-8">Event not found.</div>;
   }
 
   const event = {
-    ...eventData,
-    id: String(eventData.id),
-    approvalStatus: eventData.approvalStatus as "pending" | "approved" | "declined",
-    eventProgress: eventData.eventProgress as "not started" | "ongoing" | "completed",
+    ...data,
+    id: String(data.id),
+    approval_status: data.approval_status,
+    event_progress: data.event_progress,
+    voting_period: {
+      start: data.schedule.voting_start_period,
+      end: data.schedule.voting_end_period,
+    },
+    nomination_period: {
+      start: data.schedule.nomination_start_period,
+      end: data.schedule.nomination_end_period,
+    },
   } as Event;
 
-  const nominees: Nominee[] = event.categoryDetails.flatMap((cat) =>
-    cat.nominees.map((nom) => ({
+  const nominees: Nominee[] = data.categories.flatMap((cat: any) =>
+    cat.nominees.map((nom: any) => ({
       id: nom.id,
-      name: nom.fullName,
-      fullName: nom.fullName,
+      name: nom.full_name,
+      fullName: nom.full_name,
       category: cat.name,
-      image: nom.image,
+      image: nom.img_url,
       code: nom.code,
-      totalVotes: nom.totalVotes,
+      totalVotes: nom.votes.find((n: any) => n.nominee_id === nom.id)?.count,
     }))
   );
 
