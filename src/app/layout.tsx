@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar";
 import "./globals.css";
 import Footer from "@/components/footer";
 import { HOME_SCHEMA } from "@/structured-data/home.schema";
+import { QueryProvider } from "@/providers/query-client";
 export const viewport: Viewport = {
   themeColor: "oklch(0.21 0.0198 160.28)",
   width: "device-width",
@@ -109,7 +110,12 @@ export const metadata: Metadata = {
     "e-nominations",
     "e-ticketing",
   ],
-  authors: [{ name: "Evans Elabo" }, { name: "Diabene Yaw Addo" }, { name: "Joshua Richardson Owusu" }, { name: "Nana Kwesi Asante" }],
+  authors: [
+    { name: "Evans Elabo" },
+    { name: "Diabene Yaw Addo" },
+    { name: "Joshua Richardson Owusu" },
+    { name: "Nana Kwesi Asante" },
+  ],
   creator: "JED Team",
   publisher: "JED",
   formatDetection: {
@@ -157,17 +163,36 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${switzer.variable} ${satoshi.variable} antialiased `} role="document">
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black">
-          Skip to main content
-        </a>
-        <Navbar />
-        <main id="main-content" className="min-h-screen">
-          <Toaster closeButton className={`font-(family-name:--font-paragraph)`} position="top-center" richColors aria-live="polite" />
-          {children}
-        </main>
-        <Footer />
-        <script type="application/ld+json" id="schema-home" dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_SCHEMA) }} aria-hidden="true" />
+      <body
+        className={`${switzer.variable} ${satoshi.variable} antialiased `}
+        role="document"
+      >
+        <QueryProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black"
+          >
+            Skip to main content
+          </a>
+          <Navbar />
+          <main id="main-content" className="min-h-screen">
+            <Toaster
+              closeButton
+              className={`font-(family-name:--font-paragraph)`}
+              position="top-center"
+              richColors
+              aria-live="polite"
+            />
+            {children}
+          </main>
+          <Footer />
+          <script
+            type="application/ld+json"
+            id="schema-home"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(HOME_SCHEMA) }}
+            aria-hidden="true"
+          />
+        </QueryProvider>
       </body>
     </html>
   );

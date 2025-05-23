@@ -15,6 +15,8 @@ export interface NomineeDetails {
   nomineeName: string;
   category: string;
   pricePerVote: number;
+  event_id: string;
+  nominee_id: string;
 }
 
 export interface EventDetails {
@@ -79,11 +81,15 @@ export const DUMMY_NOMINEES: Record<string, NomineeDetails> = {
     nomineeName: "John Doe",
     category: "Best Developer",
     pricePerVote: 2,
+    event_id: "EVT001",
+    nominee_id: "NOM001",
   },
   NOM002: {
     eventName: "Tech Awards 2024",
     nomineeName: "Jane Smith",
     category: "Best Designer",
     pricePerVote: 2,
+    event_id: "EVT001",
+    nominee_id: "NOM002",
   },
 };
