@@ -1,6 +1,6 @@
 "use client";
 
-import { Event } from "@/interfaces";
+import { Event, VotingPayload } from "@/interfaces";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import BackButton from "@/components/back";
@@ -12,6 +12,10 @@ import { Spinner } from "@/components/spinner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormSchema, votingFormSchema } from "@/validations/voting-form";
+import { useParams, useRouter } from "next/navigation";
+import { AxiosError } from "axios";
+import { toast } from "sonner";
+import { formatJedError } from "@/lib/utils";
 
 export default function NomineeVotingPage({
   eventId,
@@ -21,10 +25,13 @@ export default function NomineeVotingPage({
   nomineeId: string;
 }>) {
   const [eventData, setEventData] = useState<Event>();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { id: event_id, nom_id: nominee_id } = useParams();
+  const router = useRouter();
+  const { getEvent, voteNominee } = SERVER_FUNCTIONS;
   async function fetchEventData() {
     const id = String(eventId);
-    const res = await SERVER_FUNCTIONS.getEvent(id);
+    const res = await getEvent(id);
     return res.data;
   }
 
@@ -46,13 +53,13 @@ export default function NomineeVotingPage({
         name: nominee.full_name,
         fullName: nominee.full_name,
         category: category.name,
-        image: nominee.img_url,
+        image: nominee.media?.url,
         code: nominee.code,
         totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
           ?.count,
       })),
     })),
-  } as Partial<Event>;
+  };
 
   const nominee = event.categories
     ?.flatMap((cat) => cat.nominees)
@@ -76,9 +83,35 @@ export default function NomineeVotingPage({
   const numberOfVotes = watch("numberOfVotes") ?? 1;
   const totalPrice = numberOfVotes * (event.amount_per_vote ?? 0);
 
-  const onSubmit = (data: FormSchema) => {
-    console.log({ ...data, totalPrice });
-    // TODO: Implement voting logic
+  const onSubmit = async (data: FormSchema) => {
+    setIsSubmitting(true);
+
+    try {
+      const votingPayload: VotingPayload = {
+        email: data.email,
+        full_name: data.name,
+        amount_payable: totalPrice,
+        count: data.numberOfVotes,
+        nominee_id,
+        event_id,
+      };
+
+      const response = await voteNominee(votingPayload);
+      if (response.data) {
+        toast.success(
+          "Your vote is being processed. Kindly complete the payment to finalize your vote."
+        );
+        router.push(response.data.authorization_url);
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(formatJedError(error));
+      } else {
+        toast.error("An error occurred while processing your request.");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!nominee) {
@@ -101,7 +134,7 @@ export default function NomineeVotingPage({
               src={nominee.image}
               alt={nominee.name}
               fill
-              className="object-cover"
+              className="object-cover object-top"
               priority
             />
             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
@@ -122,7 +155,7 @@ export default function NomineeVotingPage({
               </h1>
               <p className="text-gray-600">
                 Support your favorite nominee by casting your votes. You can
-                also vote via USSD by dialing *928*121#
+                also vote via USSD by dialing <strong>*928*121#</strong>
               </p>
             </div>
 
@@ -182,8 +215,8 @@ export default function NomineeVotingPage({
                 </p>
               </div>
 
-              <Button type="submit" className="w-full">
-                Submit Votes
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
+                {isSubmitting ? <Spinner /> : " Submit Votes"}
               </Button>
             </form>
           </div>
