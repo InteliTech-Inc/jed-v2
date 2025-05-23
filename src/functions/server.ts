@@ -14,4 +14,8 @@ export const SERVER_FUNCTIONS = {
     const res = await authAxios.post("/voting", votingPayload);
     return res.data;
   },
+  getNominees: async () => {
+    const res = await authAxios.get("/nominee");
+    return res.data;
+  },
 };
