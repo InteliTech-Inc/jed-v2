@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         name: nominee.full_name,
         fullName: nominee.full_name,
         category: category.name,
-        image: nominee.image,
+        image: nominee.media?.url,
         code: nominee.code,
         totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
           ?.count,
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${process.env.NEXT_PUBLIC_LIVE_URL}/events/${event.id}/nominee/${nominee.id}`,
       images: [
         {
-          url: nominee.image,
+          url: nominee.media?.url,
           width: 1200,
           height: 630,
           alt: nominee.name,
@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${nominee.name} - ${event.name} | JED Voting`,
       description: `Vote for ${nominee.name} as the ${nominee.category} in the ${event.name} event.`,
-      images: [nominee.image],
+      images: [nominee.media?.url],
     },
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_LIVE_URL}/events/${event.id}/nominee/${nominee.id}`,
