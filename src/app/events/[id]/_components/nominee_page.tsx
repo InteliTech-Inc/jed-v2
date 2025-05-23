@@ -25,7 +25,6 @@ export default function NomineeVotingPage({
   nomineeId: string;
 }>) {
   const [eventData, setEventData] = useState<Event>();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { id: event_id, nom_id: nominee_id } = useParams();
   const router = useRouter();
   const { getEvent, voteNominee } = SERVER_FUNCTIONS;
@@ -68,9 +67,10 @@ export default function NomineeVotingPage({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
     setValue,
+    reset,
   } = useForm<FormSchema>({
     resolver: zodResolver(votingFormSchema),
     defaultValues: {
@@ -84,8 +84,6 @@ export default function NomineeVotingPage({
   const totalPrice = numberOfVotes * (event.amount_per_vote ?? 0);
 
   const onSubmit = async (data: FormSchema) => {
-    setIsSubmitting(true);
-
     try {
       const votingPayload: VotingPayload = {
         email: data.email,
@@ -102,6 +100,7 @@ export default function NomineeVotingPage({
           "Your vote is being processed. Kindly complete the payment to finalize your vote."
         );
         router.push(response.data.authorization_url);
+        reset();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -109,8 +108,6 @@ export default function NomineeVotingPage({
       } else {
         toast.error("An error occurred while processing your request.");
       }
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
