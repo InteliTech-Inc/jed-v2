@@ -58,10 +58,10 @@ export default function AllEvents({
 
   const statuses = useMemo(() => {
     const uniqueStatuses = new Set(
-      events.data.events?.map((event) => event.event_progress)
+      events.data.events?.map((event) => event?.event_progress)
     );
     return Array.from(uniqueStatuses);
-  }, [events]);
+  }, [events.data.events]);
 
   const filteredEvents = useMemo(() => {
     return events.data.events?.filter((event) => {
@@ -112,9 +112,9 @@ export default function AllEvents({
         className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
       >
         <AnimatePresence mode="popLayout">
-          {filteredEvents.map((event) => (
+          {filteredEvents.map((event, index) => (
             <motion.div
-              key={event.id}
+              key={index + 1}
               variants={cardVariants}
               layout
               initial="hidden"
