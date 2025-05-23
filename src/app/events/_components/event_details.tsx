@@ -27,7 +27,6 @@ export default function EventDetails({
 
   const content = (
     <div className="flex flex-col h-full">
-      {/* Image Section - Takes up 1/3 of the height */}
       <div className="relative h-[33vh] md:h-[40vh] w-full">
         <Image
           src={event.media.url}
@@ -49,7 +48,6 @@ export default function EventDetails({
         </div>
       </div>
 
-      {/* Content Section */}
       <div className="flex-1 overflow-y-auto p-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <div className="prose prose-gray max-w-none">
