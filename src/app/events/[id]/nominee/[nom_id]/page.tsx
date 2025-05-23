@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import NomineeVotingCard from "@/app/events/[id]/_components/nominee_page";
-import eventsData from "../../../data.json";
 import { Event } from "@/interfaces";
+import { SERVER_FUNCTIONS } from "@/functions/server";
 
 interface Props {
   params: Promise<{
@@ -12,9 +12,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id, nom_id } = await params;
-  const eventData = eventsData.find((e) => String(e.id) === id);
+  const { data } = await SERVER_FUNCTIONS.getEvent(id);
 
-  if (!eventData) {
+  if (!data) {
     return {
       title: "Event Not Found | JED",
       description: "The requested event could not be found.",
@@ -22,25 +22,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const event: Event = {
-    ...eventData,
-    id: String(eventData.id),
-    approvalStatus: eventData.approvalStatus as "pending" | "approved" | "declined",
-    eventProgress: eventData.eventProgress as "not started" | "ongoing" | "completed",
-    categoryDetails: eventData.categoryDetails.map((category) => ({
+    ...data,
+    id: String(data.id),
+    approval_status: data.approval_status,
+    event_progress: data.event_progress,
+    categories: data.categories.map((category: any) => ({
       ...category,
-      nominees: category.nominees.map((nominee) => ({
+      nominees: category.nominees.map((nominee: any) => ({
         id: nominee.id,
-        name: nominee.fullName,
-        fullName: nominee.fullName,
+        name: nominee.full_name,
+        fullName: nominee.full_name,
         category: category.name,
-        image: nominee.image,
+        image: nominee.media?.url,
         code: nominee.code,
-        totalVotes: nominee.totalVotes,
+        totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
+          ?.count,
       })),
     })),
   };
 
-  const nominee = event.categoryDetails.flatMap((cat) => cat.nominees).find((nom) => nom.id === nom_id);
+  const nominee = event.categories
+    .flatMap((cat) => cat.nominees)
+    .find((nom) => nom.id === nom_id);
 
   if (!nominee) {
     return {
@@ -60,7 +63,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `${process.env.NEXT_PUBLIC_LIVE_URL}/events/${event.id}/nominee/${nominee.id}`,
       images: [
         {
-          url: nominee.image,
+          url: nominee.media?.url,
           width: 1200,
           height: 630,
           alt: nominee.name,
@@ -71,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${nominee.name} - ${event.name} | JED Voting`,
       description: `Vote for ${nominee.name} as the ${nominee.category} in the ${event.name} event.`,
-      images: [nominee.image],
+      images: [nominee.media?.url],
     },
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_LIVE_URL}/events/${event.id}/nominee/${nominee.id}`,
@@ -90,7 +93,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function NomineePage({ params }: Props) {
+export default async function NomineePage({ params }: Readonly<Props>) {
   const { id, nom_id } = await params;
   return <NomineeVotingCard eventId={id} nomineeId={nom_id} />;
 }

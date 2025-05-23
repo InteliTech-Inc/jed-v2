@@ -40,7 +40,6 @@ export default function ContactPage() {
       toast.success("Message sent successfully! We'll get back to you soon.");
       setFormData(initialFormData);
     } catch (error) {
-      console.log(error);
       toast.error("Failed to send message. Please try again.");
     } finally {
       setIsLoading(false);
@@ -58,15 +57,28 @@ export default function ContactPage() {
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-lg text-gray-600">
-            Have a question or need help? We're here to assist you. Fill out the form below and we'll get back to you as soon as possible.
+            Have a question or need help? We're here to assist you. Fill out the
+            form below and we'll get back to you as soon as possible.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-            <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form" noValidate>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              aria-label="Contact form"
+              noValidate
+            >
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Name{" "}
                   <span className="text-red-500" aria-hidden="true">
                     *
@@ -76,7 +88,9 @@ export default function ContactPage() {
                   id="name"
                   name="name"
                   value={formData.name}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, name: e.target.value }))
+                  }
                   required
                   placeholder="Your name"
                   className="w-full"
@@ -85,7 +99,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Email{" "}
                   <span className="text-red-500" aria-hidden="true">
                     *
@@ -96,7 +113,9 @@ export default function ContactPage() {
                   name="email"
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, email: e.target.value }))
+                  }
                   required
                   placeholder="your.email@example.com"
                   className="w-full"
@@ -109,7 +128,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Subject{" "}
                   <span className="text-red-500" aria-hidden="true">
                     *
@@ -119,7 +141,12 @@ export default function ContactPage() {
                   id="subject"
                   name="subject"
                   value={formData.subject}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, subject: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      subject: e.target.value,
+                    }))
+                  }
                   required
                   placeholder="What is this regarding?"
                   className="w-full"
@@ -128,7 +155,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Message{" "}
                   <span className="text-red-500" aria-hidden="true">
                     *
@@ -138,7 +168,12 @@ export default function ContactPage() {
                   id="message"
                   name="message"
                   value={formData.message}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      message: e.target.value,
+                    }))
+                  }
                   required
                   placeholder="How can we help you?"
                   className="w-full min-h-[150px]"
@@ -146,10 +181,19 @@ export default function ContactPage() {
                 />
               </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading} aria-busy={isLoading}>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoading}
+                aria-busy={isLoading}
+              >
                 {isLoading ? (
                   <>
-                    <Icon icon="eos-icons:loading" className="mr-2 h-6 w-6 animate-spin" aria-hidden="true" />
+                    <Icon
+                      icon="eos-icons:loading"
+                      className="mr-2 h-6 w-6 animate-spin"
+                      aria-hidden="true"
+                    />
                   </>
                 ) : (
                   <>
@@ -172,11 +216,15 @@ export default function ContactPage() {
             <section className="space-y-8">
               <div>
                 <h4 className="text-lg font-semibold">Chat with us</h4>
-                <p className="text-slate-600">Speak to our team via Email or Whatsapp</p>
+                <p className="text-slate-600">
+                  Speak to our team via Email or Whatsapp
+                </p>
                 <ul>
                   <li className="mt-2 font-semibold flex items-center gap-3 underline">
                     <Icon icon="ph:telegram-logo-thin" className="size-4" />
-                    <Link href="mailto:info.jedvotes@gmail.com">Shoot us an email</Link>
+                    <Link href="mailto:info.jedvotes@gmail.com">
+                      Shoot us an email
+                    </Link>
                   </li>
                   <li className="mt-2 font-semibold flex items-center gap-3 underline">
                     <Icon icon="ic:baseline-whatsapp" width={16} />
@@ -187,7 +235,9 @@ export default function ContactPage() {
 
               <div>
                 <h4 className="text-lg font-semibold">Call us</h4>
-                <p className="text-slate-600">Call our team Sun-Sat from 8am to 5pm</p>
+                <p className="text-slate-600">
+                  Call our team Sun-Sat from 8am to 5pm
+                </p>
                 <ul>
                   <li className="mt-2 font-semibold flex items-center gap-3 underline">
                     <Icon icon="ph:phone-call" className="size-5" />

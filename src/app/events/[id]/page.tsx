@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { Event, Nominee } from "@/interfaces";
 import NomineesGrid from "@/app/events/[id]/_components/nominees_grid";
-import eventsData from "../data.json";
 import BackButton from "@/components/back";
+import { SERVER_FUNCTIONS } from "@/functions/server";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -13,9 +13,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const eventData = eventsData.find((e) => String(e.id) === id);
+  const { data } = await SERVER_FUNCTIONS.getEvent(id);
 
-  if (!eventData) {
+  if (!data) {
     return {
       title: "Event Not Found | JED",
       description: "The requested event could not be found.",
@@ -23,20 +23,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const event: Event = {
-    ...eventData,
-    id: String(eventData.id),
-    approvalStatus: eventData.approvalStatus as "pending" | "approved" | "declined",
-    eventProgress: eventData.eventProgress as "not started" | "ongoing" | "completed",
-    categoryDetails: eventData.categoryDetails.map((category) => ({
+    ...data,
+    id: String(data.id),
+    approval_status: data.approval_status,
+    event_progress: data.event_progress,
+    categories: data.categories.map((category: any) => ({
       ...category,
-      nominees: category.nominees.map((nominee) => ({
+      nominees: category.nominees.map((nominee: any) => ({
         id: nominee.id,
         name: nominee.fullName,
         fullName: nominee.fullName,
         category: category.name,
         image: nominee.image,
         code: nominee.code,
-        totalVotes: nominee.totalVotes,
+        totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
+          ?.count,
       })),
     })),
   };
@@ -44,7 +45,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${event.name} | JED Event`,
     description: `${event.description} -  Join now to support your favorite nominees!`,
-    keywords: `${event.name}, voting event, ${event.categoryDetails.map((cat) => cat.name).join(", ")}, online voting, JED platform`,
+    keywords: `${event.name}, voting event, ${event.categories
+      .map((cat) => cat.name)
+      .join(", ")}, online voting, JED platform`,
     openGraph: {
       title: `${event.name} | JED Voting Event`,
       description: `${event.description} -  Join now to support your favorite nominees!`,
@@ -52,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://jed-event.com/events/${event.id}`,
       images: [
         {
-          url: event.image,
+          url: event.media?.url,
           width: 1200,
           height: 630,
           alt: event.name,
@@ -63,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${event.name} | JED Event`,
       description: `${event.description} -  Join now to support your favorite nominees!`,
-      images: [event.image],
+      images: [event.media?.url],
     },
     alternates: {
       canonical: `https://jed-event.com/events/${event.id}`,
@@ -71,54 +74,58 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function EventPage({ params }: Props) {
+export default async function EventPage({ params }: Readonly<Props>) {
   const { id } = await params;
-  const eventData = eventsData.find((e) => String(e.id) === id);
 
-  if (!eventData) {
+  const { data } = await SERVER_FUNCTIONS.getEvent(id);
+
+  if (!data) {
     notFound();
   }
 
-  const event: Event = {
-    ...eventData,
-    id: String(eventData.id),
-    approvalStatus: eventData.approvalStatus as "pending" | "approved" | "declined",
-    eventProgress: eventData.eventProgress as "not started" | "ongoing" | "completed",
-    categoryDetails: eventData.categoryDetails.map((category) => ({
-      ...category,
-      nominees: category.nominees.map((nominee) => ({
-        id: nominee.id,
-        name: nominee.fullName,
-        fullName: nominee.fullName,
-        category: category.name,
-        image: nominee.image,
-        code: nominee.code,
-        totalVotes: nominee.totalVotes,
-      })),
-    })),
-  };
+  const event = {
+    ...data,
+    id: String(data.id),
+    approval_status: data.approval_status,
+    event_progress: data.event_progress,
+    voting_period: {
+      start: data.schedule?.voting_start_period,
+      end: data.schedule?.voting_end_period,
+    },
+    nomination_period: {
+      start: data.schedule?.nomination_start_period,
+      end: data.schedule?.nomination_end_period,
+    },
+  } as Event;
 
-  const nominees: Nominee[] = event.categoryDetails.flatMap((cat) =>
-    cat.nominees.map((nom) => ({
-      id: nom.id,
-      name: nom.fullName,
-      fullName: nom.fullName,
-      category: cat.name,
-      image: nom.image,
-      code: nom.code,
-      totalVotes: nom.totalVotes,
-    }))
+  const nominees: Nominee[] = data.categories.flatMap((cat: any) =>
+    cat.nominees.map((nom: any) => {
+      const totalVotes = nom.votes
+        ?.filter((vote: any) => vote.nominee_id === nom.id)
+        .reduce((sum: number, vote: any) => sum + vote.count, 0);
+      return {
+        id: nom.id,
+        name: nom.full_name,
+        fullName: nom.full_name,
+        category: cat.name,
+        image: nom.media?.url,
+        code: nom.code,
+        totalVotes,
+      };
+    })
   );
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <BackButton />
+      <div className="max-w-7xl mx-auto">
+        <BackButton />
+      </div>
       <div className="max-w-7xl mx-auto">
         <article itemScope itemType="https://schema.org/Event">
           <meta itemProp="name" content={event.name} />
           <meta itemProp="description" content={event.description} />
-          <meta itemProp="image" content={event.image} />
-          <meta itemProp="status" content={event.eventProgress} />
+          <meta itemProp="image" content={event.media?.url} />
+          <meta itemProp="status" content={event.event_progress} />
 
           <NomineesGrid nominees={nominees} eventId={id} event={event} />
         </article>

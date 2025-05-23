@@ -8,10 +8,12 @@ export const metadata: Metadata = {
   title: "Events | JED - Vote for Your Favorite Nominees",
   description:
     "Discover and participate in exciting voting events. Support your favorite nominees across various categories. Join JED's community-driven voting platform.",
-  keywords: "voting events, nominee voting, event categories, JED voting platform, online voting, event participation",
+  keywords:
+    "voting events, nominee voting, event categories, JED voting platform, online voting, event participation",
   openGraph: {
     title: "Events | JED - Vote for Your Favorite Nominees",
-    description: "Discover and participate in exciting voting events. Support your favorite nominees across various categories.",
+    description:
+      "Discover and participate in exciting voting events. Support your favorite nominees across various categories.",
     type: "website",
     url: "https://jed-event.com/events",
     images: [
@@ -26,7 +28,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Events | JED - Vote for Your Favorite Nominees",
-    description: "Discover and participate in exciting voting events. Support your favorite nominees across various categories.",
+    description:
+      "Discover and participate in exciting voting events. Support your favorite nominees across various categories.",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_LIVE_URL}/src/app/opengraph-image.png`,
@@ -45,8 +48,12 @@ export default async function EventsPage() {
         <BackButton />
       </div>
       <section className="mt-12 px-4">
-        <h1 className="text-3xl md:text-5xl text-center font-bold">All Events</h1>
-        <p className="text-center text-lg mt-1 text-gray-600">Find all events and vote for your favorite nominees.</p>
+        <h1 className="text-3xl md:text-5xl text-center font-bold">
+          All Events
+        </h1>
+        <p className="text-center text-lg mt-1 text-gray-600">
+          Find all events and vote for your favorite nominees.
+        </p>
       </section>
       <Suspense fallback={<EventsSkeleton />}>
         <Events />

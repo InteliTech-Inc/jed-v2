@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "i.pravatar.cc",
       },
+      {
+        hostname: "api.cloudinary.com",
+      },
     ],
   },
 };
