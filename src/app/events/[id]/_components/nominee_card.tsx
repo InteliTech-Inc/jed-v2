@@ -21,6 +21,8 @@ export default function NomineeCard({
           width={500}
           height={500}
           className="h-full absolute top-0 left-0 w-full object-cover scale-105 group-hover:scale-100 transition-all duration-500"
+          priority
+          decoding="async"
         />
         <div className="absolute bottom-0 h-3/5 left-0 w-full p-3 bg-gradient-to-t from-black via-black/80 to-transparent">
           <span className="absolute bottom-3 block w-[90%] ">
