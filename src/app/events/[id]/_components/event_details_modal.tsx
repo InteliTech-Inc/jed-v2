@@ -29,7 +29,7 @@ export default function EventDetailsModal({
     <div className="flex flex-col h-full">
       <div className="relative h-[33vh] md:h-[40vh] w-full">
         <Image
-          src={event.img_url}
+          src={event.media?.url}
           alt={event.name}
           fill
           className="object-cover"
