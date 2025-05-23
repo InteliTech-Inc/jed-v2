@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://jed-event.com/events/${event.id}`,
       images: [
         {
-          url: event.img_url,
+          url: event.media?.url,
           width: 1200,
           height: 630,
           alt: event.name,
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: `${event.name} | JED Event`,
       description: `${event.description} -  Join now to support your favorite nominees!`,
-      images: [event.img_url],
+      images: [event.media?.url],
     },
     alternates: {
       canonical: `https://jed-event.com/events/${event.id}`,
@@ -99,15 +99,20 @@ export default async function EventPage({ params }: Readonly<Props>) {
   } as Event;
 
   const nominees: Nominee[] = data.categories.flatMap((cat: any) =>
-    cat.nominees.map((nom: any) => ({
-      id: nom.id,
-      name: nom.full_name,
-      fullName: nom.full_name,
-      category: cat.name,
-      image: nom.img_url,
-      code: nom.code,
-      totalVotes: nom.votes.find((n: any) => n.nominee_id === nom.id)?.count,
-    }))
+    cat.nominees.map((nom: any) => {
+      const totalVotes = nom.votes
+        ?.filter((vote: any) => vote.nominee_id === nom.id)
+        .reduce((sum: number, vote: any) => sum + vote.count, 0);
+      return {
+        id: nom.id,
+        name: nom.full_name,
+        fullName: nom.full_name,
+        category: cat.name,
+        image: nom.media?.url,
+        code: nom.code,
+        totalVotes,
+      };
+    })
   );
 
   return (
@@ -119,7 +124,7 @@ export default async function EventPage({ params }: Readonly<Props>) {
         <article itemScope itemType="https://schema.org/Event">
           <meta itemProp="name" content={event.name} />
           <meta itemProp="description" content={event.description} />
-          <meta itemProp="image" content={event.img_url} />
+          <meta itemProp="image" content={event.media?.url} />
           <meta itemProp="status" content={event.event_progress} />
 
           <NomineesGrid nominees={nominees} eventId={id} event={event} />
