@@ -150,7 +150,7 @@ export const ChatContainer = () => {
             nominee.category
           }</strong> category. Each vote is just <strong>GHS ${nominee.pricePerVote.toFixed(
             2
-          )}<strong> for the event <strong>${
+          )}</strong> for the event <strong>${
             nominee.eventName
           }</strong>. How many votes would you like to cast?`
         );
