@@ -20,7 +20,7 @@ import { QUERY_KEYS } from "@/utils/query-keys";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { Loader } from "lucide-react";
+import { Loader, ZapIcon } from "lucide-react";
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const ChatContainer = () => {
@@ -146,13 +146,13 @@ export const ChatContainer = () => {
         setNomineeDetails(nominee);
         resetRetryCount();
         await addSystemMessage(
-          `I found ${nominee.nomineeName} in the ${
+          `I found <strong>${nominee.nomineeName}</strong> in the <strong>${
             nominee.category
-          } category. Each vote is just GHS ${nominee.pricePerVote.toFixed(
+          }</strong> category. Each vote is just <strong>GHS ${nominee.pricePerVote.toFixed(
             2
-          )} for the event ${
+          )}<strong> for the event <strong>${
             nominee.eventName
-          }. How many votes would you like to cast?`
+          }</strong>. How many votes would you like to cast?`
         );
       } else {
         await handleIncorrectResponse();
@@ -167,9 +167,9 @@ export const ChatContainer = () => {
         resetRetryCount();
         const total = votes * nomineeDetails.pricePerVote;
         await addSystemMessage(
-          `Perfect! 🎉 That'll be GHS ${total.toFixed(
+          `Perfect! 🎉 That'll be <strong>GHS ${total.toFixed(
             2
-          )} for ${votes} amazing votes!\n1. Confirm to proceed with payment\n2. Cancel\nJust type (1 or 2) to continue. No pressure! 😊`
+          )}</strong> for <strong>${votes}</strong> amazing votes!\n1. Confirm to proceed with payment\n2. Cancel\nJust type (1 or 2) to continue. No pressure! 😊`
         );
       } else {
         await handleIncorrectResponse();
@@ -383,9 +383,16 @@ export const ChatContainer = () => {
       <div className="sticky bottom-0 py-4">
         <ChatInput onSend={handleMessage} />
       </div>
-      <small className="text-sm w-full underline text-center inline-flex items-center justify-center gap-1 text-gray-500">
-        <a href="https://x.com/dev_concept" target="_blank" rel="noreferrer">
-          Powered by Small God
+      <small className="text-sm w-full text-center inline-flex hover:underline items-center justify-center gap-1 text-gray-500">
+        <a
+          href="https://x.com/dev_concept"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex gap-1 items-center"
+        >
+          Powered{" "}
+          <ZapIcon fill="yellow" className="text-yellow-300" size={18} /> by
+          Small God
         </a>
       </small>
     </div>

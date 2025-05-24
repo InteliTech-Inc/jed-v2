@@ -1,7 +1,6 @@
 "use client";
 
-import { Event, VotingPayload } from "@/interfaces";
-import { useEffect, useState } from "react";
+import { Nominee, VotingPayload } from "@/interfaces";
 import Image from "next/image";
 import BackButton from "@/components/back";
 import { Button } from "@/components/ui/button";
@@ -16,6 +15,8 @@ import { useParams, useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { formatJedError } from "@/lib/utils";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "@/utils/query-keys";
 
 export default function NomineeVotingPage({
   eventId,
@@ -24,28 +25,21 @@ export default function NomineeVotingPage({
   eventId: string;
   nomineeId: string;
 }>) {
-  const [eventData, setEventData] = useState<Event>();
   const { id: event_id, nom_id: nominee_id } = useParams();
   const router = useRouter();
   const { getEvent, voteNominee } = SERVER_FUNCTIONS;
-  async function fetchEventData() {
-    const id = String(eventId);
-    const res = await getEvent(id);
-    return res.data;
-  }
 
-  useEffect(() => {
-    fetchEventData().then((data) => {
-      setEventData(data);
-    });
-  }, []);
+  const { data: eventData } = useQuery({
+    queryKey: [QUERY_KEYS.EVENTS, eventId],
+    queryFn: () => getEvent(eventId),
+  });
 
   const event = {
-    ...eventData,
-    id: String(eventData?.id),
-    approval_status: eventData?.approval_status,
-    event_progress: eventData?.event_progress,
-    categories: (eventData?.categories ?? []).map((category) => ({
+    ...eventData?.data,
+    id: String(eventData?.data.id),
+    approval_status: eventData?.data.approval_status,
+    event_progress: eventData?.data.event_progress,
+    categories: (eventData?.data.categories ?? []).map((category: any) => ({
       ...category,
       nominees: category.nominees.map((nominee: any) => ({
         id: nominee.id,
@@ -54,15 +48,13 @@ export default function NomineeVotingPage({
         category: category.name,
         image: nominee.media?.url,
         code: nominee.code,
-        totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
-          ?.count,
       })),
     })),
   };
 
   const nominee = event.categories
-    ?.flatMap((cat) => cat.nominees)
-    .find((nom) => nom.id === nomineeId);
+    ?.flatMap((cat: { nominees: Nominee }) => cat.nominees)
+    .find((nom: { id: string }) => nom.id === nomineeId);
 
   const {
     register,
@@ -83,6 +75,22 @@ export default function NomineeVotingPage({
   const numberOfVotes = watch("numberOfVotes") ?? 1;
   const totalPrice = numberOfVotes * (event.amount_per_vote ?? 0);
 
+  const { mutateAsync: handleVoting, isPending } = useMutation({
+    mutationKey: [QUERY_KEYS.VOTING],
+    mutationFn: async (payload: VotingPayload) => {
+      const res = await voteNominee(payload);
+      return res;
+    },
+
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(formatJedError(error));
+      } else {
+        toast.error("An error occurred while processing your request.");
+      }
+    },
+  });
+
   const onSubmit = async (data: FormSchema) => {
     try {
       const votingPayload: VotingPayload = {
@@ -94,7 +102,7 @@ export default function NomineeVotingPage({
         event_id,
       };
 
-      const response = await voteNominee(votingPayload);
+      const response = await handleVoting(votingPayload);
       if (response.data) {
         toast.success(
           "Your vote is being processed. Kindly complete the payment to finalize your vote."
@@ -126,12 +134,13 @@ export default function NomineeVotingPage({
           <BackButton />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
-          <div className="relative w-full overflow-hidden rounded-xl">
+          <div className="relative w-full  overflow-hidden rounded-xl">
             <Image
               src={nominee.image}
               alt={nominee.name}
               fill
-              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 1200px"
+              className="object-cover object-top h-full w-full"
               priority
             />
             <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
@@ -212,8 +221,12 @@ export default function NomineeVotingPage({
                 </p>
               </div>
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? <Spinner /> : " Submit Votes"}
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isSubmitting || isPending}
+              >
+                {isSubmitting || isPending ? <Spinner /> : " Submit Votes"}
               </Button>
             </form>
           </div>

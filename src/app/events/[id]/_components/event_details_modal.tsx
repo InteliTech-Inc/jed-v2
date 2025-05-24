@@ -31,8 +31,9 @@ export default function EventDetailsModal({
         <Image
           src={event.media?.url}
           alt={event.name}
-          fill
-          className="object-cover"
+          width={1000}
+          height={1000}
+          className="object-cover h-full w-full"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

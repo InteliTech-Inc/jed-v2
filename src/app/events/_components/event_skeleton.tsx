@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-function EventCardSkeleton() {
+export function EventCardSkeleton() {
   return (
     <div className="group transition-all duration-300">
       <div className="relative h-80 w-full overflow-hidden rounded-lg mb-3">
@@ -37,7 +37,7 @@ export default function EventsSkeleton() {
       </div>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Array.from({ length: 8 }).map((_, i) => (
-          <EventCardSkeleton key={i} />
+          <EventCardSkeleton key={i + 1} />
         ))}
       </div>
     </div>

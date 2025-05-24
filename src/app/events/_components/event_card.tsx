@@ -21,6 +21,7 @@ export default function EventCard({ event }: Readonly<{ event: Event }>) {
             width={500}
             height={500}
             className="h-full absolute top-0 left-0 w-full object-cover scale-105 group-hover:scale-100 transition-all duration-500"
+            priority
           />
           <div className="absolute bottom-0 h-2/5 left-0 w-full p-3 bg-gradient-to-t from-black via-black/70 to-transparent">
             <span className="group-hover:-translate-y-4 px-1 translate-y-0 transition-all duration-300 absolute bottom-2 text-white">
