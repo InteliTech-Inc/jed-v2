@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { Loader, ZapIcon } from "lucide-react";
+import { validateEmail } from "@/utils/validate-email";
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const ChatContainer = () => {
@@ -85,7 +86,7 @@ export const ChatContainer = () => {
 
   useEffect(() => {
     const payload: VotingPayload = {
-      email: "info.jedvotes@gmail.com",
+      email: nomineeDetails?.email!,
       full_name: "Topboy Chat (JED)",
       amount_payable: numberOfVotes * nomineeDetails?.pricePerVote!,
       event_id: nomineeDetails?.event_id!,
@@ -169,12 +170,44 @@ export const ChatContainer = () => {
         await addSystemMessage(
           `Perfect! 🎉 That'll be <strong>GHS ${total.toFixed(
             2
-          )}</strong> for <strong>${votes}</strong> amazing votes!\n1. Confirm to proceed with payment\n2. Cancel\nJust type (1 or 2) to continue. No pressure! 😊`
+          )}</strong> for <strong>${votes}</strong> amazing votes!\nNow, please provide your valid email address to proceed with payment and receive a receipt. 📧`
         );
       } else {
         await handleIncorrectResponse();
         await addSystemMessage(
           "Oops! 🙈 I need a positive number for the votes. Could you try again?"
+        );
+      }
+    } else if (!votingData?.email) {
+      const votersEmail = content.trim().toLowerCase();
+      const isValidEmail = validateEmail(votersEmail);
+      if (isValidEmail) {
+        setVotingData((prevData) =>
+          prevData
+            ? {
+                ...prevData,
+                email: votersEmail,
+                full_name: "Topboy Chat (JED)",
+                amount_payable: prevData.amount_payable,
+                event_id: prevData.event_id,
+                nominee_id: prevData.nominee_id,
+                count: prevData.count,
+              }
+            : null
+        );
+        await addSystemMessage(
+          `Got it! 📧 You've provided your email as <strong>${votersEmail}</strong>. Here's a summary of your vote:\n\nNominee: <strong>${
+            nomineeDetails.nomineeName
+          }</strong>\nVotes: <strong>${numberOfVotes}</strong>\nTotal: <strong>GHS ${(
+            numberOfVotes * nomineeDetails.pricePerVote
+          ).toFixed(
+            2
+          )}</strong>\n\nWould you like to confirm to proceed with payment or cancel?\n1. Confirm to proceed with payment\n2. Cancel\nJust type (1 or 2) to continue. 😊`
+        );
+      } else {
+        await handleIncorrectResponse();
+        await addSystemMessage(
+          "Your email address seems invalid. Please enter a valid email address to proceed with payment and receive a receipt. 📧"
         );
       }
     } else if (content.toLowerCase() === "1") {
