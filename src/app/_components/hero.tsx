@@ -12,12 +12,14 @@ import { useQuery } from "@tanstack/react-query";
 import { SERVER_FUNCTIONS } from "@/functions/server";
 import { transformNomineeData } from "@/lib/transform-nominee-data";
 import React from "react";
+import useEventsStore from "@/stores/events-store";
 
 export default function Hero() {
   const router = useRouter();
 
   const { setNominees } = useNomineeStore();
-  const { getNominees } = SERVER_FUNCTIONS;
+  const { setEvents } = useEventsStore();
+  const { getNominees, getEvents } = SERVER_FUNCTIONS;
 
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.NOMINEES],
@@ -27,11 +29,20 @@ export default function Hero() {
     },
   });
 
+  const { data: events } = useQuery({
+    queryKey: [QUERY_KEYS.EVENTS],
+    queryFn: async () => {
+      const res = await getEvents();
+      return res;
+    },
+  });
+
   React.useEffect(() => {
-    if (data) {
+    if (data && events) {
       setNominees(data);
+      setEvents(events.data.events);
     }
-  }, [data]);
+  }, [data, events.data.events]);
 
   return (
     <div>
