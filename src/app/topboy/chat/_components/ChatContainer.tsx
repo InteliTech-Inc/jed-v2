@@ -22,6 +22,7 @@ import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { Loader, ZapIcon } from "lucide-react";
 import { validateEmail } from "@/utils/validate-email";
+import useNomineeStore from "@/stores/nominee-store";
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const ChatContainer = () => {
@@ -50,15 +51,10 @@ export const ChatContainer = () => {
   const [votingData, setVotingData] = useState<VotingPayload | null>(null);
 
   const router = useRouter();
-  const { getNominees } = SERVER_FUNCTIONS;
+  const { voteNominee } = SERVER_FUNCTIONS;
+  const { nominees } = useNomineeStore();
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [QUERY_KEYS.NOMINEES],
-    queryFn: async () => {
-      const nomineeData = await getNominees();
-      return transformNomineeData(nomineeData.data.nominees);
-    },
-  });
+  console.log("nominees from store", nominees);
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
@@ -99,7 +95,7 @@ export const ChatContainer = () => {
   const { mutateAsync: triggerTopboyOnVoting, isPending } = useMutation({
     mutationKey: [QUERY_KEYS.VOTING],
     mutationFn: async (payload: VotingPayload) => {
-      const res = await SERVER_FUNCTIONS.voteNominee(payload);
+      const res = await voteNominee(payload);
       return res;
     },
     onError: (error) => {
@@ -126,23 +122,13 @@ export const ChatContainer = () => {
       await addSystemMessage(
         "I notice you're having some trouble. Would you like to:\n1. Continue with current flow\n2. Start over\nPlease type 1 or 2 to proceed."
       );
+      return;
     }
   };
 
   const handleVotingFlow = async (content: string) => {
-    if (isLoading) {
-      await addSystemMessage("I am fetching nominee details, please wait...");
-    }
-
-    if (isError) {
-      await addSystemMessage(
-        `There was an error fetching the nominees: ${error.message}`
-      );
-      return;
-    }
-
     if (!nomineeDetails) {
-      const nominee = data?.[content.toLocaleUpperCase()];
+      const nominee = nominees[content.trim().toLocaleUpperCase()];
       if (nominee) {
         setNomineeDetails(nominee);
         resetRetryCount();
@@ -205,10 +191,11 @@ export const ChatContainer = () => {
           )}</strong>\n\nWould you like to confirm to proceed with payment or cancel?\n1. Confirm to proceed with payment\n2. Cancel\nJust type (1 or 2) to continue. 😊`
         );
       } else {
-        await handleIncorrectResponse();
         await addSystemMessage(
           "Your email address seems invalid. Please enter a valid email address to proceed with payment and receive a receipt. 📧"
         );
+        await handleIncorrectResponse();
+        return;
       }
     } else if (content.toLowerCase() === "1") {
       await addSystemMessage(
@@ -240,6 +227,7 @@ export const ChatContainer = () => {
     if (isInRetryMode) {
       if (lowerContent === "1") {
         resetRetryCount();
+        setRetryMode(false);
         if (currentAction === "vote") {
           if (!nomineeDetails) {
             await addSystemMessage(
@@ -248,6 +236,10 @@ export const ChatContainer = () => {
           } else if (!numberOfVotes) {
             await addSystemMessage(
               "Great! How many votes would you like to cast?"
+            );
+          } else {
+            await addSystemMessage(
+              "Let's try again. Please provide a valid email address to proceed with payment and receive a receipt. 📧"
             );
           }
         } else if (currentAction === "buy_ticket") {
@@ -272,6 +264,7 @@ export const ChatContainer = () => {
         return;
       } else if (lowerContent === "2") {
         reset();
+        setRetryMode(false);
         await addSystemMessage(
           "Alright! Let's start fresh! 😊 What would you like to do?\n1. Vote for a nominee\n2. Buy tickets\nJust type the number (1 or 2) to get started! 🎉"
         );
