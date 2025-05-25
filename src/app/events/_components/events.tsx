@@ -9,7 +9,7 @@ import useEventsStore from "@/stores/events-store";
 
 export default function Events() {
   const { getEvents } = SERVER_FUNCTIONS;
-  const { setEvents, events } = useEventsStore();
+  const { setEvents } = useEventsStore();
 
   const { data } = useQuery({
     queryKey: [QUERY_KEYS.EVENTS],
@@ -17,7 +17,6 @@ export default function Events() {
       const res = await getEvents();
       return res;
     },
-    enabled: !events.length,
   });
 
   React.useEffect(() => {
