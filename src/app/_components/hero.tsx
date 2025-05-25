@@ -42,7 +42,7 @@ export default function Hero() {
       setNominees(data);
       setEvents(events.data.events);
     }
-  }, [data, events.data.events]);
+  }, [data, events?.data.events]);
 
   return (
     <div>
