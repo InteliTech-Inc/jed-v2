@@ -54,8 +54,6 @@ export const ChatContainer = () => {
   const { voteNominee } = SERVER_FUNCTIONS;
   const { nominees } = useNomineeStore();
 
-  console.log("nominees from store", nominees);
-
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
     if (lastMessage?.type === "system") {
