@@ -9,8 +9,12 @@ export interface ChatMessage {
 
 export type ChatAction = "vote" | "buy_ticket";
 
+export interface VotingPayload {
+  email?: string;
+}
+
 // Dummy data types for now
-export interface NomineeDetails {
+export interface NomineeDetails extends VotingPayload {
   eventName: string;
   nomineeName: string;
   category: string;
