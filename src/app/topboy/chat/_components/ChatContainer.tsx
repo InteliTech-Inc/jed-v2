@@ -13,9 +13,8 @@ import { ChatMessage } from "./ChatMessage";
 import { useTicketFlow } from "./TicketFlow";
 import { formatJedError } from "@/lib/utils";
 import { SERVER_FUNCTIONS } from "@/functions/server";
-import { transformNomineeData } from "@/lib/transform-nominee-data";
 import { VotingPayload } from "@/interfaces";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/utils/query-keys";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
@@ -53,8 +52,6 @@ export const ChatContainer = () => {
   const router = useRouter();
   const { voteNominee } = SERVER_FUNCTIONS;
   const { nominees } = useNomineeStore();
-
-  console.log("nominees from store", nominees);
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];

@@ -93,7 +93,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function NomineePage({ params }: Readonly<Props>) {
-  const { id, nom_id } = await params;
-  return <NomineeVotingCard eventId={id} nomineeId={nom_id} />;
+export default async function NomineePage() {
+  return <NomineeVotingCard />;
 }

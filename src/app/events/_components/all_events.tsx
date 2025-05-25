@@ -1,6 +1,5 @@
 "use client";
 
-import { EventResponse } from "@/interfaces";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { capitalize } from "@/utils/capitalize";
 import { EventCardSkeleton } from "./event_skeleton";
+import useEventsStore from "@/stores/events-store";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -43,16 +43,11 @@ const cardVariants = {
   },
 };
 
-export default function AllEvents({
-  events,
-  isPending,
-}: Readonly<{
-  events: EventResponse;
-  isPending: boolean;
-}>) {
+export default function AllEvents() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const { events: storedEvents, isLoading } = useEventsStore();
 
   useEffect(() => {
     const query = searchParams.get("q") ?? "";
@@ -61,13 +56,13 @@ export default function AllEvents({
 
   const statuses = useMemo(() => {
     const uniqueStatuses = new Set(
-      events?.data.events?.map((event) => event?.event_progress)
+      storedEvents.map((event) => event?.event_progress)
     );
     return Array.from(uniqueStatuses);
-  }, [events?.data?.events]);
+  }, [storedEvents]);
 
   const filteredEvents = useMemo(() => {
-    return events?.data.events?.filter((event) => {
+    return storedEvents.filter((event) => {
       const matchesSearch = searchQuery
         ? event.name.toLowerCase().includes(searchQuery.toLowerCase()) ??
           event.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -78,7 +73,7 @@ export default function AllEvents({
 
       return matchesSearch && matchesStatus;
     });
-  }, [events, searchQuery, selectedStatus]);
+  }, [storedEvents, searchQuery, selectedStatus]);
 
   const handleReset = () => {
     setSearchQuery("");
@@ -114,7 +109,7 @@ export default function AllEvents({
         animate="show"
         className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
       >
-        {isPending ? (
+        {isLoading ? (
           Array.from({ length: 8 }).map((_, i) => (
             <EventCardSkeleton key={i + 1} />
           ))

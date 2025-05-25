@@ -15,31 +15,24 @@ import { useParams, useRouter } from "next/navigation";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { formatJedError } from "@/lib/utils";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/utils/query-keys";
+import useEventsStore from "@/stores/events-store";
 
-export default function NomineeVotingPage({
-  eventId,
-  nomineeId,
-}: Readonly<{
-  eventId: string;
-  nomineeId: string;
-}>) {
+export default function NomineeVotingPage() {
   const { id: event_id, nom_id: nominee_id } = useParams();
   const router = useRouter();
-  const { getEvent, voteNominee } = SERVER_FUNCTIONS;
+  const { voteNominee } = SERVER_FUNCTIONS;
+  const { events } = useEventsStore();
 
-  const { data: eventData } = useQuery({
-    queryKey: [QUERY_KEYS.EVENTS, eventId],
-    queryFn: () => getEvent(eventId),
-  });
+  const eventData = events.find((event) => event.id === event_id);
 
   const event = {
-    ...eventData?.data,
-    id: String(eventData?.data.id),
-    approval_status: eventData?.data.approval_status,
-    event_progress: eventData?.data.event_progress,
-    categories: (eventData?.data.categories ?? []).map((category: any) => ({
+    ...eventData,
+    id: String(eventData?.id),
+    approval_status: eventData?.approval_status,
+    event_progress: eventData?.event_progress,
+    categories: (eventData?.categories ?? []).map((category: any) => ({
       ...category,
       nominees: category.nominees.map((nominee: any) => ({
         id: nominee.id,
@@ -54,7 +47,7 @@ export default function NomineeVotingPage({
 
   const nominee = event.categories
     ?.flatMap((cat: { nominees: Nominee }) => cat.nominees)
-    .find((nom: { id: string }) => nom.id === nomineeId);
+    .find((nom: { id: string }) => nom.id === nominee_id);
 
   const {
     register,
