@@ -214,7 +214,7 @@ export const ChatContainer = () => {
       await addSystemMessage(
         "Woohoo! 🎊 Your votes are in! Thanks for being awesome and supporting your favorite nominee! Your payment will be processed shortly. You're making a difference! 🌟"
       );
-      const res = await triggerTopboyOnVoting(votingData as VotingPayload);
+      const res = await triggerTopboyOnVoting(votingData);
       if (res.data) {
         router.push(res.data.authorization_url);
         reset();
