@@ -6,11 +6,13 @@ import Link from "next/link";
 type NomineeCardProps = {
   nominee: Nominee;
   eventId: string;
+  display_results: boolean;
 };
 
 export default function NomineeCard({
   nominee,
   eventId,
+  display_results,
 }: Readonly<NomineeCardProps>) {
   return (
     <div className="group transition-all duration-300">
@@ -31,10 +33,13 @@ export default function NomineeCard({
               <span className="flex flex-row gap-2 justify-between">
                 <p className="text-white/80 text-sm">{nominee.category}</p>
                 <span className="flex flex-row gap-2">
-                  <p className="text-white/80 flex gap-1 items-center text-xs">
-                    <ThumbsUp className="size-3" />
-                    {nominee.totalVotes}
-                  </p>
+                  {display_results && (
+                    <p className="text-white/80 flex gap-1 items-center text-xs">
+                      <ThumbsUp className="size-3" />
+                      {nominee.totalVotes}
+                    </p>
+                  )}
+
                   <p className="text-accent text-xs">{nominee.code}</p>
                 </span>
               </span>
