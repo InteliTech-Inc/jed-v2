@@ -101,6 +101,25 @@ export default function AllEvents() {
         </motion.div>
       );
     }
+    // if there are no published show a message
+    if (filteredEvents.filter((event) => event.is_published).length === 0) {
+      return (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="col-span-full flex flex-col items-center justify-center py-12 text-center"
+        >
+          <SearchX className="size-12 text-gray-400 mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900">
+            No published events found
+          </h3>
+          <p className="text-gray-500 mt-1">
+            There are no published events available at the moment
+          </p>
+        </motion.div>
+      );
+    }
 
     return (
       <motion.div
@@ -115,19 +134,21 @@ export default function AllEvents() {
           ))
         ) : (
           <AnimatePresence mode="popLayout">
-            {filteredEvents?.map((event) => (
-              <motion.div
-                key={event.id}
-                variants={cardVariants}
-                layout
-                initial="hidden"
-                animate="show"
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-              >
-                <EventCard event={event} />
-              </motion.div>
-            ))}
+            {filteredEvents
+              ?.filter((event) => event.is_published)
+              .map((event) => (
+                <motion.div
+                  key={event.id}
+                  variants={cardVariants}
+                  layout
+                  initial="hidden"
+                  animate="show"
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <EventCard event={event} />
+                </motion.div>
+              ))}
           </AnimatePresence>
         )}
       </motion.div>
