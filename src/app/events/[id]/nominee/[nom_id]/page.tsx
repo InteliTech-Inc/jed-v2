@@ -47,17 +47,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!nominee) {
     return {
-      title: "Nominee Not Found | JED",
+      title: "Nominee Not Found",
       description: "The requested nominee could not be found.",
     };
   }
 
   return {
-    title: `${nominee.name} - ${event.name} | JED Voting`,
+    title: `${nominee.name} - ${event.name} `,
     description: `Vote for ${nominee.name} as the ${nominee.category} in the ${event.name} event.`,
     keywords: `${nominee.name}, ${nominee.code}, ${event.name}, ${nominee.category}, voting, JED platform, online voting`,
     openGraph: {
-      title: `${nominee.name} (${nominee.code}) | ${event.name} | JED Voting`,
+      title: `${nominee.name} (${nominee.code}) | ${event.name} `,
       description: `Vote for ${nominee.name} as the ${nominee.category} in the ${event.name} event.`,
       type: "website",
       url: `${process.env.NEXT_PUBLIC_LIVE_URL}/events/${event.id}/nominee/${nominee.id}`,
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${nominee.name} - ${event.name} | JED Voting`,
+      title: `${nominee.name} - ${event.name} `,
       description: `Vote for ${nominee.name} as the ${nominee.category} in the ${event.name} event.`,
       images: [nominee.media?.url],
     },

@@ -5,13 +5,13 @@ import BackButton from "@/components/back";
 import EventsSkeleton from "./_components/event_skeleton";
 
 export const metadata: Metadata = {
-  title: "Events | JED - Vote for Your Favorite Nominees",
+  title: "Events - Vote for Your Favorite Nominees",
   description:
     "Discover and participate in exciting voting events. Support your favorite nominees across various categories. Join JED's community-driven voting platform.",
   keywords:
     "voting events, nominee voting, event categories, JED voting platform, online voting, event participation",
   openGraph: {
-    title: "Events | JED - Vote for Your Favorite Nominees",
+    title: "Events - Vote for Your Favorite Nominees",
     description:
       "Discover and participate in exciting voting events. Support your favorite nominees across various categories.",
     type: "website",
