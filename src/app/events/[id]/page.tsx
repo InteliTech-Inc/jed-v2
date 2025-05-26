@@ -43,13 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 
   return {
-    title: `${event.name} | JED Event`,
+    title: `Event - ${event.name}`,
     description: `${event.description} -  Join now to support your favorite nominees!`,
     keywords: `${event.name}, voting event, ${event.categories
       .map((cat) => cat.name)
       .join(", ")}, online voting, JED platform`,
     openGraph: {
-      title: `${event.name} | JED Voting Event`,
+      title: `Event - ${event.name}`,
       description: `${event.description} -  Join now to support your favorite nominees!`,
       type: "website",
       url: `https://jed-event.com/events/${event.id}`,
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${event.name} | JED Event`,
+      title: `Event - ${event.name}`,
       description: `${event.description} -  Join now to support your favorite nominees!`,
       images: [event.media?.url],
     },
