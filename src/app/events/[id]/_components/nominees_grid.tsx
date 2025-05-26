@@ -154,7 +154,11 @@ export default function NomineesGrid({
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <NomineeCard nominee={nominee} eventId={eventId} />
+                  <NomineeCard
+                    nominee={nominee}
+                    eventId={eventId}
+                    display_results={event.display_results}
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>
