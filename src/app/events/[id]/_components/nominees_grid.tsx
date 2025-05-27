@@ -158,6 +158,7 @@ export default function NomineesGrid({
                     nominee={nominee}
                     eventId={eventId}
                     display_results={event.display_results}
+                    event_progress={event.event_progress}
                   />
                 </motion.div>
               ))}

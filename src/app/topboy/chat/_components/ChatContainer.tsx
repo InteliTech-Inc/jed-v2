@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { Loader, ZapIcon } from "lucide-react";
 import { validateEmail } from "@/utils/validate-email";
 import useNomineeStore from "@/stores/nominee-store";
+import useEventsStore from "@/stores/events-store";
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const ChatContainer = () => {
@@ -52,6 +53,7 @@ export const ChatContainer = () => {
   const router = useRouter();
   const { voteNominee } = SERVER_FUNCTIONS;
   const { nominees } = useNomineeStore();
+  const { events } = useEventsStore();
 
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
@@ -119,13 +121,24 @@ export const ChatContainer = () => {
       await addSystemMessage(
         "I notice you're having some trouble. Would you like to:\n1. Continue with current flow\n2. Start over\nPlease type 1 or 2 to proceed."
       );
-      return;
     }
   };
 
   const handleVotingFlow = async (content: string) => {
     if (!nomineeDetails) {
       const nominee = nominees[content.trim().toLocaleUpperCase()];
+      const event = events.find((event) => event.id === nominee.event_id);
+      if (event?.event_progress.toLocaleLowerCase() === "not_started") {
+        await addSystemMessage(
+          "Patience, folks! 🛑. Voting will begin soon. But not now. Definitely not now."
+        );
+        return;
+      } else if (event?.event_progress.toLocaleLowerCase() === "completed") {
+        await addSystemMessage(
+          "Voting is over! The ballots are packed, sealed, and probably chilling somewhere in the other part of our world 🌍."
+        );
+        return;
+      }
       if (nominee) {
         setNomineeDetails(nominee);
         resetRetryCount();

@@ -85,7 +85,11 @@ export default function EventDetails({
 
               <div>
                 <Link href={`/events/${event.id}/vote`} className="w-full">
-                  <Button variant="secondary" className="w-full group">
+                  <Button
+                    variant="secondary"
+                    className="w-full group"
+                    disabled={event.event_progress === "not_started"}
+                  >
                     Vote Now
                     <Vote className="size-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
