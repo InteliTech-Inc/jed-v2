@@ -39,7 +39,7 @@ export type Event = {
   voting_period: Period;
   nomination_period: Period;
   approval_status: "pending" | "approved" | "declined";
-  event_progress: "pending" | "ongoing" | "completed";
+  event_progress: "not_started" | "ongoing" | "completed";
   is_published: boolean;
   display_results: boolean;
   amount_per_vote: number;
