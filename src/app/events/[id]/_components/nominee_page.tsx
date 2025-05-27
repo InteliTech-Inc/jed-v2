@@ -120,111 +120,154 @@ export default function NomineeVotingPage() {
     );
   }
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto mt-8">
-        <div className=" ml-2 md:ml-6">
-          <BackButton />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
-          <div className="relative w-full  overflow-hidden rounded-xl">
+  switch (event.event_progress?.toLocaleLowerCase()) {
+    case "not_started":
+      return (
+        <div className="flex container flex-col h-[30rem] items-center justify-center">
+          <div className="text-center w-40 h-auto ">
             <Image
-              src={nominee.image}
-              alt={nominee.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 1200px"
-              className="object-cover object-top h-full w-full"
-              priority
+              src="/images/processing.svg"
+              alt="Processing"
+              width={200}
+              height={200}
+              className="mx-auto mb-6  h-full w-full object-contain"
             />
-            <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
-              <div className="flex flex-col gap-2">
-                <h2 className="text-2xl font-bold text-white">
-                  {nominee.name}
-                </h2>
-                <p className="text-white/80">{nominee.category}</p>
-                <p className="text-accent">{nominee.code}</p>
-              </div>
-            </div>
           </div>
-
-          <div className="flex flex-col gap-6">
-            <div>
-              <h1 className="text-2xl font-bold mb-2">
-                Vote for {nominee.name} ({nominee.code})
-              </h1>
-              <p className="text-gray-600">
-                Support your favorite nominee by casting your votes. You can
-                also vote via USSD by dialing <strong>*928*121#</strong>
-              </p>
+          <h1 className="text-gray-700 text-xl font-medium">
+            Voting for this event has not started yet.
+          </h1>
+          <p className="text-gray-500 text-sm mt-2">
+            Please check back later when the event goes live.
+          </p>
+        </div>
+      );
+    case "completed":
+      return (
+        <div className="flex container flex-col h-[30rem] items-center justify-center">
+          <div className="text-center w-40 h-auto ">
+            <Image
+              src="/images/completed.svg"
+              alt="Processing"
+              width={200}
+              height={200}
+              className="mx-auto mb-6  h-full w-full object-contain"
+            />
+          </div>
+          <h1 className="text-gray-700 text-xl font-medium">
+            Voting for this event has already been completed.
+          </h1>
+          <p className="text-gray-500 text-sm mt-2">
+            Thank you for your interest, but the voting period has ended.
+          </p>
+        </div>
+      );
+    default:
+      return (
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-6xl mx-auto mt-8">
+            <div className=" ml-2 md:ml-6">
+              <BackButton />
             </div>
-
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-6"
-            >
-              <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                  id="name"
-                  {...register("name")}
-                  placeholder="Enter your full name"
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
+              <div className="relative w-full  overflow-hidden rounded-xl">
+                <Image
+                  src={nominee.image}
+                  alt={nominee.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                  className="object-cover object-top h-full w-full"
+                  priority
                 />
-                {errors.name && (
-                  <small className="text-sm text-red-500">
-                    {errors.name.message}
-                  </small>
-                )}
+                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-2xl font-bold text-white">
+                      {nominee.name}
+                    </h2>
+                    <p className="text-white/80">{nominee.category}</p>
+                    <p className="text-accent">{nominee.code}</p>
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  {...register("email")}
-                  placeholder="Enter your email address"
-                />
-                {errors.email && (
-                  <small className="text-sm text-red-500">
-                    {errors.email.message}
-                  </small>
-                )}
-              </div>
+              <div className="flex flex-col gap-6">
+                <div>
+                  <h1 className="text-2xl font-bold mb-2">
+                    Vote for {nominee.name} ({nominee.code})
+                  </h1>
+                  <p className="text-gray-600">
+                    Support your favorite nominee by casting your votes. You can
+                    also vote via USSD by dialing <strong>*928*121#</strong>
+                  </p>
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="votes">
-                  Number of Votes (GHS {event.amount_per_vote?.toFixed(2)})
-                </Label>
-                <Input
-                  id="votes"
-                  type="number"
-                  {...register("numberOfVotes", { valueAsNumber: true })}
-                  min={1}
-                  onChange={(e) =>
-                    setValue("numberOfVotes", parseInt(e.target.value))
-                  }
-                />
-                {errors.numberOfVotes && (
-                  <small className="text-sm text-red-500">
-                    {errors.numberOfVotes.message}
-                  </small>
-                )}
-                <p className="text-sm text-gray-500">
-                  Total Price: GHS {totalPrice.toFixed(2)}
-                </p>
-              </div>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col gap-6"
+                >
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input
+                      id="name"
+                      {...register("name")}
+                      placeholder="Enter your full name"
+                    />
+                    {errors.name && (
+                      <small className="text-sm text-red-500">
+                        {errors.name.message}
+                      </small>
+                    )}
+                  </div>
 
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isSubmitting || isPending}
-              >
-                {isSubmitting || isPending ? <Spinner /> : " Submit Votes"}
-              </Button>
-            </form>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      {...register("email")}
+                      placeholder="Enter your email address"
+                    />
+                    {errors.email && (
+                      <small className="text-sm text-red-500">
+                        {errors.email.message}
+                      </small>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="votes">
+                      Number of Votes (GHS {event.amount_per_vote?.toFixed(2)})
+                    </Label>
+                    <Input
+                      id="votes"
+                      type="number"
+                      {...register("numberOfVotes", { valueAsNumber: true })}
+                      min={1}
+                      onChange={(e) =>
+                        setValue("numberOfVotes", parseInt(e.target.value))
+                      }
+                    />
+                    {errors.numberOfVotes && (
+                      <small className="text-sm text-red-500">
+                        {errors.numberOfVotes.message}
+                      </small>
+                    )}
+                    <p className="text-sm text-gray-500">
+                      Total Price: GHS {totalPrice.toFixed(2)}
+                    </p>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isSubmitting || isPending}
+                  >
+                    {isSubmitting || isPending ? <Spinner /> : " Submit Votes"}
+                  </Button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      );
+  }
 }
