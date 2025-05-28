@@ -43,11 +43,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Step 6: Build the Next.js app
-      - name: Build Next.js app
-        run: pnpm run build
-        env:
-          NODE_ENV: production
 
       # Step 7: Run tests (optional, uncomment if you have tests)
       # - name: Run tests
