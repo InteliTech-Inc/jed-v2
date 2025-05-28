@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24" # Use the same Node.js version as your VPS
-          cache: "pnpm"
+          cache: "npm"
 
       # Step 3: Install dependencies
       - name: Install dependencies
