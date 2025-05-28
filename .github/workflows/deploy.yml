@@ -1,0 +1,52 @@
+name: CI/CD Pipeline for Next.js App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24" # Use the same Node.js version as your VPS
+          cache: "pnpm"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: pnpm ci
+
+      # Step 4: Build the Next.js app
+      - name: Build Next.js app
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+      # Step 5: Run tests (optional, if you have tests)
+      # - name: Run tests
+      #   run: pnpm test
+      #   if: always() # Run even if build fails, adjust based on your needs
+
+      # Step 6: Deploy to VPS
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /var/www/nextjs/jed-landing
+            git pull origin main
+            pnpm ci
+            pnpm run build
+            pm2 restart ecosystem.config.js
