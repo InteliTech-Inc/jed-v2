@@ -1,4 +1,4 @@
-name: CI/CD Pipeline for Next.js App
+name: CI/CD Pipeline for Next.js App with pnpm
 
 on:
   push:
@@ -18,25 +18,29 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24" # Use the same Node.js version as your VPS
-          cache: "npm"
+          node-version: "24" # Matches your VPS Node.js version
+          cache: "pnpm" # Cache pnpm dependencies
 
-      # Step 3: Install dependencies
+      # Step 3: Install pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Step 4: Install dependencies
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile # Replaces pnpm ci for consistency
 
-      # Step 4: Build the Next.js app
+      # Step 5: Build the Next.js app
       - name: Build Next.js app
         run: pnpm run build
         env:
           NODE_ENV: production
 
-      # Step 5: Run tests (optional, if you have tests)
+      # Step 6: Run tests (optional, uncomment if you have tests)
       # - name: Run tests
       #   run: pnpm test
       #   if: always() # Run even if build fails, adjust based on your needs
 
-      # Step 6: Deploy to VPS
+      # Step 7: Deploy to VPS
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -45,8 +49,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            export PATH=$PATH:/usr/local/bin # Ensure pnpm is in PATH
             cd /var/www/nextjs/jed-landing
             git pull origin main
-            pnpm ci
+            pnpm install --frozen-lockfile
             pnpm run build
             pm2 restart ecosystem.config.js
