@@ -127,7 +127,17 @@ export const ChatContainer = () => {
   const handleVotingFlow = async (content: string) => {
     if (!nomineeDetails) {
       const nominee = nominees[content.trim().toLocaleUpperCase()];
+
+      if (!nominee) {
+        await handleIncorrectResponse();
+        await addSystemMessage(
+          "Hmm, I couldn't find that nominee code. 🤔 Could you double-check and try again? I want to make sure your votes go to the right person! 🎯"
+        );
+        return;
+      }
+
       const event = events.find((event) => event.id === nominee.event_id);
+
       if (event?.event_progress.toLocaleLowerCase() === "not_started") {
         await addSystemMessage(
           "Patience, folks! 🛑. Voting will begin soon. But not now. Definitely not now."
@@ -139,6 +149,7 @@ export const ChatContainer = () => {
         );
         return;
       }
+
       if (nominee) {
         setNomineeDetails(nominee);
         resetRetryCount();
@@ -150,11 +161,6 @@ export const ChatContainer = () => {
           )}</strong> for the event <strong>${
             nominee.eventName
           }</strong>. How many votes would you like to cast?`
-        );
-      } else {
-        await handleIncorrectResponse();
-        await addSystemMessage(
-          "Hmm, I couldn't find that nominee code. 🤔 Could you double-check and try again? I want to make sure your votes go to the right person! 🎯"
         );
       }
     } else if (!numberOfVotes) {
