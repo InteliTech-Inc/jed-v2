@@ -36,8 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         category: category.name,
         image: nominee.image,
         code: nominee.code,
-        totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)
-          ?.count,
+        totalVotes: nominee.votes.find((n: any) => n.nominee_id === nominee.id)?.count,
       })),
     })),
   };
@@ -45,9 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `Event - ${event.name}`,
     description: `${event.description} -  Join now to support your favorite nominees!`,
-    keywords: `${event.name}, voting event, ${event.categories
-      .map((cat) => cat.name)
-      .join(", ")}, online voting, JED platform`,
+    keywords: `${event.name}, voting event, ${event.categories.map((cat) => cat.name).join(", ")}, online voting, JED platform`,
     openGraph: {
       title: `Event - ${event.name}`,
       description: `${event.description} -  Join now to support your favorite nominees!`,
@@ -100,9 +97,7 @@ export default async function EventPage({ params }: Readonly<Props>) {
 
   const nominees: Nominee[] = data.categories.flatMap((cat: any) =>
     cat.nominees.map((nom: any) => {
-      const totalVotes = nom.votes
-        ?.filter((vote: any) => vote.nominee_id === nom.id)
-        .reduce((sum: number, vote: any) => sum + vote.count, 0);
+      const totalVotes = nom.votes?.filter((vote: any) => vote.nominee_id === nom.id).reduce((sum: number, vote: any) => sum + vote.count, 0);
       return {
         id: nom.id,
         name: nom.full_name,

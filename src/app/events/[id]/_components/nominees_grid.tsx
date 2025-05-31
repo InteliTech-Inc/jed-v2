@@ -9,6 +9,7 @@ import CategoryFilter from "@/app/events/[id]/_components/category_filter";
 import EventDetailsModal from "@/app/events/[id]/_components/event_details_modal";
 import { SearchX, Info } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import useEventsStore from "@/stores/events-store";
 import { Button } from "@/components/ui/button";
 
 type NomineesGridProps = {
@@ -41,11 +42,7 @@ const cardVariants = {
   },
 };
 
-export default function NomineesGrid({
-  nominees,
-  eventId,
-  event,
-}: Readonly<NomineesGridProps>) {
+export default function NomineesGrid({ nominees, eventId, event }: Readonly<NomineesGridProps>) {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -58,9 +55,7 @@ export default function NomineesGrid({
   }, [searchParams]);
 
   const categories = useMemo(() => {
-    const uniqueCategories = new Set(
-      nominees.map((nominee) => nominee.category)
-    );
+    const uniqueCategories = new Set(nominees.map((nominee) => nominee.category));
     return Array.from(uniqueCategories);
   }, [nominees]);
 
@@ -73,8 +68,7 @@ export default function NomineesGrid({
           nominee.code.toLowerCase().includes(searchQuery.toLowerCase())
         : true;
 
-      const matchesCategory =
-        selectedCategory === "all" || nominee.category === selectedCategory;
+      const matchesCategory = selectedCategory === "all" || nominee.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
@@ -92,31 +86,16 @@ export default function NomineesGrid({
     <div className="flex flex-col w-full mt-10 lg:mt-20 gap-6">
       <div className="flex flex-col md:flex-row items-center flex-wrap lg:flex-nowrap justify-between gap-4">
         <div className="flex w-full flex-col md:flex-row items-center gap-4">
-          <SearchBar
-            placeholder="Search by name, category or code..."
-            queryKey="q"
-            handleReset={handleReset}
-          />
-          <CategoryFilter
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
+          <SearchBar placeholder="Search by name, category or code..." queryKey="q" handleReset={handleReset} />
+          <CategoryFilter categories={categories} selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
         </div>
-        <Button
-          className=" shadow-none w-full md:w-auto"
-          onClick={() => setIsModalOpen(true)}
-        >
+        <Button className=" shadow-none w-full md:w-auto" onClick={() => setIsModalOpen(true)}>
           View Details
           <Info className="mr-2 h-4 w-4" />
         </Button>
       </div>
 
-      <EventDetailsModal
-        event={event}
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      <EventDetailsModal event={event} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <div className={`mt-4 ${isSearching ? "opacity-50" : ""}`}>
         {filteredNominees.length === 0 ? (
@@ -127,9 +106,7 @@ export default function NomineesGrid({
             className="col-span-full flex flex-col items-center justify-center py-12 text-center"
           >
             <SearchX className="size-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900">
-              No nominees found {searchQuery ? `for "${searchQuery}"` : ""}
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-900">No nominees found {searchQuery ? `for "${searchQuery}"` : ""}</h3>
             <p className="text-gray-500 mt-1">
               {searchQuery
                 ? "Try adjusting your search terms or category filter. You can search by name, category, or nominee code"
@@ -154,12 +131,7 @@ export default function NomineesGrid({
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <NomineeCard
-                    nominee={nominee}
-                    eventId={eventId}
-                    display_results={event.display_results}
-                    event_progress={event.event_progress}
-                  />
+                  <NomineeCard nominee={nominee} eventId={eventId} display_results={event.display_results} event_progress={event.event_progress} />
                 </motion.div>
               ))}
             </AnimatePresence>
