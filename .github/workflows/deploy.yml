@@ -44,23 +44,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
 
-      # Step 7: Run tests (optional, uncomment if you have tests)
-      # - name: Run tests
-      #   run: pnpm test
-      #   if: always() # Run even if build fails, adjust based on your needs
+      - name: Echo Dokploy message
+        run: echo "Dokploy uses this file for CI/CD"
 
-      # Step 8: Deploy to VPS
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            export PATH=$PATH:/usr/local/bin:/home/${{ secrets.VPS_USER }}/.local/share/pnpm/global/5/.pnpm
-            cd /var/www/nextjs/jed-landing
-            git pull origin main
-            pnpm install --frozen-lockfile
-            pnpm run build
-            pm2 restart ecosystem.config.js
