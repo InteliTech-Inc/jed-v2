@@ -50,11 +50,17 @@ export default function NomineeCard({
               <Link
                 href={`/events/${eventId}/nominee/${nominee.id}`}
                 className=" w-full"
-                aria-disabled={event_progress.toLowerCase() === "not_started"}
+                aria-disabled={
+                  event_progress.toLowerCase() === "not_started" ||
+                  event_progress.toLowerCase() === "completed"
+                }
               >
                 <button
                   className="w-full text-sm py-2 px-4 bg-white/95 text-black rounded-full hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={event_progress.toLowerCase() === "not_started"}
+                  disabled={
+                    event_progress.toLowerCase() === "not_started" ||
+                    event_progress.toLowerCase() === "completed"
+                  }
                 >
                   Vote
                 </button>
