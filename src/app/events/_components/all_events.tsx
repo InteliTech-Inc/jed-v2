@@ -16,8 +16,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { capitalize } from "@/utils/capitalize";
-import { EventCardSkeleton } from "./event_skeleton";
 import useEventsStore from "@/stores/events-store";
+import { Event } from "@/interfaces";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -43,16 +43,22 @@ const cardVariants = {
   },
 };
 
-export default function AllEvents() {
+export default function AllEvents({ events }: { events: Event[] }) {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const { events: storedEvents, isLoading } = useEventsStore();
+  const { events: storedEvents, setEvents } = useEventsStore();
 
   useEffect(() => {
     const query = searchParams.get("q") ?? "";
     setSearchQuery(query);
   }, [searchParams]);
+
+  useEffect(() => {
+    if (events) {
+      setEvents(events);
+    }
+  }, [events]);
 
   const statuses = useMemo(() => {
     const uniqueStatuses = new Set(
@@ -128,29 +134,23 @@ export default function AllEvents() {
         animate="show"
         className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"
       >
-        {isLoading ? (
-          Array.from({ length: 8 }).map((_, i) => (
-            <EventCardSkeleton key={i + 1} />
-          ))
-        ) : (
-          <AnimatePresence mode="popLayout">
-            {filteredEvents
-              ?.filter((event) => event.is_published)
-              .map((event) => (
-                <motion.div
-                  key={event.id}
-                  variants={cardVariants}
-                  layout
-                  initial="hidden"
-                  animate="show"
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <EventCard event={event} />
-                </motion.div>
-              ))}
-          </AnimatePresence>
-        )}
+        <AnimatePresence mode="popLayout">
+          {filteredEvents
+            ?.filter((event) => event.is_published)
+            .map((event) => (
+              <motion.div
+                key={event.id}
+                variants={cardVariants}
+                layout
+                initial="hidden"
+                animate="show"
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <EventCard event={event} />
+              </motion.div>
+            ))}
+        </AnimatePresence>
       </motion.div>
     );
   }, [filteredEvents, searchQuery]);
