@@ -1,33 +1,27 @@
-"use client";
-
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import AllEvents from "./all_events";
 import { SERVER_FUNCTIONS } from "@/functions/server";
 import { QUERY_KEYS } from "@/utils/query-keys";
-import useEventsStore from "@/stores/events-store";
 
-export default function Events() {
+export default async function Events() {
   const { getEvents } = SERVER_FUNCTIONS;
-  const { setEvents } = useEventsStore();
+  const queryClient = new QueryClient();
 
-  const { data } = useQuery({
+  const { data } = await queryClient.fetchQuery({
     queryKey: [QUERY_KEYS.EVENTS],
-    queryFn: async () => {
-      const res = await getEvents();
-      return res;
-    },
+    queryFn: getEvents,
   });
-
-  React.useEffect(() => {
-    if (data) {
-      setEvents(data.data.events);
-    }
-  }, [data, setEvents]);
 
   return (
     <div className="flex flex-col gap-4">
-      <AllEvents />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <AllEvents events={data.events} />
+      </HydrationBoundary>
     </div>
   );
 }
