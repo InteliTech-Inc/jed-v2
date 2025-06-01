@@ -10,12 +10,7 @@ type NomineeCardProps = {
   event_progress: string;
 };
 
-export default function NomineeCard({
-  nominee,
-  eventId,
-  display_results,
-  event_progress,
-}: Readonly<NomineeCardProps>) {
+export default function NomineeCard({ nominee, eventId, display_results, event_progress }: Readonly<NomineeCardProps>) {
   return (
     <div className="group transition-all duration-300">
       <div className="relative h-72 w-full overflow-hidden rounded-xl transition-all duration-300">
@@ -50,17 +45,11 @@ export default function NomineeCard({
               <Link
                 href={`/events/${eventId}/nominee/${nominee.id}`}
                 className=" w-full"
-                aria-disabled={
-                  event_progress.toLowerCase() === "not_started" ||
-                  event_progress.toLowerCase() === "completed"
-                }
+                aria-disabled={event_progress.toLowerCase() === "not_started" || event_progress.toLowerCase() === "completed"}
               >
                 <button
                   className="w-full text-sm py-2 px-4 bg-white/95 text-black rounded-full hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={
-                    event_progress.toLowerCase() === "not_started" ||
-                    event_progress.toLowerCase() === "completed"
-                  }
+                  disabled={event_progress.toLowerCase() === "not_started" || event_progress.toLowerCase() === "completed"}
                 >
                   Vote
                 </button>

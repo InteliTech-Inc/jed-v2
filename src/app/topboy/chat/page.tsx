@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 export default function ChatPage() {
   return (
     <section className="relative min-h-screen">
-      <div className="absolute inset-0 bg-gradient-to-b from-accent/20 via-accent/10 to-transparent -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/10 via-accent/10 to-transparent -z-10" />
 
       <div className="container mx-auto px-4 py-8">
         <div className="mt-8 space-y-3">

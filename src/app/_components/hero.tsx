@@ -70,8 +70,7 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
           >
-            The <span className="text-accent"> Easy Way</span> to Manage Your
-            Events Online
+            The <span className="text-accent"> Easy Way</span> to Manage Your Events Online
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -79,37 +78,22 @@ export default function Hero() {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-xl text-white/90 max-w-2xl mx-auto mb-12"
           >
-            Organizing and managing online events shouldn't be complicated. Our
-            platform makes it simple to manage everything in one
-            place—nominations, voting, ticketing, and more.
+            Organizing and managing online events shouldn't be complicated. Our platform makes it simple to manage everything in one place—nominations, voting,
+            ticketing, and more.
           </motion.p>
           <div className="flex w-fit mx-auto gap-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
               <Button
                 variant={"secondary"}
                 aria-label="Start free trial"
                 role="button"
-                onClick={() =>
-                  window.open(
-                    "https://jed-app.vercel.app/login",
-                    "_blank",
-                    "noopener,noreferrer"
-                  )
-                }
+                onClick={() => window.open("https://app.jedevent.com/sign-up", "_blank", "noopener,noreferrer")}
               >
                 Try for free
                 <Icon icon="solar:arrow-right-linear" aria-hidden="true" />
               </Button>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
               <Button
                 variant={"outline"}
                 aria-label="Start free trial"

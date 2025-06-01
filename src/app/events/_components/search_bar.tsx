@@ -58,7 +58,7 @@ export default function SearchBar({ placeholder, queryKey, handleReset }: Search
           handleSearch(e.target.value);
         }}
         onKeyDown={handleKeyDown}
-        className="mr-2 py-6 w-full px-4 rounded-full pr-12"
+        className="mr-2 py-6 border-accent/40 w-full px-4 rounded-full pr-12"
         aria-label="Search"
       />
       {inputValue && (
@@ -70,10 +70,10 @@ export default function SearchBar({ placeholder, queryKey, handleReset }: Search
         type="submit"
         size="icon"
         disabled={isLoading}
-        className="absolute size-10 bg-gray-100 top-1/2 -translate-y-1/2 right-3 rounded-full hover:bg-gray-200 transition-all duration-300 disabled:opacity-50"
+        className="absolute size-10 bg-accent/40 top-1/2 -translate-y-1/2 right-3 rounded-full hover:bg-gray-200 transition-all duration-300 disabled:opacity-50"
         aria-label="Search"
       >
-        <Search className={`text-gray-500 ${isLoading ? "animate-pulse" : ""}`} />
+        <Search className={`text-secondary ${isLoading ? "animate-pulse" : ""}`} />
       </Button>
     </form>
   );

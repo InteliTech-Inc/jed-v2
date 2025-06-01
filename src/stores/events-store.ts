@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Event } from "@/interfaces";
 
+// Types for all Events
 type EventsActions = {
   setEvents: (events: Event[]) => void;
   setIsLoading: (isLoading: boolean) => void;
@@ -12,24 +13,34 @@ type EventsStore = {
   isLoading?: boolean;
 };
 
-const initialState: EventsStore = {
+type SingleEventActions = {
+  setEvent: (event: Event) => void;
+};
+
+type SingleEventStore = {
+  event: Event | null;
+};
+
+const initialEventsState: EventsStore = {
   events: [],
   isLoading: false,
+};
+
+const initialSingleEventState: SingleEventStore = {
+  event: null,
 };
 
 const useEventsStore = create<EventsStore & EventsActions>()(
   persist(
     (set) => ({
-      ...initialState,
+      ...initialEventsState,
       setEvents: (events) =>
-        set((state) => ({
-          ...state,
+        set(() => ({
           events,
           isLoading: false,
         })),
       setIsLoading: (isLoading) =>
-        set((state) => ({
-          ...state,
+        set(() => ({
           isLoading,
         })),
     }),
@@ -38,5 +49,22 @@ const useEventsStore = create<EventsStore & EventsActions>()(
     }
   )
 );
+
+const useSingleEventStore = create<SingleEventStore & SingleEventActions>()(
+  persist(
+    (set) => ({
+      ...initialSingleEventState,
+      setEvent: (event) =>
+        set(() => ({
+          event,
+        })),
+    }),
+    {
+      name: "single-event-store",
+    }
+  )
+);
+
 export default useEventsStore;
-export type { EventsStore, EventsActions };
+export { useSingleEventStore };
+export type { EventsStore, EventsActions, SingleEventStore, SingleEventActions };
