@@ -9,9 +9,10 @@ import EventCard from "./event_card";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { capitalize } from "@/utils/capitalize";
 import useEventsStore from "@/stores/events-store";
 import { Event } from "@/interfaces";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { QUERY_OPTIONS } from "@/functions/server";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -37,11 +38,16 @@ const cardVariants = {
   },
 };
 
-export default function AllEvents({ events }: { events: Event[] }) {
+export default function AllEvents() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
-  const { events: storedEvents, setEvents } = useEventsStore();
+  const { setEvents } = useEventsStore();
+  const {
+    data: {
+      data: { events },
+    },
+  } = useSuspenseQuery(QUERY_OPTIONS.EVENTS) as { data: { data: { events: Event[] } } };
 
   useEffect(() => {
     const query = searchParams.get("q") ?? "";
@@ -55,12 +61,12 @@ export default function AllEvents({ events }: { events: Event[] }) {
   }, [events]);
 
   const statuses = useMemo(() => {
-    const uniqueStatuses = new Set(storedEvents.map((event) => event?.event_progress));
+    const uniqueStatuses = new Set(events.map((event) => event?.event_progress));
     return Array.from(uniqueStatuses);
-  }, [storedEvents]);
+  }, [events]);
 
   const filteredEvents = useMemo(() => {
-    return storedEvents.filter((event) => {
+    return events.filter((event) => {
       const matchesSearch = searchQuery
         ? event.name.toLowerCase().includes(searchQuery.toLowerCase()) ?? event.description.toLowerCase().includes(searchQuery.toLowerCase())
         : true;
@@ -69,7 +75,7 @@ export default function AllEvents({ events }: { events: Event[] }) {
 
       return matchesSearch && matchesStatus;
     });
-  }, [storedEvents, searchQuery, selectedStatus]);
+  }, [events, searchQuery, selectedStatus]);
 
   const handleReset = () => {
     setSearchQuery("");

@@ -1,9 +1,10 @@
 import { Metadata } from "next";
-import { Event, Nominee } from "@/interfaces";
-import NomineesGrid from "@/app/events/[id]/_components/nominees_grid";
+import { Event } from "@/interfaces";
 import BackButton from "@/components/back";
 import { SERVER_FUNCTIONS } from "@/functions/server";
 import { notFound } from "next/navigation";
+import CategoriesList from "./_components/categories_list";
+import SingleEvent from "./_components/single_event";
 
 interface Props {
   params: Promise<{
@@ -74,57 +75,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function EventPage({ params }: Readonly<Props>) {
   const { id } = await params;
 
-  const { data } = await SERVER_FUNCTIONS.getEvent(id);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`, {
+    next: { revalidate: 120 },
+  });
+  const { data: event } = await res.json();
 
-  if (!data) {
-    notFound();
+  if (!event) {
+    return notFound();
   }
 
-  const event = {
-    ...data,
-    id: String(data.id),
-    approval_status: data.approval_status,
-    event_progress: data.event_progress,
-    voting_period: {
-      start: data.schedule?.voting_start_period,
-      end: data.schedule?.voting_end_period,
-    },
-    nomination_period: {
-      start: data.schedule?.nomination_start_period,
-      end: data.schedule?.nomination_end_period,
-    },
-  } as Event;
-
-  const nominees: Nominee[] = data.categories.flatMap((cat: any) =>
-    cat.nominees.map((nom: any) => {
-      const totalVotes = nom.votes?.filter((vote: any) => vote.nominee_id === nom.id).reduce((sum: number, vote: any) => sum + vote.count, 0);
-      return {
-        id: nom.id,
-        name: nom.full_name,
-        fullName: nom.full_name,
-        category: cat.name,
-        image: nom.media?.url,
-        code: nom.code,
-        totalVotes,
-      };
-    })
-  );
-
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="max-w-7xl mx-auto">
-        <BackButton />
-      </div>
-      <div className="max-w-7xl mx-auto">
-        <article itemScope itemType="https://schema.org/Event">
-          <meta itemProp="name" content={event.name} />
-          <meta itemProp="description" content={event.description} />
-          <meta itemProp="image" content={event.media?.url} />
-          <meta itemProp="status" content={event.event_progress} />
-
-          <NomineesGrid nominees={nominees} eventId={id} event={event} />
-        </article>
-      </div>
-    </main>
+    <div className=" bg-gradient-to-b from-accent/10 to-white">
+      <main className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto">
+          <BackButton />
+        </div>
+        <div className="max-w-7xl mx-auto">
+          <article itemScope itemType="https://schema.org/Event">
+            <meta itemProp="name" content={event.name} />
+            <meta itemProp="description" content={event.description} />
+            <meta itemProp="image" content={event.media?.url} />
+            <meta itemProp="status" content={event.event_progress} />
+          </article>
+          <SingleEvent event={event} />
+          <div className="mt-4 text-center max-w-screen-md mb-10 mx-auto ">
+            <h1 className="text-4xl font-bold mb-2">{event.name}</h1>
+            <p className="text-gray-500">{event.description}</p>
+          </div>
+          <CategoriesList data={event} />{" "}
+        </div>
+      </main>
+    </div>
   );
 }

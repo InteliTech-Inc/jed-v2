@@ -27,7 +27,7 @@ export default function MobileNavbar({ isOpen, closeButtonHandler }: MobileNavba
       variants={containerVariants}
       initial="hidden"
       animate={isOpen ? "visible" : "hidden"}
-      className={`${isOpen ? "absolute" : "hidden"} w-full h-screen top-0 left-0 lg:hidden z-50`}
+      className={`${isOpen ? "absolute" : "hidden"} w-full h-screen top-0 left-0 lg:hidden z-50 bg-gradient-to-b `}
     >
       <nav className="bg-primary pt-8 w-full h-screen p-4 relative flex flex-col">
         {/* Header */}
@@ -61,7 +61,7 @@ export default function MobileNavbar({ isOpen, closeButtonHandler }: MobileNavba
               Contact <Icon icon={"solar:phone-calling-rounded-linear"} />
             </Link>
           </Button>
-          <Button className="bg-transparent hover:border-accent" onClick={() => window.open("https://jed-app.fly.dev/login", "_blank", "noopener,noreferrer")}>
+          <Button className=" hover:border-accent" onClick={() => window.open("https://jed-app.fly.dev/login", "_blank", "noopener,noreferrer")}>
             Log In <Icon icon={"solar:login-2-outline"} />
           </Button>
         </motion.section>

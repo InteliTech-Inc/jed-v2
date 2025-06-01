@@ -35,7 +35,6 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-black/60" />
         </div>
         <div className="relative z-10 text-center text-white max-w-7xl mx-auto px-4">
-          <BackButton />
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">About JED</h1>
           <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">
             We're building the future of event management, making it easier for organizers to create amazing experiences.
@@ -43,20 +42,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4">
-        <section className="py-20 bg-white">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Mission</h2>
-            <p className="text-lg text-gray-600">
-              We're dedicated to making event planning effortless. Our platform offers a user-friendly experience, packed with powerful tools, to help you
-              seamlessly organize events of any size, so you can focus on what truly matters.
-            </p>
-          </div>
+      <div className="">
+        <section className="max-w-7xl mt-4 mx-auto px-4">
+          <BackButton />
+          <section className="py-20 bg-white">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold">Our Mission</h2>
+              <p className="text-lg text-gray-600">
+                We're dedicated to making event planning effortless. Our platform offers a user-friendly experience, packed with powerful tools, to help you
+                seamlessly organize events of any size, so you can focus on what truly matters.
+              </p>
+            </div>
+          </section>
         </section>
         <WhyJedSection />
         <SupportSection />
 
-        <section className="py-20 bg-primary text-white">
+        <section className="pt-20  bg-primary text-white">
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Events?</h2>
             <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
