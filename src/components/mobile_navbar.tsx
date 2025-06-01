@@ -61,7 +61,7 @@ export default function MobileNavbar({ isOpen, closeButtonHandler }: MobileNavba
               Contact <Icon icon={"solar:phone-calling-rounded-linear"} />
             </Link>
           </Button>
-          <Button className=" hover:border-accent" onClick={() => window.open("https://jed-app.fly.dev/login", "_blank", "noopener,noreferrer")}>
+          <Button className=" hover:border-accent" onClick={() => window.open("https://app.jedevent.com/login", "_blank", "noopener,noreferrer")}>
             Log In <Icon icon={"solar:login-2-outline"} />
           </Button>
         </motion.section>

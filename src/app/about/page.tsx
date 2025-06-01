@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import WhyJedSection from "@/app/_components/about/why_jed_section";
 import SupportSection from "@/app/_components/about/support_section";
 import BackButton from "@/components/back";
-
+import GetStartedButton from "./link";
 export const metadata: Metadata = {
   title: "About Us",
   description:
@@ -64,10 +64,7 @@ export default function AboutPage() {
             <p className="text-lg text-white/90 max-w-2xl mx-auto mb-8">
               Join thousands of event organizers who trust JED for their events. Start creating amazing experiences today.
             </p>
-            <Button variant="secondary" size="lg" className="group rounded-full">
-              Get Started
-              <Icon icon="solar:arrow-right-linear" className="ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-            </Button>
+            <GetStartedButton />
           </div>
         </section>
       </div>
