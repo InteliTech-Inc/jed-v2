@@ -30,20 +30,16 @@ export default function SolutionsPage() {
         <div className="ml-6">
           <BackButton />
         </div>
-        <section className="p-5 sm:p-6" aria-labelledby="solutions-heading">
-          <h1 id="solutions-heading" className="py-4 text-4xl md:text-5xl lg:text-6xl font-bold text-secondary">
+        <section className="p-5 sm:p-6 mb-0 lg:mb-10" aria-labelledby="solutions-heading">
+          <h1 id="solutions-heading" className="py-4 text-4xl md:text-5xl lg:text-6xl font-bold md:text-center text-secondary">
             Solutions
           </h1>
-          <p className="text-lg lg:w-3/5 lg:text-2xl leading-[1.4]">
+          <p className=" text-pretty md:text-center max-w-3xl mx-auto">
             Our tools help you make the process of voting, nominations, and ticketing much simpler, making it easier to manage your events. With our easy-to-use
             tools, you can improve your planning and make every event <mark className="text-primary/60">memorable</mark>.
           </p>
         </section>
-        <section
-          id="nominations"
-          className="grid lg:h-screen max-h-[550px] lg:grid-cols-2 gap-4 place-content-center p-5 sm:p-6"
-          aria-labelledby="nominations-heading"
-        >
+        <section id="nominations" className="grid  lg:grid-cols-2 gap-4 place-content-center p-5 sm:p-6" aria-labelledby="nominations-heading">
           <section className="lg:p-4">
             <h2 id="nominations-heading" className="text-2xl lg:text-5xl text-secondary font-semibold py-4">
               Nominations
@@ -68,7 +64,7 @@ export default function SolutionsPage() {
         </section>
         <section
           id="voting"
-          className="grid max-h-[550px] max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-5 sm:p-6"
+          className=" max-w-7xl mx-auto grid rounded-lg lg:h-screen lg:grid-cols-2 bg-accent/70 gap-4 place-content-center p-5 sm:p-6"
           aria-labelledby="voting-heading"
         >
           <section className="lg:p-4">
@@ -95,7 +91,7 @@ export default function SolutionsPage() {
         </section>
         <section
           id="ticketing"
-          className="grid max-h-[550px] max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-5 sm:p-6"
+          className="grid max-w-7xl mx-auto rounded-lg lg:h-screen lg:grid-cols-2 gap-4 place-content-center p-5 sm:p-6"
           aria-labelledby="ticketing-heading"
         >
           <section>

@@ -2,7 +2,7 @@
 
 import { Event } from "@/interfaces";
 import Image from "next/image";
-import { IconLivePhoto, IconEye } from "@tabler/icons-react";
+import { IconLivePhoto, IconEye, IconEyeOff } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function EventCard({ event }: Readonly<{ event: Event }>) {
@@ -24,16 +24,12 @@ export default function EventCard({ event }: Readonly<{ event: Event }>) {
             priority
           />
           <div className="absolute bottom-0 h-2/5 left-0 w-full p-3 bg-gradient-to-t from-black via-black/70 to-transparent">
-            <span className="group-hover:-translate-y-4 px-1 translate-y-0 transition-all duration-300 absolute bottom-2 text-white">
+            <span className="group-hover:-translate-y-4 px-1 mb-2 translate-y-0 transition-all duration-300 absolute bottom-2 text-white">
               <p className=" font-semibold text-white">{event?.name}</p>
-              <p className="text-white/80 text-sm text-pretty line-clamp-1 ">
-                {event?.description}
-              </p>
+              <p className="text-white/80 text-sm text-pretty line-clamp-1 ">{event?.description}</p>
             </span>
-            <div className="translate-y-10 flex items-center gap-2 group-hover:translate-y-0 transition-all duration-300 absolute bottom-2 text-white font-semibold">
-              <p>
-                <IconEye className="size-4 text-white/80" />
-              </p>
+            <div className="translate-y-10 flex items-center gap-2 group-hover:translate-y-0 transition-all pl-1 duration-300 absolute bottom-2 text-white font-semibold">
+              <p>{event.display_results ? <IconEye className="size-4 text-white/80" /> : <IconEyeOff className="size-4 text-white/80" />}</p>
             </div>
           </div>
         </div>

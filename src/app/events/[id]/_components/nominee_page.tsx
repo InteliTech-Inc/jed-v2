@@ -18,7 +18,7 @@ import { formatJedError } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/utils/query-keys";
 import useEventsStore from "@/stores/events-store";
-
+import ShareLink from "./share_link";
 export default function NomineeVotingPage() {
   const { id: event_id, nom_id: nominee_id } = useParams();
   const router = useRouter();
@@ -45,9 +45,7 @@ export default function NomineeVotingPage() {
     })),
   };
 
-  const nominee = event.categories
-    ?.flatMap((cat: { nominees: Nominee }) => cat.nominees)
-    .find((nom: { id: string }) => nom.id === nominee_id);
+  const nominee = event.categories?.flatMap((cat: { nominees: Nominee }) => cat.nominees).find((nom: { id: string }) => nom.id === nominee_id);
 
   const {
     register,
@@ -97,9 +95,7 @@ export default function NomineeVotingPage() {
 
       const response = await handleVoting(votingPayload);
       if (response.data) {
-        toast.success(
-          "Your vote is being processed. Kindly complete the payment to finalize your vote."
-        );
+        toast.success("Your vote is being processed. Kindly complete the payment to finalize your vote.");
         router.push(response.data.authorization_url);
         reset();
       }
@@ -125,51 +121,34 @@ export default function NomineeVotingPage() {
       return (
         <div className="flex container flex-col h-[30rem] items-center justify-center">
           <div className="text-center w-40 h-auto ">
-            <Image
-              src="/images/processing.svg"
-              alt="Processing"
-              width={200}
-              height={200}
-              className="mx-auto mb-6  h-full w-full object-contain"
-            />
+            <Image src="/images/processing.svg" alt="Processing" width={200} height={200} className="mx-auto mb-6  h-full w-full object-contain" />
           </div>
-          <h1 className="text-gray-700 text-xl font-medium">
-            Voting for this event has not started yet.
-          </h1>
-          <p className="text-gray-500 text-sm mt-2">
-            Please check back later when the event goes live.
-          </p>
+          <h1 className="text-gray-700 text-xl font-medium">Voting for this event has not started yet.</h1>
+          <p className="text-gray-500 text-sm mt-2">Please check back later when the event goes live.</p>
         </div>
       );
-    case "completed":
+    case "hi":
       return (
         <div className="flex container flex-col h-[30rem] items-center justify-center">
           <div className="text-center w-40 h-auto ">
-            <Image
-              src="/images/completed.svg"
-              alt="Processing"
-              width={200}
-              height={200}
-              className="mx-auto mb-6  h-full w-full object-contain"
-            />
+            <Image src="/images/completed.svg" alt="Processing" width={200} height={200} className="mx-auto mb-6  h-full w-full object-contain" />
           </div>
-          <h1 className="text-gray-700 text-xl font-medium">
-            Voting for this event has already been completed.
-          </h1>
-          <p className="text-gray-500 text-sm mt-2">
-            Thank you for your interest, but the voting period has ended.
-          </p>
+          <h1 className="text-gray-700 text-xl font-medium">Voting for this event has already been completed.</h1>
+          <p className="text-gray-500 text-sm mt-2">Thank you for your interest, but the voting period has ended.</p>
         </div>
       );
     default:
       return (
         <div className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto mt-8">
-            <div className=" ml-2 md:ml-6">
-              <BackButton />
+          <div className="max-w-6xl mx-auto md:mt-8">
+            <div className="flex mb-3 justify-between items-center pr-2">
+              <div className=" ml-2 md:ml-6">
+                <BackButton />
+              </div>
+              <ShareLink code={nominee.code} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 md:p-6">
-              <div className="relative w-full  overflow-hidden rounded-xl">
+            <div className="grid md:grid-cols-2 gap-8 px-2 md:p-6">
+              <div className="relative w-full h-[18rem] md:h-full overflow-hidden rounded-xl">
                 <Image
                   src={nominee.image}
                   alt={nominee.name}
@@ -180,9 +159,7 @@ export default function NomineeVotingPage() {
                 />
                 <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
                   <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl font-bold text-white">
-                      {nominee.name}
-                    </h2>
+                    <h2 className="text-2xl font-bold text-white">{nominee.name}</h2>
                     <p className="text-white/80">{nominee.category}</p>
                     <p className="text-accent">{nominee.code}</p>
                   </div>
@@ -195,72 +172,37 @@ export default function NomineeVotingPage() {
                     Vote for {nominee.name} ({nominee.code})
                   </h1>
                   <p className="text-gray-600">
-                    Support your favorite nominee by casting your votes. You can
-                    also vote via USSD by dialing <strong>*928*121#</strong>
+                    Support your favorite nominee by casting your votes. You can also vote via USSD by dialing <strong>*928*121#</strong>
                   </p>
                 </div>
 
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col gap-6"
-                >
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
-                    <Input
-                      id="name"
-                      {...register("name")}
-                      placeholder="Enter your full name"
-                    />
-                    {errors.name && (
-                      <small className="text-sm text-red-500">
-                        {errors.name.message}
-                      </small>
-                    )}
+                    <Input id="name" {...register("name")} placeholder="Enter your full name" />
+                    {errors.name && <small className="text-sm text-red-500">{errors.name.message}</small>}
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      {...register("email")}
-                      placeholder="Enter your email address"
-                    />
-                    {errors.email && (
-                      <small className="text-sm text-red-500">
-                        {errors.email.message}
-                      </small>
-                    )}
+                    <Input id="email" type="email" {...register("email")} placeholder="Enter your email address" />
+                    {errors.email && <small className="text-sm text-red-500">{errors.email.message}</small>}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="votes">
-                      Number of Votes (GHS {event.amount_per_vote?.toFixed(2)})
-                    </Label>
+                    <Label htmlFor="votes">Number of Votes (GHS {event.amount_per_vote?.toFixed(2)})</Label>
                     <Input
                       id="votes"
                       type="number"
                       {...register("numberOfVotes", { valueAsNumber: true })}
                       min={1}
-                      onChange={(e) =>
-                        setValue("numberOfVotes", parseInt(e.target.value))
-                      }
+                      onChange={(e) => setValue("numberOfVotes", parseInt(e.target.value))}
                     />
-                    {errors.numberOfVotes && (
-                      <small className="text-sm text-red-500">
-                        {errors.numberOfVotes.message}
-                      </small>
-                    )}
-                    <p className="text-sm text-gray-500">
-                      Total Price: GHS {totalPrice.toFixed(2)}
-                    </p>
+                    {errors.numberOfVotes && <small className="text-sm text-red-500">{errors.numberOfVotes.message}</small>}
+                    <p className="text-sm text-gray-500">Total Price: GHS {totalPrice > 0 ? totalPrice.toFixed(2) : "0.00"}</p>
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={isSubmitting || isPending}
-                  >
+                  <Button type="submit" className="w-full" disabled={isSubmitting || isPending}>
                     {isSubmitting || isPending ? <Spinner /> : " Submit Votes"}
                   </Button>
                 </form>

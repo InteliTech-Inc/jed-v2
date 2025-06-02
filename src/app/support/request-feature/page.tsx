@@ -71,7 +71,7 @@ export default function RequestFeaturePage() {
   };
 
   return (
-    <main className="min-h-screen py-20" role="main">
+    <main className="min-h-screen bg-gradient-to-b from-accent/10 to-transparent py-20" role="main">
       <div className="max-w-2xl mx-auto px-4">
         <motion.div
           className="text-center max-w-3xl mx-auto mb-16"
@@ -149,7 +149,7 @@ export default function RequestFeaturePage() {
                       </span>
                     </Label>
                     <Select value={formData.category} onValueChange={(value: string) => setFormData((prev) => ({ ...prev, category: value }))} required>
-                      <SelectTrigger id="category" className="w-full shadow-none">
+                      <SelectTrigger id="category" className="w-full shadow-none rounded-full">
                         <SelectValue placeholder="Select a category" />
                       </SelectTrigger>
                       <SelectContent>
