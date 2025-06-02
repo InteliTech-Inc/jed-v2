@@ -138,6 +138,13 @@ export const ChatContainer = () => {
 
       const event = events.find((event) => event.id === nominee.event_id);
 
+      if (!event?.is_published) {
+        await addSystemMessage(
+          "Oops! It seems like the event is not published yet. Please check back later or contact support for more information."
+        );
+        return;
+      }
+
       if (event?.event_progress.toLocaleLowerCase() === "not_started") {
         await addSystemMessage(
           "Patience, folks! 🛑. Voting will begin soon. But not now. Definitely not now."

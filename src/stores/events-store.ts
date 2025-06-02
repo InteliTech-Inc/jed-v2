@@ -34,11 +34,19 @@ const useEventsStore = create<EventsStore & EventsActions>()(
   persist(
     (set) => ({
       ...initialEventsState,
-      setEvents: (events) =>
-        set(() => ({
-          events,
-          isLoading: false,
-        })),
+      setEvents: (newEvents) =>
+        set((state) => {
+          const isSame =
+            JSON.stringify(state.events) === JSON.stringify(newEvents);
+          if (isSame) {
+            return { ...state, isLoading: false };
+          }
+          return {
+            ...state,
+            events: newEvents,
+            isLoading: false,
+          };
+        }),
       setIsLoading: (isLoading) =>
         set(() => ({
           isLoading,
@@ -67,4 +75,9 @@ const useSingleEventStore = create<SingleEventStore & SingleEventActions>()(
 
 export default useEventsStore;
 export { useSingleEventStore };
-export type { EventsStore, EventsActions, SingleEventStore, SingleEventActions };
+export type {
+  EventsStore,
+  EventsActions,
+  SingleEventStore,
+  SingleEventActions,
+};
